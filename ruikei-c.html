@@ -156,7 +156,29 @@ textarea.q-input.short{min-height:46px;}
 .info-list li{font-size:12.5px;line-height:1.75;color:var(--text-muted);display:flex;gap:10px;}
 .info-list li b{color:var(--text);flex:none;min-width:88px;font-weight:700;}
 .cover-caveat{font-size:11.5px;color:var(--text-muted);margin:10px 0 0;line-height:1.7;}
-.footer-saved{font-size:10.5px;color:var(--text-muted);opacity:.75;margin-left:8px;font-variant-numeric:tabular-nums;}
+.opt-group{display:flex;flex-wrap:wrap;gap:8px;}
+.opt-chip{flex:1 1 120px;min-height:46px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:15px;font-weight:600;cursor:pointer;}
+.opt-chip:hover{border-color:var(--accent);}
+.opt-chip.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.opt-chip:focus-visible,.btn:focus-visible,.link-btn:focus-visible,.doc-chip:focus-visible,.q-input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.link-btn{background:none;border:none;padding:4px 0;font-size:inherit;color:inherit;text-decoration:underline;cursor:pointer;text-align:left;font-family:inherit;}
+.missing-list li .link-btn{font-size:13px;color:var(--required);padding:6px 0;}
+.reset-link .link-btn{font-size:12px;color:var(--text-muted);}
+.step-list{margin:0 0 14px;padding-left:22px;display:grid;gap:8px;font-size:13.5px;line-height:1.8;color:var(--text);}
+.back-link{display:inline-block;font-size:12.5px;color:var(--text-muted);text-decoration:none;margin-bottom:14px;}
+.back-link:hover{color:var(--accent-strong);text-decoration:underline;}
+details.cover-card>summary,details.save-section>summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent-strong);list-style-position:inside;}
+::placeholder{color:#7d8e89;opacity:1;}
+.q-prompt{font-size:14px;}
+.q-example{font-size:13px;}
+.footer-label{font-weight:600;}
+.footer-saved{display:block;margin:4px 0 0;font-size:11px;min-height:14px;}
+.doc-state{flex-wrap:wrap;}
+.mt-pill{min-height:38px;}
+.btn{min-height:42px;}
+.cover-card .btn,.save-section .btn{white-space:normal;}
+@media (max-width:880px){.footer-progress-text{gap:8px;}.footer-progress-text span:last-child{white-space:nowrap;}}
+.footer-saved-old{font-size:10.5px;color:var(--text-muted);opacity:.75;margin-left:8px;font-variant-numeric:tabular-nums;}
 
 .qcard{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
@@ -311,13 +333,17 @@ select.q-input{appearance:none;background-image:linear-gradient(45deg,transparen
 
 <script>
 /* ---------------- data (build.py が生成) ---------------- */
-const FORM = {"key":"c","brand":"つるい未来補助金","typeName":"類型C　観光推進事業","short":"類型C","blocks":[{"id":"b0","no":0,"eyebrow":"基本情報","title":"基本情報","railLabel":"0．基本情報","sheetLabel":"0. 基本情報","note":"","groups":[{"heading":"","questions":[{"id":"00-01","label":"事業者名","prompt":"事業者名（法人名または屋号）を教えてください。","example":"有限会社〇〇／〇〇カフェ","type":"text"},{"id":"00-02","label":"代表者名","prompt":"代表者のお名前を教えてください。","example":"鶴居 太郎","type":"text"},{"id":"00-03","label":"所在地","prompt":"本店（個人の方はご自宅）の住所を教えてください。","example":"阿寒郡鶴居村鶴居北〇丁目〇番地","type":"text"},{"id":"00-04","label":"電話番号","prompt":"日中に連絡がとれる電話番号を教えてください。","example":"090-〇〇〇〇-〇〇〇〇","type":"text","inputmode":"tel"},{"id":"00-05","label":"メールアドレス","prompt":"メールアドレスを教えてください。","example":"info@example.jp","type":"text","inputmode":"email"}]}]},{"id":"b1","no":1,"eyebrow":"第1ブロック","title":"申請内容の確認","railLabel":"1．申請内容の確認","sheetLabel":"1. 申請内容の確認","note":"※最初の「宿泊業の状況」を選ぶと、あなたが記入しなくてよい設問は自動的に表示されなくなります。","groups":[{"heading":"","questions":[{"id":"C1-01","label":"宿泊業の状況","prompt":"現在、宿泊業を営んでいますか。（営んでいる／これから始める）","example":"営んでいる","type":"select","options":["営んでいる","これから始める"]},{"id":"C1-02","label":"施設の種別","prompt":"今回整備する宿泊施設の種別は何ですか。（旅館・ホテル／簡易宿所（民宿・ゲストハウス・一棟貸しなど）／その他）","example":"簡易宿所","type":"select","options":["旅館・ホテル","簡易宿所","その他"]},{"id":"C1-03","label":"旅館業の許可","prompt":"旅館業の許可の状況を教えてください。（取得済み／申請中／これから申請／わからない）","example":"これから申請","type":"select","options":["取得済み","申請中","これから申請","わからない"]},{"id":"C1-04","label":"許可番号","prompt":"【取得済みの方】許可番号を教えてください。","example":"釧保生 第〇〇号","type":"textarea","short":true,"dependsOn":[{"id":"C1-03","hideIf":"ne","val":"取得済み"}]},{"id":"C1-05","label":"許可の取得年月日","prompt":"【取得済みの方】許可を取得した年月日を教えてください。","example":"平成19年4月20日","type":"textarea","short":true,"dependsOn":[{"id":"C1-03","hideIf":"ne","val":"取得済み"}]}]}]},{"id":"b2","no":2,"eyebrow":"第2ブロック","title":"あなたのこれまで【これから始める方】","railLabel":"2．あなたのこれまで【これから始める方】","sheetLabel":"2. あなたのこれまで【これから始める方】","note":"※「1 申請内容」で宿泊業を「これから始める」を選んだ方だけご記入ください。「営んでいる」を選んだ方は、このブロックは自動的にスキップされます。","groups":[{"heading":"","questions":[{"id":"C2-01","label":"経歴①","prompt":"これまでの主な経歴（年月・勤務先・仕事内容）を教えてください（1つ目）。","example":"平成5年まで東京都で公務員","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-02","label":"経歴②","prompt":"主な経歴の2つ目（年月・勤務先・仕事内容）を教えてください。ない場合は「なし」。","example":"平成5年〜 鶴居村に移住し、〇〇株式会社で事務","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-03","label":"経歴③以降","prompt":"その他の経歴があれば教えてください。ない場合は「なし」。","example":"令和2年 〇〇合同会社を設立","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-04","label":"他に営む事業","prompt":"宿泊業のほかに、すでに営んでいる事業はありますか。ある場合は事業の名称と内容を教えてください。ない場合は「なし」。","example":"不動産賃貸業（帯広市）","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-05","label":"その事業の従業員数","prompt":"その事業の従業員数を教えてください。ない場合は「なし」。","example":"常用2名","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"},{"id":"C2-04","hideIf":"eq","val":"なし"}]},{"id":"C2-06","label":"資格・経験","prompt":"宿泊業に活かせる資格や経験を教えてください。ない場合は「なし」。","example":"不動産の管理運営の経験","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-07","label":"始めるきっかけ","prompt":"宿泊業を始めようと思ったきっかけを教えてください。","example":"村内の宿泊施設が不足し、宿泊客が釧路市などに流れていると聞いた","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-08","label":"鶴居村で行う理由","prompt":"鶴居村で行う理由や、村とのつながりを教えてください。","example":"移住した際に感じた村の魅力を、訪れる人にも伝えたい","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]}]}]},{"id":"b3","no":3,"eyebrow":"第3ブロック","title":"施設のこれまで【営業中の方】","railLabel":"3．施設のこれまで【営業中の方】","sheetLabel":"3. 施設のこれまで【営業中の方】","note":"※「1 申請内容」で宿泊業を「営んでいる」を選んだ方だけご記入ください。「これから始める」を選んだ方は、このブロックは自動的にスキップされます。","groups":[{"heading":"","questions":[{"id":"C3-01","label":"創業年月","prompt":"会社（お店）を創業した年月を教えてください。","example":"平成14年7月","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-02","label":"宿泊業の開始","prompt":"宿泊業を始めた年月を教えてください。","example":"平成19年4月","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-03","label":"施設名","prompt":"宿泊施設の名称を教えてください。","example":"〇〇温泉ホテル","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-04","label":"現在の客室数","prompt":"現在の客室数を教えてください。","example":"20室","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-05","label":"現在の定員","prompt":"現在の宿泊定員（最大収容人数）を教えてください。","example":"60名","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-06","label":"年間宿泊者数","prompt":"年間の宿泊者数はおよそ何人ですか。","example":"約6,000人","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-07","label":"客室稼働率","prompt":"1年のうち客室が埋まっている割合（客室稼働率）は、およそ何％ですか。わからない場合は「わからない」。","example":"約45％","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-08","label":"宿泊以外の施設","prompt":"宿泊以外の施設やサービス（温泉、レストラン、日帰り入浴など）を教えてください。ない場合は「なし」。","example":"日帰り温泉、レストラン、サウナ","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-09","label":"売上の内わけ","prompt":"事業ごとの売上の割合（内わけ）を教えてください。","example":"宿泊60％、日帰り入浴25％、レストラン15％","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-10","label":"従業員数","prompt":"常用従業員（ほぼ毎日働いている人）の人数と、パート・アルバイトの人数を教えてください。","example":"常用8名、パート5名","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]}]}]},{"id":"b4","no":4,"eyebrow":"第4ブロック","title":"地域とのつながり","railLabel":"4．地域とのつながり","sheetLabel":"4. 地域とのつながり","note":"","groups":[{"heading":"","questions":[{"id":"C4-01","label":"加入団体","prompt":"加入している商工会・観光協会などの団体と、加入した年を教えてください。ない場合は「なし」。","example":"鶴居村商工会（平成12年〜）","type":"textarea","short":true},{"id":"C4-02","label":"団体での役職","prompt":"代表者や役員の方が、団体で役職に就いた経験があれば教えてください。ない場合は「なし」。","example":"鶴居村商工会 理事（令和2年〜）","type":"textarea"},{"id":"C4-03","label":"地域活動","prompt":"村のイベントへの協力など、地域での活動があれば教えてください。ない場合は「なし」。","example":"村の夏祭りに毎年出店","type":"textarea","short":true}]}]},{"id":"b5","no":5,"eyebrow":"第5ブロック","title":"事業の目的","railLabel":"5．事業の目的","sheetLabel":"5. 事業の目的","note":"","groups":[{"heading":"","questions":[{"id":"C5-01","label":"事業の一言タイトル","prompt":"今回の事業を一言で表すと何ですか。（30字以内）","example":"空き家を改装した一棟貸し宿の開業","type":"textarea"},{"id":"C5-02","label":"鶴居村観光の課題","prompt":"鶴居村の観光について、課題だと感じることは何ですか。","example":"宿泊施設が少なく、宿泊客が村外に流れている","type":"textarea"},{"id":"C5-03","label":"そう感じた根拠","prompt":"そう感じた具体的な場面や根拠を教えてください。","example":"タンチョウの時期は村内の宿がすぐ満室になる","type":"textarea"},{"id":"C5-04","label":"解決の方法","prompt":"今回の事業で、その課題をどう解決しますか。","example":"村内に新たな宿泊の受け皿をつくる","type":"textarea"},{"id":"C5-05","label":"村の観光方針との関係","prompt":"村や商工会の観光の取組（例：「新・湯治」）と関係することがあれば教えてください。ない場合・わからない場合は「なし」。","example":"「新・湯治」の長期滞在型観光に合う宿にする","type":"textarea"},{"id":"C5-06","label":"目指す姿","prompt":"お客様にとって、どんな宿になりたいですか。","example":"軽い移住体験ができる、自然に囲まれた宿","type":"textarea"}]}]},{"id":"b6","no":6,"eyebrow":"第6ブロック","title":"宿泊サービスの内容","railLabel":"6．宿泊サービスの内容","sheetLabel":"6. 宿泊サービスの内容","note":"","groups":[{"heading":"宿のコンセプト・プラン","questions":[{"id":"C6-01","label":"コンセプト","prompt":"宿のコンセプトを教えてください。","example":"鶴居村の自然の中でデジタルデトックスできる一棟貸しの宿","type":"textarea"},{"id":"C6-02","label":"宿泊プラン①","prompt":"主な宿泊プラン（1つ目）の内容を教えてください。","example":"1棟貸し・素泊まり（3名まで）","type":"textarea"},{"id":"C6-03","label":"①の料金","prompt":"そのプランの料金を教えてください。","example":"1棟1泊30,000円（税抜）、4名以上は1名につき8,000円加算","type":"textarea"},{"id":"C6-04","label":"宿泊プラン②","prompt":"他の宿泊プランがあれば教えてください。ない場合は「なし」。","example":"合宿プラン（最大12名）","type":"textarea","short":true},{"id":"C6-05","label":"食事の提供","prompt":"食事はどのように提供しますか。","example":"村内飲食店のケータリング、BBQ会場の紹介","type":"textarea"},{"id":"C6-06","label":"体験コンテンツ","prompt":"宿泊客に提供する体験や楽しみを教えてください。","example":"星空観察、釧路湿原の乗馬ツアー、サイクリングツアー","type":"textarea"},{"id":"C6-07","label":"提携先","prompt":"提携する村内事業者を具体名で教えてください（予定を含む）。ない場合は「なし」。","example":"〇〇牧場（乗馬）、〇〇（ケータリング）","type":"textarea"}]},{"heading":"営業の概要","questions":[{"id":"C6-08","label":"チェックイン・アウト","prompt":"チェックインとチェックアウトの時刻を教えてください。","example":"14:00／10:00","type":"textarea","short":true},{"id":"C6-09","label":"営業期間","prompt":"通年営業ですか。休業期間があれば教えてください。","example":"通年","type":"textarea","short":true},{"id":"C6-10","label":"開業予定時期","prompt":"開業（運用開始）の予定時期を教えてください。","example":"2026年11月","type":"textarea","short":true}]},{"heading":"運営人数・雇用","questions":[{"id":"C6-11","label":"運営人数","prompt":"運営に関わる人数を教えてください。","example":"2名（清掃・現場管理を含む）","type":"textarea","short":true},{"id":"C6-12","label":"新規雇用","prompt":"新たに人を雇う予定はありますか。人数と雇用形態（正社員・パートなど）を教えてください。ない場合は「なし」。","example":"清掃スタッフ（パート）1名","type":"textarea","short":true},{"id":"C6-13","label":"村内からの雇用","prompt":"そのうち、村内に住む方を雇う予定の人数を教えてください。","example":"1名","type":"textarea","short":true,"dependsOn":[{"id":"C6-12","hideIf":"eq","val":"なし"}]},{"id":"C6-14","label":"人件費の見込み","prompt":"年間の人件費はおよそいくらを見込みますか。人を雇う予定がない場合は「0」。","example":"年60万円","type":"textarea","short":true}]}]},{"id":"b7","no":7,"eyebrow":"第7ブロック","title":"補助金で整備するもの","railLabel":"7．補助金で整備するもの","sheetLabel":"7. 補助金で整備するもの","note":"※ここでいう「工事・設備」は、補助金を使って行う工事や、購入する設備・備品のことです。4つ以上ある場合は、4つ目以降を最後の「その他・補足」にご記入ください。","groups":[{"heading":"施設の場所・建物","questions":[{"id":"C7-01","label":"施設の場所","prompt":"施設の住所を教えてください。基本情報（00-03）の住所と同じなら「同じ」。","example":"阿寒郡鶴居村字雪裡〇〇番地","type":"textarea","short":true},{"id":"C7-02","label":"場所の特徴","prompt":"その場所の特徴（立地、周辺環境など）を教えてください。","example":"森林に囲まれ、星空がよく見える","type":"textarea"},{"id":"C7-03","label":"建物の種類","prompt":"建物は次のどれですか。（新築／既存建物の改修／空き家の改修／住居兼店舗）","example":"空き家の改修","type":"select","options":["新築","既存建物の改修","空き家の改修","住居兼店舗"]},{"id":"C7-04","label":"住居兼店舗の面積","prompt":"【住居兼店舗の方】建物全体の面積と、そのうち宿泊事業に使う部分の面積を教えてください。","example":"全体150㎡、うち宿泊部分90㎡","type":"textarea","dependsOn":[{"id":"C7-03","hideIf":"ne","val":"住居兼店舗"}]}]},{"heading":"工事・設備①","questions":[{"id":"C7-05","label":"工事・設備①の名称","prompt":"今回整備・導入するもの（1つ目）の名称を教えてください。","example":"空き家の改装工事（床・内装・電気工事）","type":"textarea"},{"id":"C7-06","label":"工事・設備①の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"簡易宿所の許可が取れる構造に改装し、小上がりの和室を新設","type":"textarea"},{"id":"C7-07","label":"工事・設備①の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"インバウンド客に人気の和の空間を提供できる","type":"textarea"},{"id":"C7-08","label":"工事・設備①の金額","prompt":"工事・設備①のおおよその金額（税抜）を教えてください。","example":"約400万円","type":"textarea","short":true},{"id":"C7-09","label":"工事・設備①の見積書","prompt":"工事・設備①の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"]}]},{"heading":"工事・設備②","questions":[{"id":"C7-10","label":"工事・設備②の名称","prompt":"今回整備・導入するもの（2つ目）の名称を教えてください。2つ目がない場合は「なし」（続く設問は記入不要になります）。","example":"ウッドデッキ・天窓の設置","type":"textarea","short":true},{"id":"C7-11","label":"工事・設備②の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"星空を眺められる天窓と、自然を楽しむウッドデッキ","type":"textarea","dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]},{"id":"C7-12","label":"工事・設備②の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"鶴居村ならではの滞在体験を提供できる","type":"textarea","dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]},{"id":"C7-13","label":"工事・設備②の金額","prompt":"工事・設備②のおおよその金額（税抜）を教えてください。","example":"約25万円","type":"textarea","short":true,"dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]},{"id":"C7-14","label":"工事・設備②の見積書","prompt":"工事・設備②の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"],"dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]}]},{"heading":"工事・設備③","questions":[{"id":"C7-15","label":"工事・設備③の名称","prompt":"今回整備・導入するもの（3つ目）の名称を教えてください。3つ目がない場合は「なし」（続く設問は記入不要になります）。","example":"予約・決済機能付きホームページの開発","type":"textarea"},{"id":"C7-16","label":"工事・設備③の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"英語ページ付きの専用サイトとSNSの連携","type":"textarea","dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]},{"id":"C7-17","label":"工事・設備③の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"海外からも直接予約でき、稼働率が上がる","type":"textarea","dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]},{"id":"C7-18","label":"工事・設備③の金額","prompt":"工事・設備③のおおよその金額（税抜）を教えてください。","example":"約46万円","type":"textarea","short":true,"dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]},{"id":"C7-19","label":"工事・設備③の見積書","prompt":"工事・設備③の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"],"dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]}]},{"heading":"その他の費用","questions":[{"id":"C7-20","label":"その他にかかるお金","prompt":"上の工事・設備のほかに、消耗品や申請手数料などでかかるお金があれば、内容と金額を教えてください。ない場合は「なし」。","example":"布団・タオル等 約22万円","type":"textarea","short":true}]},{"heading":"客室数・定員","questions":[{"id":"C7-21","label":"整備前の客室数","prompt":"整備する前の客室数を教えてください。新たに始める場合は「0」、「3 施設のこれまで」で答えた数と同じなら「同じ」。","example":"0室","type":"textarea","short":true},{"id":"C7-22","label":"整備後の客室数","prompt":"整備した後の客室数を教えてください。","example":"1棟（3室）","type":"textarea","short":true},{"id":"C7-23","label":"整備前の定員","prompt":"整備する前の宿泊定員を教えてください。新たに始める場合は「0」、「3 施設のこれまで」で答えた数と同じなら「同じ」。","example":"0名","type":"textarea","short":true},{"id":"C7-24","label":"整備後の定員","prompt":"整備した後の宿泊定員を教えてください。","example":"12名","type":"textarea","short":true}]},{"heading":"スケジュール・手続き","questions":[{"id":"C7-25","label":"発注時期","prompt":"業者に発注する予定時期を教えてください。","example":"2026年9月","type":"textarea","short":true},{"id":"C7-26","label":"着工時期","prompt":"工事に着手する予定時期を教えてください。","example":"2026年9月下旬","type":"textarea","short":true},{"id":"C7-27","label":"完了時期","prompt":"工事完了・納品の予定時期を教えてください。","example":"2026年10月","type":"textarea","short":true},{"id":"C7-28","label":"支払時期","prompt":"業者への支払いを終える予定時期を教えてください。","example":"2026年10月","type":"textarea","short":true},{"id":"C7-29","label":"手続きの時期","prompt":"営業許可・消防検査などの手続きの予定時期を教えてください。","example":"2026年10月に申請","type":"textarea","short":true}]}]},{"id":"b8","no":8,"eyebrow":"第8ブロック","title":"資金の準備","railLabel":"8．資金の準備","sheetLabel":"8. 資金の準備","note":"","groups":[{"heading":"","questions":[{"id":"C8-01","label":"自己資金","prompt":"工事・設備の費用のうち、自己資金（手持ちのお金）で払う額は約いくらですか。※補助金は工事が終わった後に支払われるため、いったん全額を用意する必要があります。","example":"130万円","type":"textarea","short":true},{"id":"C8-02","label":"借入の予定","prompt":"金融機関からお金を借りる予定はありますか。ある場合は金融機関名と金額を教えてください。ない場合は「なし」。","example":"日本政策金融公庫 400万円","type":"textarea","short":true},{"id":"C8-03","label":"他の補助金","prompt":"今回の工事・設備について、国・道など他の補助金を使う予定はありますか。ない場合は「なし」。","example":"なし","type":"textarea","short":true}]}]},{"id":"b9","no":9,"eyebrow":"第9ブロック","title":"外国人のお客様（インバウンド）への対応","railLabel":"9．外国人のお客様（インバウンド）への対応","sheetLabel":"9. 外国人のお客様（インバウンド）への対応","note":"","groups":[{"heading":"","questions":[{"id":"C9-01","label":"外国人客の割合","prompt":"現在（または見込み）の宿泊客のうち、外国人の割合はどのくらいですか。","example":"約2割（見込み）","type":"textarea","short":true},{"id":"C9-02","label":"多言語対応","prompt":"ホームページや館内表示の外国語対応はどうなっていますか（現状と予定）。","example":"現状なし→英語ページと英語の館内案内を作成","type":"textarea"},{"id":"C9-03","label":"Wi-Fi","prompt":"Wi-Fi環境はどうなっていますか（現状と予定）。","example":"全室で無料Wi-Fiを整備予定","type":"textarea"},{"id":"C9-04","label":"キャッシュレス決済","prompt":"キャッシュレス決済に対応していますか（現状と予定）。","example":"クレジットカード・QR決済に対応予定","type":"textarea"},{"id":"C9-05","label":"予約サイトへの掲載","prompt":"海外からも予約できるサイト（OTA）に掲載していますか（現状と予定）。","example":"Booking.com、Airbnbに掲載予定","type":"textarea"},{"id":"C9-06","label":"その他の対応","prompt":"その他、外国人のお客様のために工夫していることがあれば教えてください。ない場合は「なし」。","example":"和室での和の体験、英語の周辺ガイドマップ","type":"textarea"}]}]},{"id":"b10","no":10,"eyebrow":"第10ブロック","title":"狙うお客様","railLabel":"10．狙うお客様","sheetLabel":"10. 狙うお客様","note":"","groups":[{"heading":"","questions":[{"id":"C10-01","label":"お客様①","prompt":"一番のメインとなるお客様はどんな人ですか。","example":"自然の中で癒しを求める都市部の旅行者","type":"textarea"},{"id":"C10-02","label":"①が選ぶ理由","prompt":"その人たちは、なぜあなたの宿を選びますか。","example":"周りに何もない静かな環境で、一棟を貸し切れるため","type":"textarea"},{"id":"C10-03","label":"お客様②","prompt":"他に狙いたいお客様はいますか。ない場合は「なし」。","example":"日本の田舎体験を求める訪日外国人","type":"textarea"},{"id":"C10-04","label":"②が選ぶ理由","prompt":"その人たちは、なぜあなたの宿を選びますか。","example":"和室と自然体験を気軽に楽しめるため","type":"textarea","dependsOn":[{"id":"C10-03","hideIf":"eq","val":"なし"}]},{"id":"C10-05","label":"季節ごとの客層","prompt":"季節によって、お客様の層はどう変わりますか。","example":"冬はタンチョウ目当ての写真愛好家、夏は家族連れ","type":"textarea"},{"id":"C10-06","label":"村内との関わり","prompt":"宿泊客を通じて、村内の事業者とどう関わりますか。","example":"食事やアクティビティを村内事業者に紹介・手配する","type":"textarea"}]}]},{"id":"b11","no":11,"eyebrow":"第11ブロック","title":"市場とライバル","railLabel":"11．市場とライバル","sheetLabel":"11. 市場とライバル","note":"","groups":[{"heading":"","questions":[{"id":"C11-01","label":"観光の動き","prompt":"鶴居村や道東の観光は今どんな状況ですか。知っている数字があれば教えてください。","example":"鶴居村を訪れる観光客は令和5年度に43万4千人","type":"textarea"},{"id":"C11-02","label":"数字の出どころ","prompt":"その数字は、どこで見聞きしたものですか（新聞、役場の資料など）。前の設問で数字を書いていない場合は「なし」、わからない場合は「わからない」。","example":"釧路総合振興局の発表","type":"textarea","short":true},{"id":"C11-03","label":"近くの宿泊施設","prompt":"村内や近隣に、似た宿泊施設はありますか。","example":"一棟貸しの宿は村内にほとんどない","type":"textarea"},{"id":"C11-04","label":"他の宿との違い","prompt":"それらと比べて、あなたの宿が選ばれる理由は何ですか。","example":"一棟貸しで、最大12名の合宿にも対応できる","type":"textarea"},{"id":"C11-05","label":"季節の繁閑","prompt":"繁忙期と閑散期はいつですか。","example":"繁忙期は1〜3月、閑散期は4〜6月","type":"textarea"}]}]},{"id":"b12","no":12,"eyebrow":"第12ブロック","title":"集客の方法","railLabel":"12．集客の方法","sheetLabel":"12. 集客の方法","note":"","groups":[{"heading":"","questions":[{"id":"C12-01","label":"ホームページ","prompt":"ホームページはどのように活用しますか。","example":"英語ページ付きの専用サイトで直接予約を受け付ける","type":"textarea"},{"id":"C12-02","label":"予約サイト（OTA）","prompt":"使う予定の予約サイトを教えてください。","example":"楽天トラベル、じゃらん、Booking.com","type":"textarea"},{"id":"C12-03","label":"SNS","prompt":"使う予定のSNSと、発信する内容を教えてください。","example":"Instagramで四季の景色と宿の様子を発信","type":"textarea"},{"id":"C12-04","label":"閑散期の対策","prompt":"お客様が少ない時期の対策を教えてください。","example":"春・夏の自然体験プランを企画","type":"textarea","short":true}]}]},{"id":"b13","no":13,"eyebrow":"第13ブロック","title":"事業の見通しと地域への効果","railLabel":"13．事業の見通しと地域への効果","sheetLabel":"13. 事業の見通しと地域への効果","note":"","groups":[{"heading":"","questions":[{"id":"C13-01","label":"1年目の稼働率","prompt":"1年目の客室稼働率（客室が埋まっている割合）の目標を教えてください。","example":"30％","type":"textarea","short":true},{"id":"C13-02","label":"5年後の稼働率","prompt":"5年後の客室稼働率の目標を教えてください。","example":"45％","type":"textarea","short":true},{"id":"C13-03","label":"1年目の宿泊者数","prompt":"1年目の年間宿泊者数の目標を教えてください。","example":"400人","type":"textarea","short":true},{"id":"C13-04","label":"5年後の宿泊者数","prompt":"5年後の年間宿泊者数の目標を教えてください。","example":"600人","type":"textarea","short":true},{"id":"C13-05","label":"目標の根拠","prompt":"その目標の根拠を教えてください。","example":"宿泊業界の平均稼働率（約46％）を参考に設定","type":"textarea"},{"id":"C13-06","label":"将来の展開","prompt":"将来、新しく展開したいことはありますか。ない場合は「なし」。","example":"2棟目の開業、長期滞在プラン","type":"textarea","short":true},{"id":"C13-07","label":"村への良い影響","prompt":"この事業が成功すると、村にどんな良い影響がありますか。","example":"村内で宿泊する人が増え、飲食店などの利用も増える","type":"textarea"},{"id":"C13-08","label":"観光・ブランドへの貢献","prompt":"村の観光や地域ブランドに、どう貢献できますか。","example":"タンチョウ以外の季節の魅力を発信し、通年観光に貢献する","type":"textarea"}]}]},{"id":"b14","no":14,"eyebrow":"第14ブロック","title":"その他・補足","railLabel":"14．その他・補足","sheetLabel":"14. その他・補足","note":"","groups":[{"heading":"","questions":[{"id":"C14-01","label":"追加の工事・設備","prompt":"書ききれなかった工事・設備（名称・内容・効果・金額）があればご記入ください。ない場合は「なし」。","example":"④ 看板の設置：宿の場所がわかりやすくなる、15万円（見積書あり）","type":"textarea"},{"id":"C14-02","label":"その他伝えたいこと","prompt":"その他、計画書づくりのために伝えておきたいことがあればご記入ください。ない場合は「なし」。","example":"開業時期は工事業者と調整中","type":"textarea","short":true}]}]}],"docs":[{"id":"D1","no":1,"label":"見積書（工事・設備ごと）"},{"id":"D2","no":2,"label":"施設の図面・現状写真"},{"id":"D3","no":3,"label":"旅館業の許可証の写し（取得済みの場合）"},{"id":"D4","no":4,"label":"【営業中の方のみ】直近2〜3期分の決算書または確定申告書（これから始める方は「該当なし」）"}],"docStates":["準備済み","準備中","まだ","該当なし"],"docDefault":2,"cover":{"usage":[["記入のしかた","難しく考えず、思いつくことを短い言葉や箇条書きでご記入ください。1つの欄には1つのことをお書きください。"],["「なし」","当てはまらない・特にない場合は「なし」とご記入ください（空欄のままだと未回答として扱われます）。"],["「わからない」","わからない・まだ決まっていない場合は「わからない」「未定」とご記入のうえ、先へ進んでください。後ほど追加のヒアリングでお伺いします。"],["数字・記入例","金額・人数・割合などはおおよその値で構いません。記入例は実際の事例をもとにしたイメージです。"],["設問の切替","前の設問の回答によって、記入が不要な設問は自動的に表示されなくなります。上から順にお答えください。"],["所要時間","設問は最大で約114問（回答内容によって減ります）、2〜3時間ほどです。1日で終わらなくて大丈夫です。数日に分けてご記入ください。"],["保存","入力内容はこの端末に自動的に保存されます。途中でやめても続きから再開できます。最後の確認画面でファイル保存・コピーができます。"],["お困りのとき","入力が難しい場合は、担当の支援者にご相談ください。お電話でのヒアリングも承ります。"]],"info":[["返送先","CT経営コンサルティング"],["返送の方法","最後の「確認・保存」画面で保存したファイル（CSVまたはテキスト）、またはコピーした全文を、返送先へお送りください。メールアドレスや住所などの連絡先は、事業者様へ個別にお知らせします。"]],"summary":[["対象事業","村内観光業の推進に資する、旅館業法に基づく宿泊施設の整備及び改修等を行う事業"],["補助率","補助対象経費の1/2以内"],["補助限度額","500万円"],["補助金の下限額","50万円"],["対象経費","工事請負費（事務所・店舗等の建設費・改修費等）、委託費（調査・設計・開発費等）、備品購入費（設備・機械装置等）、そのほか村長が必要かつ適当と認めた費用"],["ご注意","施設整備等の上限単価は24.8万円／㎡です。"]],"summaryCaveat":"※つるい未来へつなぐ商工観光経済活性化支援事業補助規則（別表1）に基づく概要です。募集期間や詳細な要件は、村が別に定める公募案内等で必ずご確認ください。"}};
+const FORM = {"key":"c","brand":"つるい未来補助金","typeName":"類型C　観光推進事業","short":"類型C","blocks":[{"id":"b0","no":0,"eyebrow":"基本情報","title":"基本情報","railLabel":"0．基本情報","sheetLabel":"0. 基本情報","note":"","groups":[{"heading":"","questions":[{"id":"00-01","label":"事業者名","prompt":"事業者名（法人名または屋号）を教えてください。","example":"有限会社〇〇／〇〇カフェ","type":"text"},{"id":"00-02","label":"代表者名","prompt":"代表者のお名前を教えてください。","example":"鶴居 太郎","type":"text"},{"id":"00-03","label":"所在地","prompt":"本店（個人の方はご自宅）の住所を教えてください。","example":"阿寒郡鶴居村鶴居北〇丁目〇番地","type":"text"},{"id":"00-04","label":"電話番号","prompt":"日中に連絡がとれる電話番号を教えてください。","example":"090-〇〇〇〇-〇〇〇〇","type":"text","inputmode":"tel"},{"id":"00-05","label":"メールアドレス","prompt":"メールアドレスを教えてください。","example":"info@example.jp","type":"text","inputmode":"email"}]}]},{"id":"b1","no":1,"eyebrow":"第1ブロック","title":"申請内容の確認","railLabel":"1．申請内容の確認","sheetLabel":"1. 申請内容の確認","note":"※最初の「宿泊業の状況」を選ぶと、あなたが記入しなくてよい設問は自動的に表示されなくなります。","groups":[{"heading":"","questions":[{"id":"C1-01","label":"宿泊業の状況","prompt":"現在、宿泊業を営んでいますか。（営んでいる／これから始める）","example":"営んでいる","type":"select","options":["営んでいる","これから始める"]},{"id":"C1-02","label":"施設の種別","prompt":"今回整備する宿泊施設の種別は何ですか。（旅館・ホテル／簡易宿所（民宿・ゲストハウス・一棟貸しなど）／その他）","example":"簡易宿所","type":"select","options":["旅館・ホテル","簡易宿所","その他"]},{"id":"C1-03","label":"旅館業の許可","prompt":"旅館業の許可の状況を教えてください。（取得済み／申請中／これから申請／わからない）","example":"これから申請","type":"select","options":["取得済み","申請中","これから申請","わからない"]},{"id":"C1-04","label":"許可番号","prompt":"【取得済みの方】許可番号を教えてください。","example":"釧保生 第〇〇号","type":"textarea","short":true,"dependsOn":[{"id":"C1-03","hideIf":"ne","val":"取得済み"}]},{"id":"C1-05","label":"許可の取得年月日","prompt":"【取得済みの方】許可を取得した年月日を教えてください。","example":"平成19年4月20日","type":"textarea","short":true,"dependsOn":[{"id":"C1-03","hideIf":"ne","val":"取得済み"}]}]}]},{"id":"b2","no":2,"eyebrow":"第2ブロック","title":"あなたのこれまで【これから始める方】","railLabel":"2．あなたのこれまで【これから始める方】","sheetLabel":"2. あなたのこれまで【これから始める方】","note":"※「1 申請内容」で宿泊業を「これから始める」を選んだ方だけご記入ください。「営んでいる」を選んだ方は、このブロックは自動的にスキップされます。","groups":[{"heading":"","questions":[{"id":"C2-01","label":"経歴①","prompt":"これまでの主な経歴（年月・勤務先・仕事内容）を教えてください（1つ目）。","example":"平成5年まで東京都で公務員","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-02","label":"経歴②","prompt":"主な経歴の2つ目（年月・勤務先・仕事内容）を教えてください。ない場合は「なし」。","example":"平成5年〜 鶴居村に移住し、〇〇株式会社で事務","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-03","label":"経歴③以降","prompt":"その他の経歴があれば教えてください。ない場合は「なし」。","example":"令和2年 〇〇合同会社を設立","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-04","label":"他に営む事業","prompt":"宿泊業のほかに、すでに営んでいる事業はありますか。ある場合は事業の名称と内容を教えてください。ない場合は「なし」。","example":"不動産賃貸業（帯広市）","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-05","label":"その事業の従業員数","prompt":"その事業の従業員数を教えてください。ない場合は「なし」。","example":"常用2名","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"},{"id":"C2-04","hideIf":"eq","val":"なし"}]},{"id":"C2-06","label":"資格・経験","prompt":"宿泊業に活かせる資格や経験を教えてください。ない場合は「なし」。","example":"不動産の管理運営の経験","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-07","label":"始めるきっかけ","prompt":"宿泊業を始めようと思ったきっかけを教えてください。","example":"村内の宿泊施設が不足し、宿泊客が釧路市などに流れていると聞いた","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]},{"id":"C2-08","label":"鶴居村で行う理由","prompt":"鶴居村で行う理由や、村とのつながりを教えてください。","example":"移住した際に感じた村の魅力を、訪れる人にも伝えたい","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"営んでいる"}]}]}]},{"id":"b3","no":3,"eyebrow":"第3ブロック","title":"施設のこれまで【営業中の方】","railLabel":"3．施設のこれまで【営業中の方】","sheetLabel":"3. 施設のこれまで【営業中の方】","note":"※「1 申請内容」で宿泊業を「営んでいる」を選んだ方だけご記入ください。「これから始める」を選んだ方は、このブロックは自動的にスキップされます。","groups":[{"heading":"","questions":[{"id":"C3-01","label":"創業年月","prompt":"会社（お店）を創業した年月を教えてください。","example":"平成14年7月","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-02","label":"宿泊業の開始","prompt":"宿泊業を始めた年月を教えてください。","example":"平成19年4月","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-03","label":"施設名","prompt":"宿泊施設の名称を教えてください。","example":"〇〇温泉ホテル","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-04","label":"現在の客室数","prompt":"現在の客室数を教えてください。","example":"20室","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-05","label":"現在の定員","prompt":"現在の宿泊定員（最大収容人数）を教えてください。","example":"60名","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-06","label":"年間宿泊者数","prompt":"年間の宿泊者数はおよそ何人ですか。","example":"約6,000人","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-07","label":"客室稼働率","prompt":"1年のうち客室が埋まっている割合（客室稼働率）は、およそ何％ですか。わからない場合は「わからない」。","example":"約45％","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-08","label":"宿泊以外の施設","prompt":"宿泊以外の施設やサービス（温泉、レストラン、日帰り入浴など）を教えてください。ない場合は「なし」。","example":"日帰り温泉、レストラン、サウナ","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-09","label":"売上の内わけ","prompt":"事業ごとの売上の割合（内わけ）を教えてください。","example":"宿泊60％、日帰り入浴25％、レストラン15％","type":"textarea","dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]},{"id":"C3-10","label":"従業員数","prompt":"常用従業員（ほぼ毎日働いている人）の人数と、パート・アルバイトの人数を教えてください。","example":"常用8名、パート5名","type":"textarea","short":true,"dependsOn":[{"id":"C1-01","hideIf":"eq","val":"これから始める"}]}]}]},{"id":"b4","no":4,"eyebrow":"第4ブロック","title":"地域とのつながり","railLabel":"4．地域とのつながり","sheetLabel":"4. 地域とのつながり","note":"","groups":[{"heading":"","questions":[{"id":"C4-01","label":"加入団体","prompt":"加入している商工会・観光協会などの団体と、加入した年を教えてください。ない場合は「なし」。","example":"鶴居村商工会（平成12年〜）","type":"textarea","short":true},{"id":"C4-02","label":"団体での役職","prompt":"代表者や役員の方が、団体で役職に就いた経験があれば教えてください。ない場合は「なし」。","example":"鶴居村商工会 理事（令和2年〜）","type":"textarea"},{"id":"C4-03","label":"地域活動","prompt":"村のイベントへの協力など、地域での活動があれば教えてください。ない場合は「なし」。","example":"村の夏祭りに毎年出店","type":"textarea","short":true}]}]},{"id":"b5","no":5,"eyebrow":"第5ブロック","title":"事業の目的","railLabel":"5．事業の目的","sheetLabel":"5. 事業の目的","note":"","groups":[{"heading":"","questions":[{"id":"C5-01","label":"事業の一言タイトル","prompt":"今回の事業を一言で表すと何ですか。（30字以内）","example":"空き家を改装した一棟貸し宿の開業","type":"textarea"},{"id":"C5-02","label":"鶴居村観光の課題","prompt":"鶴居村の観光について、課題だと感じることは何ですか。","example":"宿泊施設が少なく、宿泊客が村外に流れている","type":"textarea"},{"id":"C5-03","label":"そう感じた根拠","prompt":"そう感じた具体的な場面や根拠を教えてください。","example":"タンチョウの時期は村内の宿がすぐ満室になる","type":"textarea"},{"id":"C5-04","label":"解決の方法","prompt":"今回の事業で、その課題をどう解決しますか。","example":"村内に新たな宿泊の受け皿をつくる","type":"textarea"},{"id":"C5-05","label":"村の観光方針との関係","prompt":"村や商工会の観光の取組（例：「新・湯治」）と関係することがあれば教えてください。ない場合・わからない場合は「なし」。","example":"「新・湯治」の長期滞在型観光に合う宿にする","type":"textarea"},{"id":"C5-06","label":"目指す姿","prompt":"お客様にとって、どんな宿になりたいですか。","example":"軽い移住体験ができる、自然に囲まれた宿","type":"textarea"}]}]},{"id":"b6","no":6,"eyebrow":"第6ブロック","title":"宿泊サービスの内容","railLabel":"6．宿泊サービスの内容","sheetLabel":"6. 宿泊サービスの内容","note":"","groups":[{"heading":"宿のコンセプト・プラン","questions":[{"id":"C6-01","label":"コンセプト","prompt":"宿のコンセプトを教えてください。","example":"鶴居村の自然の中でデジタルデトックスできる一棟貸しの宿","type":"textarea"},{"id":"C6-02","label":"宿泊プラン①","prompt":"主な宿泊プラン（1つ目）の内容を教えてください。","example":"1棟貸し・素泊まり（3名まで）","type":"textarea"},{"id":"C6-03","label":"①の料金","prompt":"そのプランの料金を教えてください。","example":"1棟1泊30,000円（税抜）、4名以上は1名につき8,000円加算","type":"textarea"},{"id":"C6-04","label":"宿泊プラン②","prompt":"他の宿泊プランがあれば教えてください。ない場合は「なし」。","example":"合宿プラン（最大12名）","type":"textarea","short":true},{"id":"C6-05","label":"食事の提供","prompt":"食事はどのように提供しますか。","example":"村内飲食店のケータリング、BBQ会場の紹介","type":"textarea"},{"id":"C6-06","label":"体験コンテンツ","prompt":"宿泊客に提供する体験や楽しみを教えてください。","example":"星空観察、釧路湿原の乗馬ツアー、サイクリングツアー","type":"textarea"},{"id":"C6-07","label":"提携先","prompt":"提携する村内事業者を具体名で教えてください（予定を含む）。ない場合は「なし」。","example":"〇〇牧場（乗馬）、〇〇（ケータリング）","type":"textarea"}]},{"heading":"営業の概要","questions":[{"id":"C6-08","label":"チェックイン・アウト","prompt":"チェックインとチェックアウトの時刻を教えてください。","example":"14:00／10:00","type":"textarea","short":true},{"id":"C6-09","label":"営業期間","prompt":"通年営業ですか。休業期間があれば教えてください。","example":"通年","type":"textarea","short":true},{"id":"C6-10","label":"開業予定時期","prompt":"開業（運用開始）の予定時期を教えてください。","example":"2026年11月","type":"textarea","short":true}]},{"heading":"運営人数・雇用","questions":[{"id":"C6-11","label":"運営人数","prompt":"運営に関わる人数を教えてください。","example":"2名（清掃・現場管理を含む）","type":"textarea","short":true},{"id":"C6-12","label":"新規雇用","prompt":"新たに人を雇う予定はありますか。人数と雇用形態（正社員・パートなど）を教えてください。ない場合は「なし」。","example":"清掃スタッフ（パート）1名","type":"textarea","short":true},{"id":"C6-13","label":"村内からの雇用","prompt":"そのうち、村内に住む方を雇う予定の人数を教えてください。","example":"1名","type":"textarea","short":true,"dependsOn":[{"id":"C6-12","hideIf":"eq","val":"なし"}]},{"id":"C6-14","label":"人件費の見込み","prompt":"年間の人件費はおよそいくらを見込みますか。人を雇う予定がない場合は「0」。","example":"年60万円","type":"textarea","short":true}]}]},{"id":"b7","no":7,"eyebrow":"第7ブロック","title":"補助金で整備するもの","railLabel":"7．補助金で整備するもの","sheetLabel":"7. 補助金で整備するもの","note":"※ここでいう「工事・設備」は、補助金を使って行う工事や、購入する設備・備品のことです。4つ以上ある場合は、4つ目以降を最後の「その他・補足」にご記入ください。","groups":[{"heading":"施設の場所・建物","questions":[{"id":"C7-01","label":"施設の場所","prompt":"施設の住所を教えてください。基本情報（00-03）の住所と同じなら「同じ」。","example":"阿寒郡鶴居村字雪裡〇〇番地","type":"textarea","short":true},{"id":"C7-02","label":"場所の特徴","prompt":"その場所の特徴（立地、周辺環境など）を教えてください。","example":"森林に囲まれ、星空がよく見える","type":"textarea"},{"id":"C7-03","label":"建物の種類","prompt":"建物は次のどれですか。（新築／既存建物の改修／空き家の改修／住居兼店舗）","example":"空き家の改修","type":"select","options":["新築","既存建物の改修","空き家の改修","住居兼店舗"]},{"id":"C7-04","label":"住居兼店舗の面積","prompt":"【住居兼店舗の方】建物全体の面積と、そのうち宿泊事業に使う部分の面積を教えてください。","example":"全体150㎡、うち宿泊部分90㎡","type":"textarea","dependsOn":[{"id":"C7-03","hideIf":"ne","val":"住居兼店舗"}]}]},{"heading":"工事・設備①","questions":[{"id":"C7-05","label":"工事・設備①の名称","prompt":"今回整備・導入するもの（1つ目）の名称を教えてください。","example":"空き家の改装工事（床・内装・電気工事）","type":"textarea"},{"id":"C7-06","label":"工事・設備①の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"簡易宿所の許可が取れる構造に改装し、小上がりの和室を新設","type":"textarea"},{"id":"C7-07","label":"工事・設備①の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"インバウンド客に人気の和の空間を提供できる","type":"textarea"},{"id":"C7-08","label":"工事・設備①の金額","prompt":"工事・設備①のおおよその金額（税抜）を教えてください。","example":"約400万円","type":"textarea","short":true},{"id":"C7-09","label":"工事・設備①の見積書","prompt":"工事・設備①の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"]}]},{"heading":"工事・設備②","questions":[{"id":"C7-10","label":"工事・設備②の名称","prompt":"今回整備・導入するもの（2つ目）の名称を教えてください。2つ目がない場合は「なし」（続く設問は記入不要になります）。","example":"ウッドデッキ・天窓の設置","type":"textarea","short":true},{"id":"C7-11","label":"工事・設備②の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"星空を眺められる天窓と、自然を楽しむウッドデッキ","type":"textarea","dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]},{"id":"C7-12","label":"工事・設備②の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"鶴居村ならではの滞在体験を提供できる","type":"textarea","dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]},{"id":"C7-13","label":"工事・設備②の金額","prompt":"工事・設備②のおおよその金額（税抜）を教えてください。","example":"約25万円","type":"textarea","short":true,"dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]},{"id":"C7-14","label":"工事・設備②の見積書","prompt":"工事・設備②の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"],"dependsOn":[{"id":"C7-10","hideIf":"eq","val":"なし"}]}]},{"heading":"工事・設備③","questions":[{"id":"C7-15","label":"工事・設備③の名称","prompt":"今回整備・導入するもの（3つ目）の名称を教えてください。3つ目がない場合は「なし」（続く設問は記入不要になります）。","example":"予約・決済機能付きホームページの開発","type":"textarea"},{"id":"C7-16","label":"工事・設備③の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"英語ページ付きの専用サイトとSNSの連携","type":"textarea","dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]},{"id":"C7-17","label":"工事・設備③の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"海外からも直接予約でき、稼働率が上がる","type":"textarea","dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]},{"id":"C7-18","label":"工事・設備③の金額","prompt":"工事・設備③のおおよその金額（税抜）を教えてください。","example":"約46万円","type":"textarea","short":true,"dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]},{"id":"C7-19","label":"工事・設備③の見積書","prompt":"工事・設備③の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"],"dependsOn":[{"id":"C7-15","hideIf":"eq","val":"なし"}]}]},{"heading":"その他の費用","questions":[{"id":"C7-20","label":"その他にかかるお金","prompt":"上の工事・設備のほかに、消耗品や申請手数料などでかかるお金があれば、内容と金額を教えてください。ない場合は「なし」。","example":"布団・タオル等 約22万円","type":"textarea","short":true}]},{"heading":"客室数・定員","questions":[{"id":"C7-21","label":"整備前の客室数","prompt":"整備する前の客室数を教えてください。新たに始める場合は「0」、「3 施設のこれまで」で答えた数と同じなら「同じ」。","example":"0室","type":"textarea","short":true},{"id":"C7-22","label":"整備後の客室数","prompt":"整備した後の客室数を教えてください。","example":"1棟（3室）","type":"textarea","short":true},{"id":"C7-23","label":"整備前の定員","prompt":"整備する前の宿泊定員を教えてください。新たに始める場合は「0」、「3 施設のこれまで」で答えた数と同じなら「同じ」。","example":"0名","type":"textarea","short":true},{"id":"C7-24","label":"整備後の定員","prompt":"整備した後の宿泊定員を教えてください。","example":"12名","type":"textarea","short":true}]},{"heading":"スケジュール・手続き","questions":[{"id":"C7-25","label":"発注時期","prompt":"業者に発注する予定時期を教えてください。","example":"2026年9月","type":"textarea","short":true},{"id":"C7-26","label":"着工時期","prompt":"工事に着手する予定時期を教えてください。","example":"2026年9月下旬","type":"textarea","short":true},{"id":"C7-27","label":"完了時期","prompt":"工事完了・納品の予定時期を教えてください。","example":"2026年10月","type":"textarea","short":true},{"id":"C7-28","label":"支払時期","prompt":"業者への支払いを終える予定時期を教えてください。","example":"2026年10月","type":"textarea","short":true},{"id":"C7-29","label":"手続きの時期","prompt":"営業許可・消防検査などの手続きの予定時期を教えてください。","example":"2026年10月に申請","type":"textarea","short":true}]}]},{"id":"b8","no":8,"eyebrow":"第8ブロック","title":"資金の準備","railLabel":"8．資金の準備","sheetLabel":"8. 資金の準備","note":"","groups":[{"heading":"","questions":[{"id":"C8-01","label":"自己資金","prompt":"工事・設備の費用のうち、自己資金（手持ちのお金）で払う額は約いくらですか。※補助金は工事が終わった後に支払われるため、いったん全額を用意する必要があります。","example":"130万円","type":"textarea","short":true},{"id":"C8-02","label":"借入の予定","prompt":"金融機関からお金を借りる予定はありますか。ある場合は金融機関名と金額を教えてください。ない場合は「なし」。","example":"日本政策金融公庫 400万円","type":"textarea","short":true},{"id":"C8-03","label":"他の補助金","prompt":"今回の工事・設備について、国・道など他の補助金を使う予定はありますか。ない場合は「なし」。","example":"なし","type":"textarea","short":true}]}]},{"id":"b9","no":9,"eyebrow":"第9ブロック","title":"外国人のお客様（インバウンド）への対応","railLabel":"9．外国人のお客様（インバウンド）への対応","sheetLabel":"9. 外国人のお客様（インバウンド）への対応","note":"","groups":[{"heading":"","questions":[{"id":"C9-01","label":"外国人客の割合","prompt":"現在（または見込み）の宿泊客のうち、外国人の割合はどのくらいですか。","example":"約2割（見込み）","type":"textarea","short":true},{"id":"C9-02","label":"多言語対応","prompt":"ホームページや館内表示の外国語対応はどうなっていますか（現状と予定）。","example":"現状なし→英語ページと英語の館内案内を作成","type":"textarea"},{"id":"C9-03","label":"Wi-Fi","prompt":"Wi-Fi環境はどうなっていますか（現状と予定）。","example":"全室で無料Wi-Fiを整備予定","type":"textarea"},{"id":"C9-04","label":"キャッシュレス決済","prompt":"キャッシュレス決済に対応していますか（現状と予定）。","example":"クレジットカード・QR決済に対応予定","type":"textarea"},{"id":"C9-05","label":"予約サイトへの掲載","prompt":"海外からも予約できるサイト（OTA）に掲載していますか（現状と予定）。","example":"Booking.com、Airbnbに掲載予定","type":"textarea"},{"id":"C9-06","label":"その他の対応","prompt":"その他、外国人のお客様のために工夫していることがあれば教えてください。ない場合は「なし」。","example":"和室での和の体験、英語の周辺ガイドマップ","type":"textarea"}]}]},{"id":"b10","no":10,"eyebrow":"第10ブロック","title":"狙うお客様","railLabel":"10．狙うお客様","sheetLabel":"10. 狙うお客様","note":"","groups":[{"heading":"","questions":[{"id":"C10-01","label":"お客様①","prompt":"一番のメインとなるお客様はどんな人ですか。","example":"自然の中で癒しを求める都市部の旅行者","type":"textarea"},{"id":"C10-02","label":"①が選ぶ理由","prompt":"その人たちは、なぜあなたの宿を選びますか。","example":"周りに何もない静かな環境で、一棟を貸し切れるため","type":"textarea"},{"id":"C10-03","label":"お客様②","prompt":"他に狙いたいお客様はいますか。ない場合は「なし」。","example":"日本の田舎体験を求める訪日外国人","type":"textarea"},{"id":"C10-04","label":"②が選ぶ理由","prompt":"その人たちは、なぜあなたの宿を選びますか。","example":"和室と自然体験を気軽に楽しめるため","type":"textarea","dependsOn":[{"id":"C10-03","hideIf":"eq","val":"なし"}]},{"id":"C10-05","label":"季節ごとの客層","prompt":"季節によって、お客様の層はどう変わりますか。","example":"冬はタンチョウ目当ての写真愛好家、夏は家族連れ","type":"textarea"},{"id":"C10-06","label":"村内との関わり","prompt":"宿泊客を通じて、村内の事業者とどう関わりますか。","example":"食事やアクティビティを村内事業者に紹介・手配する","type":"textarea"}]}]},{"id":"b11","no":11,"eyebrow":"第11ブロック","title":"市場とライバル","railLabel":"11．市場とライバル","sheetLabel":"11. 市場とライバル","note":"","groups":[{"heading":"","questions":[{"id":"C11-01","label":"観光の動き","prompt":"鶴居村や道東の観光は今どんな状況ですか。知っている数字があれば教えてください。","example":"鶴居村を訪れる観光客は令和5年度に43万4千人","type":"textarea"},{"id":"C11-02","label":"数字の出どころ","prompt":"その数字は、どこで見聞きしたものですか（新聞、役場の資料など）。前の設問で数字を書いていない場合は「なし」、わからない場合は「わからない」。","example":"釧路総合振興局の発表","type":"textarea","short":true},{"id":"C11-03","label":"近くの宿泊施設","prompt":"村内や近隣に、似た宿泊施設はありますか。","example":"一棟貸しの宿は村内にほとんどない","type":"textarea"},{"id":"C11-04","label":"他の宿との違い","prompt":"それらと比べて、あなたの宿が選ばれる理由は何ですか。","example":"一棟貸しで、最大12名の合宿にも対応できる","type":"textarea"},{"id":"C11-05","label":"季節の繁閑","prompt":"繁忙期と閑散期はいつですか。","example":"繁忙期は1〜3月、閑散期は4〜6月","type":"textarea"}]}]},{"id":"b12","no":12,"eyebrow":"第12ブロック","title":"集客の方法","railLabel":"12．集客の方法","sheetLabel":"12. 集客の方法","note":"","groups":[{"heading":"","questions":[{"id":"C12-01","label":"ホームページ","prompt":"ホームページはどのように活用しますか。","example":"英語ページ付きの専用サイトで直接予約を受け付ける","type":"textarea"},{"id":"C12-02","label":"予約サイト（OTA）","prompt":"使う予定の予約サイトを教えてください。","example":"楽天トラベル、じゃらん、Booking.com","type":"textarea"},{"id":"C12-03","label":"SNS","prompt":"使う予定のSNSと、発信する内容を教えてください。","example":"Instagramで四季の景色と宿の様子を発信","type":"textarea"},{"id":"C12-04","label":"閑散期の対策","prompt":"お客様が少ない時期の対策を教えてください。","example":"春・夏の自然体験プランを企画","type":"textarea","short":true}]}]},{"id":"b13","no":13,"eyebrow":"第13ブロック","title":"事業の見通しと地域への効果","railLabel":"13．事業の見通しと地域への効果","sheetLabel":"13. 事業の見通しと地域への効果","note":"","groups":[{"heading":"","questions":[{"id":"C13-01","label":"1年目の稼働率","prompt":"1年目の客室稼働率（客室が埋まっている割合）の目標を教えてください。","example":"30％","type":"textarea","short":true},{"id":"C13-02","label":"5年後の稼働率","prompt":"5年後の客室稼働率の目標を教えてください。","example":"45％","type":"textarea","short":true},{"id":"C13-03","label":"1年目の宿泊者数","prompt":"1年目の年間宿泊者数の目標を教えてください。","example":"400人","type":"textarea","short":true},{"id":"C13-04","label":"5年後の宿泊者数","prompt":"5年後の年間宿泊者数の目標を教えてください。","example":"600人","type":"textarea","short":true},{"id":"C13-05","label":"目標の根拠","prompt":"その目標の根拠を教えてください。","example":"宿泊業界の平均稼働率（約46％）を参考に設定","type":"textarea"},{"id":"C13-06","label":"将来の展開","prompt":"将来、新しく展開したいことはありますか。ない場合は「なし」。","example":"2棟目の開業、長期滞在プラン","type":"textarea","short":true},{"id":"C13-07","label":"村への良い影響","prompt":"この事業が成功すると、村にどんな良い影響がありますか。","example":"村内で宿泊する人が増え、飲食店などの利用も増える","type":"textarea"},{"id":"C13-08","label":"観光・ブランドへの貢献","prompt":"村の観光や地域ブランドに、どう貢献できますか。","example":"タンチョウ以外の季節の魅力を発信し、通年観光に貢献する","type":"textarea"}]}]},{"id":"b14","no":14,"eyebrow":"第14ブロック","title":"その他・補足","railLabel":"14．その他・補足","sheetLabel":"14. その他・補足","note":"","groups":[{"heading":"","questions":[{"id":"C14-01","label":"追加の工事・設備","prompt":"書ききれなかった工事・設備（名称・内容・効果・金額）があればご記入ください。ない場合は「なし」。","example":"④ 看板の設置：宿の場所がわかりやすくなる、15万円（見積書あり）","type":"textarea"},{"id":"C14-02","label":"その他伝えたいこと","prompt":"その他、計画書づくりのために伝えておきたいことがあればご記入ください。ない場合は「なし」。","example":"開業時期は工事業者と調整中","type":"textarea","short":true}]}]}],"docs":[{"id":"D1","no":1,"label":"見積書（工事・設備ごと）"},{"id":"D2","no":2,"label":"施設の図面・現状写真"},{"id":"D3","no":3,"label":"旅館業の許可証の写し（取得済みの場合）"},{"id":"D4","no":4,"label":"【営業中の方のみ】直近2〜3期分の決算書または確定申告書（これから始める方は「該当なし」）"}],"docStates":["準備済み","準備中","まだ","該当なし"],"docDefault":2,"cover":{"points":["分かる範囲で書けば大丈夫です。短い言葉や箇条書きで構いません。","当てはまらない・特にない場合は「なし」、分からない・まだ決まっていない場合は「わからない」「未定」とご記入ください。","入力内容はこの端末に自動で保存されます。途中でやめても、続きから再開できます（全部で2〜3時間ほど。数日に分けて大丈夫です）。"],"usage":[["記入のしかた","難しく考えず、思いつくことを短い言葉や箇条書きでご記入ください。1つの欄には1つのことをお書きください。"],["「なし」","当てはまらない・特にない場合は「なし」とご記入ください（空欄のままだと未回答として扱われます）。"],["「わからない」","わからない・まだ決まっていない場合は「わからない」「未定」とご記入のうえ、先へ進んでください。後ほど追加のヒアリングでお伺いします。"],["数字・記入例","金額・人数・割合などはおおよその値で構いません。記入例は実際の事例をもとにしたイメージです。"],["設問の切替","前の設問の回答によって、記入が不要な設問は自動的に表示されなくなります。上から順にお答えください。"],["所要時間","設問は100問前後（回答内容によって増減します）、2〜3時間ほどです。1日で終わらなくて大丈夫です。数日に分けてご記入ください。"],["保存","入力内容はこの端末に自動的に保存されます。途中でやめても続きから再開できます。最後の確認画面でファイル保存・コピーができます。"],["共用パソコン","共用のパソコンでご利用の場合は、提出後に確認画面の「回答をすべて消去して最初からやり直す」を押してください。"],["お困りのとき","入力が難しい場合は、担当の支援者にご相談ください。お電話でのヒアリングも承ります。"]],"info":[["返送先","CT経営コンサルティング"],["返送の方法","最後の「確認・保存」画面で保存したファイル（CSVまたはテキスト）、またはコピーした全文を、返送先へお送りください。メールアドレスや住所などの連絡先は、事業者様へ個別にお知らせします。"]],"summary":[["対象事業","村内観光業の推進に資する、旅館業法に基づく宿泊施設の整備及び改修等を行う事業"],["補助率","補助対象経費の1/2以内"],["補助限度額","500万円"],["補助金の下限額","50万円"],["対象経費","工事請負費（事務所・店舗等の建設費・改修費等）、委託費（調査・設計・開発費等）、備品購入費（設備・機械装置等）、そのほか村長が必要かつ適当と認めた費用"],["ご注意","施設整備等の上限単価は24.8万円／㎡です。"]],"summaryCaveat":"※つるい未来へつなぐ商工観光経済活性化支援事業補助規則（別表1）に基づく概要です。募集期間や詳細な要件は、村が別に定める公募案内等で必ずご確認ください。"}};
 
 const STORAGE_KEY = "turui_hearing_" + FORM.key + "_v1";
 const FORM_ID = "turui-" + FORM.key + "-v1";
 
 /* ---------------- state ---------------- */
-let state = { answers:{}, step:0 };
+function localDate(){
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+let state = { answers:{}, step:0, lastStep:0 };
 try{
   const raw = localStorage.getItem(STORAGE_KEY);
   if(raw){ const parsed = JSON.parse(raw); if(parsed && typeof parsed==="object"){ state = Object.assign(state, parsed); } }
@@ -325,7 +351,7 @@ try{
 if(!state.answers) state.answers = {};
 let hasResumed = Object.keys(state.answers).some(k=>k!=="R_DATE" && String(state.answers[k]).trim()!=="");
 if(!state.answers.R_DATE){
-  const d = new Date(); state.answers.R_DATE = d.toISOString().slice(0,10);
+  state.answers.R_DATE = localDate();
 }
 
 const BLOCKS = FORM.blocks;
@@ -353,8 +379,7 @@ function updateSavedIndicator(){
   if(!lastSavedAt){ el.textContent = ""; return; }
   const hh = String(lastSavedAt.getHours()).padStart(2,"0");
   const mm = String(lastSavedAt.getMinutes()).padStart(2,"0");
-  const ss = String(lastSavedAt.getSeconds()).padStart(2,"0");
-  el.textContent = `最終保存 ${hh}:${mm}:${ss}`;
+  el.textContent = `自動保存済み ${hh}:${mm}`;
 }
 
 /* ---------------- 設問の表示制御（Excelの「状態」列と同じ規則） ---------------- */
@@ -443,12 +468,15 @@ function applyPayloadToState(payload){
 function clearResumeHash(){
   try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
 }
+function isValidPayload(p){
+  return !!(p && p.formId===FORM_ID && p.answers && typeof p.answers==="object" && !Array.isArray(p.answers));
+}
 function checkResumeHash(){
   if(location.hash && location.hash.indexOf("#resume=")===0){
     try{
       const encoded = decodeURIComponent(location.hash.slice(8));
       const payload = JSON.parse(base64ToUtf8(encoded));
-      if(payload && payload.formId===FORM_ID && payload.answers){ pendingResumePayload = payload; }
+      if(isValidPayload(payload)){ pendingResumePayload = payload; state.step = 0; }
     }catch(e){}
   }
 }
@@ -460,7 +488,7 @@ function importProgressFile(file){
   reader.onload = ()=>{
     try{
       const payload = JSON.parse(reader.result);
-      if(!payload || payload.formId !== FORM_ID){ showToast("このフォーム用の進捗ファイルではないようです"); return; }
+      if(!isValidPayload(payload)){ showToast("このフォーム用の進捗ファイルではないようです"); return; }
       if(!confirm("読み込んだ内容で、この端末の入力内容を上書きします。よろしいですか？")) return;
       applyPayloadToState(payload);
       showToast("進捗ファイルを読み込みました");
@@ -526,19 +554,22 @@ function fieldHtml(q){
   const val = state.answers[q.id] ?? "";
   const answered = String(val).trim()!=="";
   let inputHtml="";
-  if(q.type==="select"){
+  if(q.type==="select" && q.options.length<=4){
+    inputHtml = `<div class="opt-group" role="radiogroup" aria-label="${escAttr(q.label)}">` +
+      q.options.map(o=>`<button type="button" class="opt-chip ${o===val?"on":""}" role="radio" aria-checked="${o===val}" data-opt="${q.id}" data-val="${escAttr(o)}">${esc(o)}</button>`).join("") + `</div>`;
+  } else if(q.type==="select"){
     inputHtml = `<select class="q-input" id="f_${q.id}" data-qid="${q.id}"><option value="">選択してください</option>` +
       q.options.map(o=>`<option value="${escAttr(o)}" ${o===val?"selected":""}>${esc(o)}</option>`).join("") + `</select>`;
   } else if(q.type==="textarea"){
-    inputHtml = `<textarea class="q-input${q.short?" short":""}" id="f_${q.id}" data-qid="${q.id}" placeholder="ご回答（ない場合は「なし」）">${esc(val)}</textarea>`;
+    inputHtml = `<textarea class="q-input${q.short?" short":""}" id="f_${q.id}" data-qid="${q.id}" placeholder="ここに入力（分からなければ「わからない」）">${esc(val)}</textarea>`;
   } else {
-    inputHtml = `<input class="q-input" type="text" id="f_${q.id}" data-qid="${q.id}" value="${escAttr(val)}" placeholder="ご回答をご記入ください"${q.inputmode?` inputmode="${q.inputmode}"`:""}>`;
+    inputHtml = `<input class="q-input" type="text" id="f_${q.id}" data-qid="${q.id}" value="${escAttr(val)}" placeholder="ここに入力"${q.inputmode?` inputmode="${q.inputmode}"`:""}>`;
   }
   return `<div class="qcard ${answered?'answered':''}" id="card_${q.id}" data-card="${q.id}" ${isVisible(q)?"":"hidden"}>
     <div class="q-top"><span class="q-no">${esc(q.id)}</span></div>
     <label class="q-label" for="f_${q.id}">${esc(q.label)}</label>
     ${q.prompt?`<p class="q-prompt">${esc(q.prompt)}</p>`:''}
-    ${q.example?`<div class="q-example"><b>記入例：</b>${esc(q.example)}</div>`:''}
+    ${q.example && q.type!=="select"?`<div class="q-example"><b>記入例：</b>${esc(q.example)}</div>`:''}
     ${inputHtml}
   </div>`;
 }
@@ -546,6 +577,7 @@ function fieldHtml(q){
 function renderCover(){
   const c = FORM.cover;
   let html = `<div class="cover-wrap">
+    <a class="back-link" href="index.html">← 類型の選択にもどる</a>
     <h1 class="cover-title serif">${esc(FORM.brand)}<br>事業計画ヒアリングフォーム</h1>
     <p class="cover-sub">${esc(FORM.typeName)}用　／　補助事業の事業計画書づくりに必要な情報を、一問一答形式でお伺いします。</p>`;
   if(pendingResumePayload){
@@ -561,31 +593,32 @@ function renderCover(){
   if(hasResumed){
     html += `<div class="resume-note"><span>前回入力の続きから再開できます。</span><button id="btnReset">最初からやり直す</button></div>`;
   }
+  html += `<div class="cover-card">
+      <h3>■ ご回答にあたって（3つのポイント）</h3>
+      <ol class="step-list">${c.points.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>
+      <button class="btn primary start-btn" id="btnStart">${hasResumed ? "続きから入力する" : "回答をはじめる"} →</button>
+    </div>`;
   if(c.info && c.info.length){
-    html += `<div class="cover-card"><h3>■ ご返送について</h3><ul class="info-list">` +
+    html += `<div class="cover-card"><h3>■ ご提出について</h3><ul class="info-list">` +
       c.info.map(r=>`<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join("") + `</ul></div>`;
   }
-  html += `<div class="cover-card">
-      <h3>■ このフォームの使い方</h3>
-      <div class="usage-grid">${c.usage.map(r=>`<div class="usage-item"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join("")}</div>
-    </div>`;
+  html += `<details class="cover-card"><summary>くわしい使い方</summary>
+      <div class="usage-grid" style="margin-top:12px;">${c.usage.map(r=>`<div class="usage-item"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join("")}</div>
+    </details>`;
   if(c.summary && c.summary.length){
-    html += `<div class="cover-card"><h3>■ この補助金の概要（補助規則より）</h3><ul class="info-list">` +
+    html += `<details class="cover-card"><summary>この補助金の概要（補助規則より）</summary><ul class="info-list" style="margin-top:12px;">` +
       c.summary.map(r=>`<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join("") + `</ul>
-      <p class="cover-caveat">${esc(c.summaryCaveat)}</p></div>`;
+      <p class="cover-caveat">${esc(c.summaryCaveat)}</p></details>`;
   }
   html += `<div class="cover-card">
-      <button class="btn primary start-btn" id="btnStart">${hasResumed ? "続きから入力する" : "回答をはじめる"} →</button>
-    </div>
-    <div class="cover-card">
       <h3>■ 別の端末で続きを入力する</h3>
       <p>この端末に保存されている入力内容を、他のスマートフォンやパソコンに引き継ぐことができます。</p>
       <div class="save-btn-row">
-        <button class="btn" id="btnExportProgress">進捗をファイルに保存</button>
-        <button class="btn" id="btnImportProgress">ファイルから読み込む</button>
+        <button class="btn" id="btnExportProgress">続きを保存（ファイル）</button>
+        <button class="btn" id="btnImportProgress">保存した続きを読み込む</button>
       </div>
       <input type="file" id="importFileInput" accept="application/json,.json" style="display:none">
-      <button class="btn ghost" type="button" id="btnToggleQr" style="width:100%;margin-top:6px;">${qrPanelOpen ? "QRコード／リンクを閉じる" : "QRコード／リンクで送る（入力量が少ない場合）"}</button>
+      <button class="btn" type="button" id="btnToggleQr" style="width:100%;">${qrPanelOpen ? "QRコード／リンクを閉じる" : "QRコード／リンクで送る（入力が少ないときのみ）"}</button>
       ${qrPanelOpen ? renderQrPanel() : ''}
     </div>
   </div>`;
@@ -660,28 +693,33 @@ function renderReview(){
     <div class="stat-tile"><div class="stat-num">${missing.length}</div><div class="stat-label">未回答の設問数</div></div>
   </div>`;
   if(missing.length){
-    html += `<div class="missing-box"><h4>未回答の設問が ${missing.length} 件あります</h4><ul class="missing-list">` +
-      missing.slice(0,20).map(q=>`<li><a data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</a></li>`).join("") +
-      (missing.length>20?`<li>ほか ${missing.length-20} 件</li>`:"") + `</ul>
-      <p style="margin:10px 0 0;font-size:11.5px;color:var(--text-muted);line-height:1.7;">当てはまらない・特にない場合は「なし」、わからない・未定の場合は「わからない」「未定」とご記入ください。</p></div>`;
+    html += `<div class="missing-box"><h4>あと ${missing.length} 問、未記入の設問があります</h4>
+      <p style="margin:0 0 10px;font-size:12.5px;color:var(--text-muted);line-height:1.7;">当てはまらない・特にない場合は「なし」、分からない・未定の場合は「わからない」「未定」とご記入ください。項目をタップすると、その設問へ移動します。</p><ul class="missing-list">` +
+      missing.slice(0,20).map(q=>`<li><button type="button" class="link-btn" data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</button></li>`).join("") +
+      (missing.length>20?`<li>ほか ${missing.length-20} 件</li>`:"") + `</ul></div>`;
   } else if(p.total>0) {
     html += `<div class="done-box"><h4>✓ すべての設問に回答済みです</h4><p>この内容で保存・送付いただけます。提出書類の準備状況もあわせてご確認ください。</p></div>`;
   }
+  const dest = (FORM.cover.info||[]).find(r=>r[0]==="返送先");
   html += `<div class="save-section">
-    <h3>📄 Excel・スプレッドシート用（CSV形式）</h3>
-    <p class="hint">元のヒアリングシートの「回答一覧（支援者・AI読み込み用）」と同じ列構成（項目番号・ブロック・項目・おたずね・回答・状態）で保存します。支援者へお渡しする際に便利です。</p>
-    <div class="save-btn-row"><button class="btn primary" id="btnSaveCsv">CSVファイルを保存する</button></div>
-  </div>
-  <div class="save-section">
-    <h3>📝 メール・チャット用（テキスト形式）</h3>
-    <p class="hint">読みやすい文章形式でまとめます。ファイル保存、またはコピーしてメールやLINEに貼り付けてご利用いただけます。</p>
+    <h3>📝 提出の手順</h3>
+    <ol class="step-list">
+      <li>未記入の設問がないか確認します（上の一覧から戻って入力できます）。</li>
+      <li>下の「テキストファイルを保存する」を押します。<br>保存できない場合は「全文をコピーする」を押してください。</li>
+      <li>保存したファイル（またはコピーした文章）を、${dest?esc(dest[1]):"担当の支援者"}へメールやLINEなどでお送りください。${dest?"連絡先は事業者様へ個別にお知らせしています。":""}</li>
+    </ol>
     <div class="save-btn-row">
       <button class="btn primary" id="btnSaveTxt">テキストファイルを保存する</button>
       <button class="btn" id="btnCopyTxt">全文をコピーする</button>
     </div>
-    <textarea class="copy-area" id="copyArea" readonly></textarea>
+    <textarea class="copy-area" id="copyArea" readonly aria-label="回答の全文"></textarea>
   </div>
-  <p class="reset-link"><a id="btnResetBottom">回答をすべて消去して最初からやり直す</a></p>`;
+  <details class="save-section">
+    <summary>表計算ソフト用（CSV形式）で保存する　※担当の支援者から指示があった場合</summary>
+    <p class="hint" style="margin-top:12px;">元のヒアリングシートの「回答一覧」と同じ列構成（項目番号・ブロック・項目・おたずね・回答・状態）で保存します。</p>
+    <div class="save-btn-row"><button class="btn" id="btnSaveCsv">CSVファイルを保存する</button></div>
+  </details>
+  <p class="reset-link"><button type="button" class="link-btn" id="btnResetBottom">回答をすべて消去して最初からやり直す</button></p>`;
   return html;
 }
 
@@ -701,6 +739,7 @@ function renderStep(){
     document.getElementById("copyArea").value = buildReadableText();
   }
   mainScroll.scrollTo({top:0});
+  window.scrollTo(0,0);
 }
 
 function renderFooter(){
@@ -709,8 +748,9 @@ function renderFooter(){
   const isCover = state.step===0, isReview = state.step===STEP_META.length-1;
   footerEl.innerHTML = `
     <div class="footer-progress">
-      <div class="footer-progress-text"><span>${esc(STEP_META[state.step].label)}<span id="savedIndicator" class="footer-saved"></span></span><span>${progressText(p)}</span></div>
+      <div class="footer-progress-text"><span class="footer-label">${esc(STEP_META[state.step].label)}</span><span id="progressText">${progressText(p)}</span></div>
       <div class="footer-bar-track"><div class="footer-bar-fill" style="width:${pct}%"></div></div>
+      <div id="savedIndicator" class="footer-saved"></div>
     </div>
     ${isCover?'':'<button class="btn" id="btnPrev">← 戻る</button>'}
     ${isReview?'':'<button class="btn primary" id="btnNext">'+(isCover?'始める':'次へ')+' →</button>'}
@@ -723,13 +763,25 @@ function renderFooter(){
 }
 
 /* 記入不要（対象外）のブロックは「次へ／戻る」で自動的に飛ばす */
+function unansweredInCurrentBlock(){
+  const b = BLOCKS.find(x=>x.id===STEP_META[state.step].key);
+  if(!b) return 0;
+  let n=0;
+  b.groups.forEach(g=>g.questions.forEach(q=>{ if(isVisible(q) && norm(state.answers[q.id])==="") n++; }));
+  return n;
+}
 function stepBy(dir){
+  if(dir>0){
+    const n = unansweredInCurrentBlock();
+    if(n>0 && !confirm(`このブロックに未記入の設問が ${n} 問あります。\nこのまま次へ進みますか？\n（あとで「確認・保存」画面から戻って入力できます。分からない場合は「わからない」とご記入ください）`)) return;
+  }
   let i = state.step + dir;
   while(i>0 && i<STEP_META.length-1 && stepIsNA(i)) i += dir;
   if(i<=0 && dir<0){ goStep(0); return; }
   goStep(i);
 }
 function startFromCover(){
+  if(hasResumed && state.lastStep>0 && state.lastStep<STEP_META.length){ goStep(state.lastStep); return; }
   hasResumed = true;
   let i = 1;
   while(i<STEP_META.length-1 && stepIsNA(i)) i++;
@@ -739,6 +791,7 @@ function startFromCover(){
 function goStep(i){
   if(i<0||i>=STEP_META.length) return;
   state.step = i;
+  if(i>0) state.lastStep = i;
   saveState();
   renderAll();
 }
@@ -747,6 +800,15 @@ function attachStepEvents(){
   mainScroll.querySelectorAll("[data-qid]").forEach(el=>{
     el.addEventListener("input", onFieldInput);
     el.addEventListener("change", onFieldInput);
+  });
+  mainScroll.querySelectorAll("[data-opt]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const id = el.dataset.opt;
+      const same = state.answers[id]===el.dataset.val;
+      setAnswer(id, same ? "" : el.dataset.val);
+      const grp = el.parentElement;
+      grp.querySelectorAll(".opt-chip").forEach(b=>{ const on = !same && b===el; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); });
+    });
   });
   mainScroll.querySelectorAll("[data-doc-state]").forEach(el=>{
     el.addEventListener("click", ()=>{
@@ -859,11 +921,11 @@ function refreshVisibility(){
   }
 }
 
-function onFieldInput(e){
-  const id = e.target.dataset.qid;
-  state.answers[id] = e.target.value;
+function onFieldInput(e){ setAnswer(e.target.dataset.qid, e.target.value); }
+function setAnswer(id, value){
+  state.answers[id] = value;
   const card = document.getElementById("card_"+id);
-  if(card){ card.classList.toggle("answered", String(e.target.value).trim()!=="") ; }
+  if(card){ card.classList.toggle("answered", String(value).trim()!=="") ; }
   scheduleSave();
   refreshVisibility();
   renderFooterLite();
@@ -880,7 +942,7 @@ function refreshNav(){
 function renderFooterLite(){
   const p = computeProgress();
   const pct = p.total ? Math.round((p.done/p.total)*100) : 0;
-  const txt = footerEl.querySelector(".footer-progress-text span:last-child");
+  const txt = document.getElementById("progressText");
   const fill = footerEl.querySelector(".footer-bar-fill");
   if(txt) txt.textContent = progressText(p);
   if(fill) fill.style.width = pct+"%";
@@ -899,8 +961,8 @@ function jumpToQuestion(qid){
 function doReset(){
   if(!confirm("これまでの回答をすべて消去して、最初からやり直しますか？この操作は取り消せません。")) return;
   try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
-  state = { answers:{}, step:0 };
-  const d = new Date(); state.answers.R_DATE = d.toISOString().slice(0,10);
+  state = { answers:{}, step:0, lastStep:0 };
+  state.answers.R_DATE = localDate();
   hasResumed=false;
   lastSavedAt = null;
   renderAll();
@@ -928,6 +990,7 @@ function buildRows(){
 
 function csvEscape(v){
   v = String(v??"");
+  if(/^[=+@]/.test(v) || /^-[^0-9]/.test(v)) v = "'" + v;
   if(/[",\r\n]/.test(v)) return '"' + v.replace(/"/g,'""') + '"';
   return v;
 }
@@ -963,7 +1026,7 @@ function buildReadableText(){
 }
 
 function safeFileBase(){
-  const biz = String(state.answers["00-01"]||"事業者").replace(/[/:*?"<>|]/g,"").split(String.fromCharCode(92)).join("");
+  const biz = String(state.answers["00-01"]||"事業者").replace(/[/:*?"<>|]/g,"").replace(/\s+/g," ").split(String.fromCharCode(92)).join("").trim().slice(0,30) || "事業者";
   const date = (state.answers.R_DATE||"").replace(/-/g,"");
   return `ヒアリング回答_${FORM.short}_${biz}_${date}`;
 }
@@ -1006,6 +1069,8 @@ async function copyTxt(){
 }
 
 /* ---------------- init ---------------- */
+window.addEventListener("pagehide", saveState);
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") saveState(); });
 checkResumeHash();
 if(state.step<0 || state.step>=STEP_META.length) state.step = 0;
 renderAll();

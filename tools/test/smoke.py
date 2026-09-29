@@ -13,6 +13,7 @@ def run(pw, fname, first_choice, other_choice_hidden_prefix):
     page.on("pageerror", lambda e: errs.append(str(e)))
     page.on("console", lambda m: errs.append(m.text) if m.type == "error" and "fonts" not in m.text and "cdnjs" not in m.text and "ERR_" not in m.text else None)
     page.goto("file:///" + ROOT.replace(os.sep, "/") + "/" + fname)
+    page.on("dialog", lambda d: d.accept())
     page.click("#btnStart")
     # block 0: fill all
     for i, el in enumerate(page.query_selector_all("[data-qid]")):
@@ -54,6 +55,7 @@ def run(pw, fname, first_choice, other_choice_hidden_prefix):
     print("  visited:", labels)
     txt = page.input_value("#copyArea")
     print("  review stats:", page.inner_text(".review-stats").replace("\n", " "))
+    page.click("details.save-section summary")
     with page.expect_download() as d:
         page.click("#btnSaveCsv")
     path = d.value.path()

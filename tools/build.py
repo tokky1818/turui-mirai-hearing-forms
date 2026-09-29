@@ -175,8 +175,9 @@ def build_form(key, spec):
     if has_deps:
         usage.append(["設問の切替", "前の設問の回答によって、記入が不要な設問は自動的に表示されなくなります。上から順にお答えください。"])
     usage += [
-        ["所要時間", "設問は最大で約%d問（回答内容によって減ります）、2〜3時間ほどです。1日で終わらなくて大丈夫です。数日に分けてご記入ください。" % total_q],
+        ["所要時間", "設問は100問前後（回答内容によって増減します）、2〜3時間ほどです。1日で終わらなくて大丈夫です。数日に分けてご記入ください。"],
         ["保存", "入力内容はこの端末に自動的に保存されます。途中でやめても続きから再開できます。最後の確認画面でファイル保存・コピーができます。"],
+        ["共用パソコン", "共用のパソコンでご利用の場合は、提出後に確認画面の「回答をすべて消去して最初からやり直す」を押してください。"],
         ["お困りのとき", "入力が難しい場合は、担当の支援者にご相談ください。お電話でのヒアリングも承ります。"],
     ]
     info = []
@@ -191,7 +192,7 @@ def build_form(key, spec):
         "key": key, "brand": BRAND, "typeName": t["typeName"], "short": t["short"],
         "blocks": blocks, "docs": docs, "docStates": doc_states,
         "docDefault": doc_states.index("まだ") if "まだ" in doc_states else 0,
-        "cover": {"usage": usage, "info": info, "summary": t["summary"], "summaryCaveat": SUMMARY_CAVEAT},
+        "cover": {"points": ["分かる範囲で書けば大丈夫です。短い言葉や箇条書きで構いません。", "当てはまらない・特にない場合は「なし」、分からない・まだ決まっていない場合は「わからない」「未定」とご記入ください。", "入力内容はこの端末に自動で保存されます。途中でやめても、続きから再開できます（全部で2〜3時間ほど。数日に分けて大丈夫です）。"], "usage": usage, "info": info, "summary": t["summary"], "summaryCaveat": SUMMARY_CAVEAT},
         "_total": total_q,
     }
 
@@ -220,8 +221,8 @@ def build_index(counts):
         total, nblocks = counts[key]
         cards += (
             '    <a class="card" href="%s">\n      <div class="eyebrow">%s</div>\n      <h2>%s</h2>\n'
-            '      <p>%s（全%dブロック・最大約%d問）</p>\n      <div class="go">回答をはじめる →</div>\n    </a>\n'
-            % (t["file"], html.escape(t["short"]), html.escape(t["typeName"].split("　", 1)[1]), html.escape(t["lead"]), nblocks + 1, total)
+            '      <p>%s</p>\n      <div class="go">%sのフォームを開く →</div>\n    </a>\n'
+            % (t["file"], html.escape(t["short"]), html.escape(t["typeName"].split("　", 1)[1]), html.escape(t["lead"]), html.escape(t["short"]))
         )
     return idx.replace("__CARDS__", cards)
 

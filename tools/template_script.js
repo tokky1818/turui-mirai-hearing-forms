@@ -5,7 +5,11 @@ const STORAGE_KEY = "turui_hearing_" + FORM.key + "_v1";
 const FORM_ID = "turui-" + FORM.key + "-v1";
 
 /* ---------------- state ---------------- */
-let state = { answers:{}, step:0 };
+function localDate(){
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+let state = { answers:{}, step:0, lastStep:0 };
 try{
   const raw = localStorage.getItem(STORAGE_KEY);
   if(raw){ const parsed = JSON.parse(raw); if(parsed && typeof parsed==="object"){ state = Object.assign(state, parsed); } }
@@ -13,7 +17,7 @@ try{
 if(!state.answers) state.answers = {};
 let hasResumed = Object.keys(state.answers).some(k=>k!=="R_DATE" && String(state.answers[k]).trim()!=="");
 if(!state.answers.R_DATE){
-  const d = new Date(); state.answers.R_DATE = d.toISOString().slice(0,10);
+  state.answers.R_DATE = localDate();
 }
 
 const BLOCKS = FORM.blocks;
@@ -41,8 +45,7 @@ function updateSavedIndicator(){
   if(!lastSavedAt){ el.textContent = ""; return; }
   const hh = String(lastSavedAt.getHours()).padStart(2,"0");
   const mm = String(lastSavedAt.getMinutes()).padStart(2,"0");
-  const ss = String(lastSavedAt.getSeconds()).padStart(2,"0");
-  el.textContent = `最終保存 ${hh}:${mm}:${ss}`;
+  el.textContent = `自動保存済み ${hh}:${mm}`;
 }
 
 /* ---------------- 設問の表示制御（Excelの「状態」列と同じ規則） ---------------- */
@@ -131,12 +134,15 @@ function applyPayloadToState(payload){
 function clearResumeHash(){
   try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
 }
+function isValidPayload(p){
+  return !!(p && p.formId===FORM_ID && p.answers && typeof p.answers==="object" && !Array.isArray(p.answers));
+}
 function checkResumeHash(){
   if(location.hash && location.hash.indexOf("#resume=")===0){
     try{
       const encoded = decodeURIComponent(location.hash.slice(8));
       const payload = JSON.parse(base64ToUtf8(encoded));
-      if(payload && payload.formId===FORM_ID && payload.answers){ pendingResumePayload = payload; }
+      if(isValidPayload(payload)){ pendingResumePayload = payload; state.step = 0; }
     }catch(e){}
   }
 }
@@ -148,7 +154,7 @@ function importProgressFile(file){
   reader.onload = ()=>{
     try{
       const payload = JSON.parse(reader.result);
-      if(!payload || payload.formId !== FORM_ID){ showToast("このフォーム用の進捗ファイルではないようです"); return; }
+      if(!isValidPayload(payload)){ showToast("このフォーム用の進捗ファイルではないようです"); return; }
       if(!confirm("読み込んだ内容で、この端末の入力内容を上書きします。よろしいですか？")) return;
       applyPayloadToState(payload);
       showToast("進捗ファイルを読み込みました");
@@ -214,19 +220,22 @@ function fieldHtml(q){
   const val = state.answers[q.id] ?? "";
   const answered = String(val).trim()!=="";
   let inputHtml="";
-  if(q.type==="select"){
+  if(q.type==="select" && q.options.length<=4){
+    inputHtml = `<div class="opt-group" role="radiogroup" aria-label="${escAttr(q.label)}">` +
+      q.options.map(o=>`<button type="button" class="opt-chip ${o===val?"on":""}" role="radio" aria-checked="${o===val}" data-opt="${q.id}" data-val="${escAttr(o)}">${esc(o)}</button>`).join("") + `</div>`;
+  } else if(q.type==="select"){
     inputHtml = `<select class="q-input" id="f_${q.id}" data-qid="${q.id}"><option value="">選択してください</option>` +
       q.options.map(o=>`<option value="${escAttr(o)}" ${o===val?"selected":""}>${esc(o)}</option>`).join("") + `</select>`;
   } else if(q.type==="textarea"){
-    inputHtml = `<textarea class="q-input${q.short?" short":""}" id="f_${q.id}" data-qid="${q.id}" placeholder="ご回答（ない場合は「なし」）">${esc(val)}</textarea>`;
+    inputHtml = `<textarea class="q-input${q.short?" short":""}" id="f_${q.id}" data-qid="${q.id}" placeholder="ここに入力（分からなければ「わからない」）">${esc(val)}</textarea>`;
   } else {
-    inputHtml = `<input class="q-input" type="text" id="f_${q.id}" data-qid="${q.id}" value="${escAttr(val)}" placeholder="ご回答をご記入ください"${q.inputmode?` inputmode="${q.inputmode}"`:""}>`;
+    inputHtml = `<input class="q-input" type="text" id="f_${q.id}" data-qid="${q.id}" value="${escAttr(val)}" placeholder="ここに入力"${q.inputmode?` inputmode="${q.inputmode}"`:""}>`;
   }
   return `<div class="qcard ${answered?'answered':''}" id="card_${q.id}" data-card="${q.id}" ${isVisible(q)?"":"hidden"}>
     <div class="q-top"><span class="q-no">${esc(q.id)}</span></div>
     <label class="q-label" for="f_${q.id}">${esc(q.label)}</label>
     ${q.prompt?`<p class="q-prompt">${esc(q.prompt)}</p>`:''}
-    ${q.example?`<div class="q-example"><b>記入例：</b>${esc(q.example)}</div>`:''}
+    ${q.example && q.type!=="select"?`<div class="q-example"><b>記入例：</b>${esc(q.example)}</div>`:''}
     ${inputHtml}
   </div>`;
 }
@@ -234,6 +243,7 @@ function fieldHtml(q){
 function renderCover(){
   const c = FORM.cover;
   let html = `<div class="cover-wrap">
+    <a class="back-link" href="index.html">← 類型の選択にもどる</a>
     <h1 class="cover-title serif">${esc(FORM.brand)}<br>事業計画ヒアリングフォーム</h1>
     <p class="cover-sub">${esc(FORM.typeName)}用　／　補助事業の事業計画書づくりに必要な情報を、一問一答形式でお伺いします。</p>`;
   if(pendingResumePayload){
@@ -249,31 +259,32 @@ function renderCover(){
   if(hasResumed){
     html += `<div class="resume-note"><span>前回入力の続きから再開できます。</span><button id="btnReset">最初からやり直す</button></div>`;
   }
+  html += `<div class="cover-card">
+      <h3>■ ご回答にあたって（3つのポイント）</h3>
+      <ol class="step-list">${c.points.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>
+      <button class="btn primary start-btn" id="btnStart">${hasResumed ? "続きから入力する" : "回答をはじめる"} →</button>
+    </div>`;
   if(c.info && c.info.length){
-    html += `<div class="cover-card"><h3>■ ご返送について</h3><ul class="info-list">` +
+    html += `<div class="cover-card"><h3>■ ご提出について</h3><ul class="info-list">` +
       c.info.map(r=>`<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join("") + `</ul></div>`;
   }
-  html += `<div class="cover-card">
-      <h3>■ このフォームの使い方</h3>
-      <div class="usage-grid">${c.usage.map(r=>`<div class="usage-item"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join("")}</div>
-    </div>`;
+  html += `<details class="cover-card"><summary>くわしい使い方</summary>
+      <div class="usage-grid" style="margin-top:12px;">${c.usage.map(r=>`<div class="usage-item"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join("")}</div>
+    </details>`;
   if(c.summary && c.summary.length){
-    html += `<div class="cover-card"><h3>■ この補助金の概要（補助規則より）</h3><ul class="info-list">` +
+    html += `<details class="cover-card"><summary>この補助金の概要（補助規則より）</summary><ul class="info-list" style="margin-top:12px;">` +
       c.summary.map(r=>`<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join("") + `</ul>
-      <p class="cover-caveat">${esc(c.summaryCaveat)}</p></div>`;
+      <p class="cover-caveat">${esc(c.summaryCaveat)}</p></details>`;
   }
   html += `<div class="cover-card">
-      <button class="btn primary start-btn" id="btnStart">${hasResumed ? "続きから入力する" : "回答をはじめる"} →</button>
-    </div>
-    <div class="cover-card">
       <h3>■ 別の端末で続きを入力する</h3>
       <p>この端末に保存されている入力内容を、他のスマートフォンやパソコンに引き継ぐことができます。</p>
       <div class="save-btn-row">
-        <button class="btn" id="btnExportProgress">進捗をファイルに保存</button>
-        <button class="btn" id="btnImportProgress">ファイルから読み込む</button>
+        <button class="btn" id="btnExportProgress">続きを保存（ファイル）</button>
+        <button class="btn" id="btnImportProgress">保存した続きを読み込む</button>
       </div>
       <input type="file" id="importFileInput" accept="application/json,.json" style="display:none">
-      <button class="btn ghost" type="button" id="btnToggleQr" style="width:100%;margin-top:6px;">${qrPanelOpen ? "QRコード／リンクを閉じる" : "QRコード／リンクで送る（入力量が少ない場合）"}</button>
+      <button class="btn" type="button" id="btnToggleQr" style="width:100%;">${qrPanelOpen ? "QRコード／リンクを閉じる" : "QRコード／リンクで送る（入力が少ないときのみ）"}</button>
       ${qrPanelOpen ? renderQrPanel() : ''}
     </div>
   </div>`;
@@ -348,28 +359,33 @@ function renderReview(){
     <div class="stat-tile"><div class="stat-num">${missing.length}</div><div class="stat-label">未回答の設問数</div></div>
   </div>`;
   if(missing.length){
-    html += `<div class="missing-box"><h4>未回答の設問が ${missing.length} 件あります</h4><ul class="missing-list">` +
-      missing.slice(0,20).map(q=>`<li><a data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</a></li>`).join("") +
-      (missing.length>20?`<li>ほか ${missing.length-20} 件</li>`:"") + `</ul>
-      <p style="margin:10px 0 0;font-size:11.5px;color:var(--text-muted);line-height:1.7;">当てはまらない・特にない場合は「なし」、わからない・未定の場合は「わからない」「未定」とご記入ください。</p></div>`;
+    html += `<div class="missing-box"><h4>あと ${missing.length} 問、未記入の設問があります</h4>
+      <p style="margin:0 0 10px;font-size:12.5px;color:var(--text-muted);line-height:1.7;">当てはまらない・特にない場合は「なし」、分からない・未定の場合は「わからない」「未定」とご記入ください。項目をタップすると、その設問へ移動します。</p><ul class="missing-list">` +
+      missing.slice(0,20).map(q=>`<li><button type="button" class="link-btn" data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</button></li>`).join("") +
+      (missing.length>20?`<li>ほか ${missing.length-20} 件</li>`:"") + `</ul></div>`;
   } else if(p.total>0) {
     html += `<div class="done-box"><h4>✓ すべての設問に回答済みです</h4><p>この内容で保存・送付いただけます。提出書類の準備状況もあわせてご確認ください。</p></div>`;
   }
+  const dest = (FORM.cover.info||[]).find(r=>r[0]==="返送先");
   html += `<div class="save-section">
-    <h3>📄 Excel・スプレッドシート用（CSV形式）</h3>
-    <p class="hint">元のヒアリングシートの「回答一覧（支援者・AI読み込み用）」と同じ列構成（項目番号・ブロック・項目・おたずね・回答・状態）で保存します。支援者へお渡しする際に便利です。</p>
-    <div class="save-btn-row"><button class="btn primary" id="btnSaveCsv">CSVファイルを保存する</button></div>
-  </div>
-  <div class="save-section">
-    <h3>📝 メール・チャット用（テキスト形式）</h3>
-    <p class="hint">読みやすい文章形式でまとめます。ファイル保存、またはコピーしてメールやLINEに貼り付けてご利用いただけます。</p>
+    <h3>📝 提出の手順</h3>
+    <ol class="step-list">
+      <li>未記入の設問がないか確認します（上の一覧から戻って入力できます）。</li>
+      <li>下の「テキストファイルを保存する」を押します。<br>保存できない場合は「全文をコピーする」を押してください。</li>
+      <li>保存したファイル（またはコピーした文章）を、${dest?esc(dest[1]):"担当の支援者"}へメールやLINEなどでお送りください。${dest?"連絡先は事業者様へ個別にお知らせしています。":""}</li>
+    </ol>
     <div class="save-btn-row">
       <button class="btn primary" id="btnSaveTxt">テキストファイルを保存する</button>
       <button class="btn" id="btnCopyTxt">全文をコピーする</button>
     </div>
-    <textarea class="copy-area" id="copyArea" readonly></textarea>
+    <textarea class="copy-area" id="copyArea" readonly aria-label="回答の全文"></textarea>
   </div>
-  <p class="reset-link"><a id="btnResetBottom">回答をすべて消去して最初からやり直す</a></p>`;
+  <details class="save-section">
+    <summary>表計算ソフト用（CSV形式）で保存する　※担当の支援者から指示があった場合</summary>
+    <p class="hint" style="margin-top:12px;">元のヒアリングシートの「回答一覧」と同じ列構成（項目番号・ブロック・項目・おたずね・回答・状態）で保存します。</p>
+    <div class="save-btn-row"><button class="btn" id="btnSaveCsv">CSVファイルを保存する</button></div>
+  </details>
+  <p class="reset-link"><button type="button" class="link-btn" id="btnResetBottom">回答をすべて消去して最初からやり直す</button></p>`;
   return html;
 }
 
@@ -389,6 +405,7 @@ function renderStep(){
     document.getElementById("copyArea").value = buildReadableText();
   }
   mainScroll.scrollTo({top:0});
+  window.scrollTo(0,0);
 }
 
 function renderFooter(){
@@ -397,8 +414,9 @@ function renderFooter(){
   const isCover = state.step===0, isReview = state.step===STEP_META.length-1;
   footerEl.innerHTML = `
     <div class="footer-progress">
-      <div class="footer-progress-text"><span>${esc(STEP_META[state.step].label)}<span id="savedIndicator" class="footer-saved"></span></span><span>${progressText(p)}</span></div>
+      <div class="footer-progress-text"><span class="footer-label">${esc(STEP_META[state.step].label)}</span><span id="progressText">${progressText(p)}</span></div>
       <div class="footer-bar-track"><div class="footer-bar-fill" style="width:${pct}%"></div></div>
+      <div id="savedIndicator" class="footer-saved"></div>
     </div>
     ${isCover?'':'<button class="btn" id="btnPrev">← 戻る</button>'}
     ${isReview?'':'<button class="btn primary" id="btnNext">'+(isCover?'始める':'次へ')+' →</button>'}
@@ -411,13 +429,25 @@ function renderFooter(){
 }
 
 /* 記入不要（対象外）のブロックは「次へ／戻る」で自動的に飛ばす */
+function unansweredInCurrentBlock(){
+  const b = BLOCKS.find(x=>x.id===STEP_META[state.step].key);
+  if(!b) return 0;
+  let n=0;
+  b.groups.forEach(g=>g.questions.forEach(q=>{ if(isVisible(q) && norm(state.answers[q.id])==="") n++; }));
+  return n;
+}
 function stepBy(dir){
+  if(dir>0){
+    const n = unansweredInCurrentBlock();
+    if(n>0 && !confirm(`このブロックに未記入の設問が ${n} 問あります。\nこのまま次へ進みますか？\n（あとで「確認・保存」画面から戻って入力できます。分からない場合は「わからない」とご記入ください）`)) return;
+  }
   let i = state.step + dir;
   while(i>0 && i<STEP_META.length-1 && stepIsNA(i)) i += dir;
   if(i<=0 && dir<0){ goStep(0); return; }
   goStep(i);
 }
 function startFromCover(){
+  if(hasResumed && state.lastStep>0 && state.lastStep<STEP_META.length){ goStep(state.lastStep); return; }
   hasResumed = true;
   let i = 1;
   while(i<STEP_META.length-1 && stepIsNA(i)) i++;
@@ -427,6 +457,7 @@ function startFromCover(){
 function goStep(i){
   if(i<0||i>=STEP_META.length) return;
   state.step = i;
+  if(i>0) state.lastStep = i;
   saveState();
   renderAll();
 }
@@ -435,6 +466,15 @@ function attachStepEvents(){
   mainScroll.querySelectorAll("[data-qid]").forEach(el=>{
     el.addEventListener("input", onFieldInput);
     el.addEventListener("change", onFieldInput);
+  });
+  mainScroll.querySelectorAll("[data-opt]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const id = el.dataset.opt;
+      const same = state.answers[id]===el.dataset.val;
+      setAnswer(id, same ? "" : el.dataset.val);
+      const grp = el.parentElement;
+      grp.querySelectorAll(".opt-chip").forEach(b=>{ const on = !same && b===el; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); });
+    });
   });
   mainScroll.querySelectorAll("[data-doc-state]").forEach(el=>{
     el.addEventListener("click", ()=>{
@@ -547,11 +587,11 @@ function refreshVisibility(){
   }
 }
 
-function onFieldInput(e){
-  const id = e.target.dataset.qid;
-  state.answers[id] = e.target.value;
+function onFieldInput(e){ setAnswer(e.target.dataset.qid, e.target.value); }
+function setAnswer(id, value){
+  state.answers[id] = value;
   const card = document.getElementById("card_"+id);
-  if(card){ card.classList.toggle("answered", String(e.target.value).trim()!=="") ; }
+  if(card){ card.classList.toggle("answered", String(value).trim()!=="") ; }
   scheduleSave();
   refreshVisibility();
   renderFooterLite();
@@ -568,7 +608,7 @@ function refreshNav(){
 function renderFooterLite(){
   const p = computeProgress();
   const pct = p.total ? Math.round((p.done/p.total)*100) : 0;
-  const txt = footerEl.querySelector(".footer-progress-text span:last-child");
+  const txt = document.getElementById("progressText");
   const fill = footerEl.querySelector(".footer-bar-fill");
   if(txt) txt.textContent = progressText(p);
   if(fill) fill.style.width = pct+"%";
@@ -587,8 +627,8 @@ function jumpToQuestion(qid){
 function doReset(){
   if(!confirm("これまでの回答をすべて消去して、最初からやり直しますか？この操作は取り消せません。")) return;
   try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
-  state = { answers:{}, step:0 };
-  const d = new Date(); state.answers.R_DATE = d.toISOString().slice(0,10);
+  state = { answers:{}, step:0, lastStep:0 };
+  state.answers.R_DATE = localDate();
   hasResumed=false;
   lastSavedAt = null;
   renderAll();
@@ -616,6 +656,7 @@ function buildRows(){
 
 function csvEscape(v){
   v = String(v??"");
+  if(/^[=+@]/.test(v) || /^-[^0-9]/.test(v)) v = "'" + v;
   if(/[",\r\n]/.test(v)) return '"' + v.replace(/"/g,'""') + '"';
   return v;
 }
@@ -651,7 +692,7 @@ function buildReadableText(){
 }
 
 function safeFileBase(){
-  const biz = String(state.answers["00-01"]||"事業者").replace(/[/:*?"<>|]/g,"").split(String.fromCharCode(92)).join("");
+  const biz = String(state.answers["00-01"]||"事業者").replace(/[/:*?"<>|]/g,"").replace(/\s+/g," ").split(String.fromCharCode(92)).join("").trim().slice(0,30) || "事業者";
   const date = (state.answers.R_DATE||"").replace(/-/g,"");
   return `ヒアリング回答_${FORM.short}_${biz}_${date}`;
 }
@@ -694,6 +735,8 @@ async function copyTxt(){
 }
 
 /* ---------------- init ---------------- */
+window.addEventListener("pagehide", saveState);
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") saveState(); });
 checkResumeHash();
 if(state.step<0 || state.step>=STEP_META.length) state.step = 0;
 renderAll();

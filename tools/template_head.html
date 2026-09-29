@@ -156,7 +156,29 @@ textarea.q-input.short{min-height:46px;}
 .info-list li{font-size:12.5px;line-height:1.75;color:var(--text-muted);display:flex;gap:10px;}
 .info-list li b{color:var(--text);flex:none;min-width:88px;font-weight:700;}
 .cover-caveat{font-size:11.5px;color:var(--text-muted);margin:10px 0 0;line-height:1.7;}
-.footer-saved{font-size:10.5px;color:var(--text-muted);opacity:.75;margin-left:8px;font-variant-numeric:tabular-nums;}
+.opt-group{display:flex;flex-wrap:wrap;gap:8px;}
+.opt-chip{flex:1 1 120px;min-height:46px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:15px;font-weight:600;cursor:pointer;}
+.opt-chip:hover{border-color:var(--accent);}
+.opt-chip.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.opt-chip:focus-visible,.btn:focus-visible,.link-btn:focus-visible,.doc-chip:focus-visible,.q-input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.link-btn{background:none;border:none;padding:4px 0;font-size:inherit;color:inherit;text-decoration:underline;cursor:pointer;text-align:left;font-family:inherit;}
+.missing-list li .link-btn{font-size:13px;color:var(--required);padding:6px 0;}
+.reset-link .link-btn{font-size:12px;color:var(--text-muted);}
+.step-list{margin:0 0 14px;padding-left:22px;display:grid;gap:8px;font-size:13.5px;line-height:1.8;color:var(--text);}
+.back-link{display:inline-block;font-size:12.5px;color:var(--text-muted);text-decoration:none;margin-bottom:14px;}
+.back-link:hover{color:var(--accent-strong);text-decoration:underline;}
+details.cover-card>summary,details.save-section>summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent-strong);list-style-position:inside;}
+::placeholder{color:#7d8e89;opacity:1;}
+.q-prompt{font-size:14px;}
+.q-example{font-size:13px;}
+.footer-label{font-weight:600;}
+.footer-saved{display:block;margin:4px 0 0;font-size:11px;min-height:14px;}
+.doc-state{flex-wrap:wrap;}
+.mt-pill{min-height:38px;}
+.btn{min-height:42px;}
+.cover-card .btn,.save-section .btn{white-space:normal;}
+@media (max-width:880px){.footer-progress-text{gap:8px;}.footer-progress-text span:last-child{white-space:nowrap;}}
+.footer-saved-old{font-size:10.5px;color:var(--text-muted);opacity:.75;margin-left:8px;font-variant-numeric:tabular-nums;}
 
 .qcard{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
