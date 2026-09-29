@@ -2,3 +2,5 @@
 *.xlsx
 *.rtf
 tools/__pycache__/
+*.md
+!README.md
