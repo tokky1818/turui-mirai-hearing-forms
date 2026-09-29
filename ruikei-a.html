@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>つるい未来補助金 ヒアリングフォーム（類型A）</title>
+<style>
+:root{
+  --bg:#f2f5f3;
+  --surface:#ffffff;
+  --surface-alt:#eaf1ee;
+  --text:#1a2624;
+  --text-muted:#5c6f6a;
+  --border:#d7e1dd;
+  --border-strong:#c1cfc9;
+  --accent:#1f6f5c;
+  --accent-strong:#154f42;
+  --accent-soft:#e1efe9;
+  --required:#96324a;
+  --required-soft:#f4e3e7;
+  --optional-text:#5c6f6a;
+  --optional-soft:#eef2f0;
+  --success:#1f6f5c;
+  --danger:#a23b3b;
+  --shadow:0 1px 2px rgba(20,40,35,.06),0 8px 24px -12px rgba(20,40,35,.18);
+  --radius:12px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1614;
+    --surface:#161f1c;
+    --surface-alt:#1b2521;
+    --text:#e6ece9;
+    --text-muted:#9db0ab;
+    --border:#2b3733;
+    --border-strong:#3a4844;
+    --accent:#4fae93;
+    --accent-strong:#6fcaad;
+    --accent-soft:#1c332c;
+    --required:#e08fa2;
+    --required-soft:#3a2229;
+    --optional-text:#9db0ab;
+    --optional-soft:#1f2925;
+    --success:#63c79a;
+    --danger:#d98a8a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1614;
+  --surface:#161f1c;
+  --surface-alt:#1b2521;
+  --text:#e6ece9;
+  --text-muted:#9db0ab;
+  --border:#2b3733;
+  --border-strong:#3a4844;
+  --accent:#4fae93;
+  --accent-strong:#6fcaad;
+  --accent-soft:#1c332c;
+  --required:#e08fa2;
+  --required-soft:#3a2229;
+  --optional-text:#9db0ab;
+  --optional-soft:#1f2925;
+  --success:#63c79a;
+  --danger:#d98a8a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,.serif{font-family:"Shippori Mincho",serif;}
+h1,h2,h3{text-wrap:balance;}
+button{font-family:inherit;}
+input,textarea,select{font-family:inherit;font-size:16px;color:var(--text);}
+.app-shell{display:flex;min-height:100vh;}
+.rail{
+  width:248px;flex:none;background:var(--surface);border-right:1px solid var(--border);
+  padding:28px 18px;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.rail-brand{font-family:"Shippori Mincho",serif;font-size:15px;line-height:1.5;color:var(--accent-strong);margin:0 0 22px;padding:0 6px;}
+.rail-brand small{display:block;font-family:"Noto Sans JP",sans-serif;font-size:11px;color:var(--text-muted);margin-top:3px;font-weight:500;}
+.rail-step{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;
+  color:var(--text-muted);font-size:13.5px;margin-bottom:2px;transition:background .15s;
+}
+.rail-step:hover{background:var(--surface-alt);}
+.rail-step.active{background:var(--accent-soft);color:var(--accent-strong);font-weight:600;}
+.rail-dot{
+  width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:10.5px;font-weight:700;border:1.5px solid var(--border-strong);color:var(--text-muted);background:var(--surface);
+  font-variant-numeric:tabular-nums;
+}
+.rail-step.active .rail-dot{border-color:var(--accent);color:var(--accent-strong);}
+.rail-step.done .rail-dot{background:var(--accent);border-color:var(--accent);color:#fff;}
+.rail-step.done .rail-dot::after{content:"✓";}
+.rail-step.done .rail-dot{font-size:0;}
+.rail-step.done .rail-dot::after{font-size:12px;}
+.rail-label-wrap{min-width:0;}
+.rail-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rail-sub{font-size:10.5px;color:var(--text-muted);opacity:.8;font-variant-numeric:tabular-nums;}
+
+.mobile-tracker{display:none;}
+.main-col{flex:1;min-width:0;display:flex;flex-direction:column;}
+.main-scroll{flex:1;padding:32px 24px 140px;max-width:760px;width:100%;margin:0 auto;}
+.block-header{margin-bottom:26px;}
+.block-eyebrow{font-size:12px;letter-spacing:.06em;color:var(--accent-strong);font-weight:600;margin:0 0 6px;}
+.block-title{font-size:23px;margin:0 0 6px;color:var(--text);}
+.block-subtitle{font-size:14px;color:var(--text-muted);margin:0;}
+.block-note{
+  margin-top:14px;background:var(--surface-alt);border:1px solid var(--border);border-radius:10px;
+  padding:11px 14px;font-size:12.5px;color:var(--text-muted);line-height:1.7;
+}
+.group-heading{
+  font-size:14.5px;font-weight:700;color:var(--accent-strong);margin:34px 0 12px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:8px;
+}
+.group-heading:first-of-type{margin-top:0;}
+.group-note{font-size:12px;color:var(--text-muted);margin:-6px 0 14px;line-height:1.7;}
+.inline-note{
+  font-size:12px;color:var(--text-muted);background:var(--surface-alt);border:1px solid var(--border);
+  border-radius:10px;padding:10px 14px;margin:-4px 0 14px;line-height:1.75;
+}
+.skip-box{
+  background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:20px;
+}
+.skip-label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:13px;line-height:1.7;color:var(--accent-strong);}
+.skip-label input{margin-top:3px;width:16px;height:16px;flex:none;accent-color:var(--accent);}
+.block-jumpnav{display:flex;gap:6px;overflow-x:auto;margin:-6px 0 24px;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+.jump-chip{
+  flex:none;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;
+  padding:6px 12px;border-radius:99px;border:1.5px solid var(--border-strong);background:var(--surface);
+  color:var(--text-muted);cursor:pointer;font-weight:600;
+}
+.jump-chip:hover{border-color:var(--accent);color:var(--accent-strong);background:var(--accent-soft);}
+.done-box{background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;}
+.done-box h4{margin:0 0 4px;font-size:13px;color:var(--accent-strong);}
+.done-box p{margin:0;font-size:12px;color:var(--text-muted);line-height:1.7;}
+textarea.q-input.short{min-height:46px;}
+.qcard[hidden],.grp[hidden],.na-note[hidden]{display:none;}
+.na-note{background:var(--surface-alt);border:1px dashed var(--border-strong);border-radius:var(--radius);padding:18px 16px;font-size:13px;color:var(--text-muted);line-height:1.8;margin-bottom:14px;}
+.rail-step.na{opacity:.45;}
+.rail-step.na .rail-title::after{content:"（対象外）";font-size:10.5px;}
+.mt-pill.na{opacity:.45;}
+.doc-chip.on-mid{background:var(--required-soft);border-color:var(--required);color:var(--required);}
+.doc-chip.on-todo{background:var(--optional-soft);border-color:var(--border-strong);color:var(--text);}
+.usage-item b{min-width:104px;}
+.info-list{margin:0;padding:0;list-style:none;display:grid;gap:7px;}
+.info-list li{font-size:12.5px;line-height:1.75;color:var(--text-muted);display:flex;gap:10px;}
+.info-list li b{color:var(--text);flex:none;min-width:88px;font-weight:700;}
+.cover-caveat{font-size:11.5px;color:var(--text-muted);margin:10px 0 0;line-height:1.7;}
+.footer-saved{font-size:10.5px;color:var(--text-muted);opacity:.75;margin-left:8px;font-variant-numeric:tabular-nums;}
+
+.qcard{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 18px 20px;margin-bottom:14px;box-shadow:var(--shadow);
+}
+.qcard.answered{border-color:var(--border-strong);}
+.q-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.q-no{font-size:11.5px;font-weight:700;color:var(--text-muted);font-variant-numeric:tabular-nums;}
+.badge{font-size:10.5px;font-weight:700;padding:2.5px 8px;border-radius:99px;letter-spacing:.02em;}
+.badge.req{background:var(--required-soft);color:var(--required);}
+.badge.opt{background:var(--optional-soft);color:var(--optional-text);}
+.q-label{font-size:15.5px;font-weight:600;margin:2px 0 5px;line-height:1.5;}
+.q-prompt{font-size:13px;color:var(--text-muted);line-height:1.7;margin:0 0 10px;}
+.q-example{
+  font-size:12px;color:var(--text-muted);background:var(--surface-alt);border-radius:8px;
+  padding:7px 10px;margin-bottom:10px;line-height:1.6;
+}
+.q-example b{color:var(--accent-strong);font-weight:700;}
+.q-input, select.q-input{
+  width:100%;border:1.5px solid var(--border-strong);border-radius:9px;padding:10px 12px;
+  background:var(--surface);color:var(--text);transition:border-color .15s,box-shadow .15s;
+}
+textarea.q-input{min-height:80px;resize:none;overflow:hidden;line-height:1.6;}
+.q-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+select.q-input{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text-muted) 50%),linear-gradient(135deg,var(--text-muted) 50%,transparent 50%);background-position:calc(100% - 20px) center,calc(100% - 15px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:34px;}
+
+.invitem{border:1.5px dashed var(--border-strong);border-radius:var(--radius);padding:16px 16px 4px;margin-bottom:16px;background:var(--surface-alt);}
+.invitem-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.invitem-title{font-weight:700;font-size:14.5px;color:var(--accent-strong);}
+.invitem .qcard{background:var(--surface);}
+.btn-remove{font-size:12px;color:var(--danger);background:none;border:none;cursor:pointer;padding:4px 6px;}
+.btn-add{
+  display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;
+  border:1.5px dashed var(--border-strong);border-radius:var(--radius);background:none;color:var(--accent-strong);
+  font-weight:600;font-size:13.5px;cursor:pointer;margin-bottom:16px;
+}
+.btn-add:hover{background:var(--accent-soft);}
+
+.doc-row{
+  display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px;margin-bottom:8px;background:var(--surface);flex-wrap:wrap;
+}
+.doc-main{flex:1;min-width:200px;}
+.doc-label{font-size:13.5px;line-height:1.6;margin-bottom:8px;}
+.doc-state{display:flex;gap:6px;}
+.doc-chip{
+  font-size:11.5px;padding:5px 10px;border-radius:99px;border:1.5px solid var(--border-strong);
+  background:var(--surface);color:var(--text-muted);cursor:pointer;font-weight:600;white-space:nowrap;
+}
+.doc-chip.on-ready{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-strong);}
+.doc-chip.on-none{background:var(--optional-soft);border-color:var(--border-strong);color:var(--text-muted);}
+.doc-note{margin-top:8px;}
+.doc-note input{width:100%;font-size:12.5px;padding:7px 9px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);}
+.doc-sub-heading{font-size:12.5px;font-weight:700;color:var(--text-muted);margin:16px 0 8px;padding-left:2px;}
+
+.footer-bar{
+  position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--border);
+  padding:12px 24px calc(12px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:14px;
+  box-shadow:0 -6px 18px -12px rgba(0,0,0,.15);
+}
+.footer-progress{flex:1;min-width:0;}
+.footer-progress-text{font-size:11.5px;color:var(--text-muted);margin-bottom:5px;font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;}
+.footer-bar-track{height:6px;border-radius:99px;background:var(--optional-soft);overflow:hidden;}
+.footer-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .25s;}
+.btn{
+  font-size:13.5px;font-weight:700;padding:10px 18px;border-radius:9px;border:1.5px solid var(--border-strong);
+  background:var(--surface);color:var(--text);cursor:pointer;white-space:nowrap;
+}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn.primary:hover{background:var(--accent-strong);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn.ghost{border-color:transparent;color:var(--text-muted);}
+
+.cover-wrap{max-width:640px;margin:0 auto;padding:44px 22px 60px;}
+.cover-title{font-size:26px;line-height:1.5;margin:0 0 8px;}
+.cover-sub{font-size:13px;color:var(--text-muted);margin:0 0 28px;}
+.cover-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 20px 22px;box-shadow:var(--shadow);margin-bottom:18px;}
+.cover-card h3{font-size:14.5px;margin:0 0 10px;color:var(--accent-strong);}
+.cover-card p{font-size:13px;line-height:1.85;color:var(--text-muted);margin:0 0 8px;}
+.usage-grid{display:grid;gap:9px;}
+.usage-item{display:flex;gap:10px;font-size:12.5px;line-height:1.7;color:var(--text-muted);}
+.usage-item b{color:var(--text);flex:none;min-width:70px;font-weight:700;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12.5px;font-weight:700;margin-bottom:5px;color:var(--text);}
+.resume-note{
+  font-size:12px;background:var(--accent-soft);color:var(--accent-strong);border-radius:9px;padding:9px 12px;
+  margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.resume-note button{font-size:11.5px;background:none;border:none;color:var(--danger);cursor:pointer;text-decoration:underline;padding:0;}
+.hash-resume-note{background:var(--required-soft);color:var(--required);}
+.btn-sm{padding:6px 12px;font-size:11.5px;}
+.qr-panel{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);text-align:center;}
+.qr-canvas{display:inline-block;background:#fff;padding:10px;border-radius:10px;line-height:0;}
+.qr-hint{font-size:11.5px;color:var(--text-muted);margin:10px 0;line-height:1.7;}
+.start-btn{width:100%;padding:14px;font-size:15px;margin-top:6px;border-radius:10px;}
+
+.review-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:22px;}
+.stat-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
+.stat-num{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent-strong);}
+.stat-label{font-size:11.5px;color:var(--text-muted);margin-top:2px;}
+.missing-box{background:var(--required-soft);border:1px solid var(--required);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;}
+.missing-box h4{margin:0 0 8px;font-size:13px;color:var(--required);}
+.missing-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;}
+.missing-list li a{font-size:12.5px;color:var(--required);text-decoration:none;cursor:pointer;}
+.missing-list li a:hover{text-decoration:underline;}
+.save-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:16px;}
+.save-section h3{font-size:14.5px;margin:0 0 4px;}
+.save-section p.hint{font-size:12px;color:var(--text-muted);margin:0 0 14px;}
+.save-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.save-btn-row .btn{flex:1;min-width:150px;}
+.copy-area{width:100%;min-height:120px;font-size:11.5px;font-family:ui-monospace,monospace;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface-alt);color:var(--text-muted);}
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--text);color:var(--bg);
+  padding:9px 18px;border-radius:99px;font-size:12.5px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.reset-link{font-size:11.5px;color:var(--text-muted);text-align:center;margin-top:8px;}
+.reset-link a{color:var(--text-muted);cursor:pointer;}
+
+@media (max-width:880px){
+  .rail{display:none;}
+  .mobile-tracker{
+    display:flex;gap:6px;overflow-x:auto;padding:12px 14px;background:var(--surface);
+    border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;-webkit-overflow-scrolling:touch;
+  }
+  .mt-pill{
+    flex:none;display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;
+    border:1.5px solid var(--border-strong);font-size:11.5px;color:var(--text-muted);white-space:nowrap;cursor:pointer;
+  }
+  .mt-pill.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-strong);font-weight:700;}
+  .mt-pill.done{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .main-scroll{padding:20px 16px 130px;}
+  .footer-bar{padding:10px 14px calc(10px + env(safe-area-inset-bottom));}
+  .btn{padding:10px 14px;}
+  .review-stats{grid-template-columns:1fr 1fr;}
+}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+<div class="app-shell">
+  <nav class="rail" id="rail"></nav>
+  <div class="main-col">
+    <div class="mobile-tracker" id="mobileTracker"></div>
+    <div class="main-scroll" id="mainScroll"></div>
+    <div class="footer-bar" id="footerBar"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- data (build.py が生成) ---------------- */
+const FORM = {"key":"a","brand":"つるい未来補助金","typeName":"類型A　新規開業・新分野進出支援事業","short":"類型A","blocks":[{"id":"b0","no":0,"eyebrow":"基本情報","title":"基本情報","railLabel":"0．基本情報","sheetLabel":"0. 基本情報","note":"","groups":[{"heading":"","questions":[{"id":"00-01","label":"事業者名","prompt":"事業者名（法人名または屋号）を教えてください。","example":"有限会社〇〇／〇〇カフェ","type":"text"},{"id":"00-02","label":"代表者名","prompt":"代表者のお名前を教えてください。","example":"鶴居 太郎","type":"text"},{"id":"00-03","label":"所在地","prompt":"本店（個人の方はご自宅）の住所を教えてください。","example":"阿寒郡鶴居村鶴居北〇丁目〇番地","type":"text"},{"id":"00-04","label":"電話番号","prompt":"日中に連絡がとれる電話番号を教えてください。","example":"090-〇〇〇〇-〇〇〇〇","type":"text","inputmode":"tel"},{"id":"00-05","label":"メールアドレス","prompt":"メールアドレスを教えてください。","example":"info@example.jp","type":"text","inputmode":"email"}]}]},{"id":"b1","no":1,"eyebrow":"第1ブロック","title":"申請区分の確認","railLabel":"1．申請区分の確認","sheetLabel":"1. 申請区分の確認","note":"※最初の「申請区分」を選ぶと、あなたが記入しなくてよい設問は自動的に表示されなくなります。「指定区域」〜「年齢要件」の4問は、補助金の上乗せに当てはまるかを確認する質問です。分からなければ「わからない」を選んでください（支援者が村に確認します）。","groups":[{"heading":"","questions":[{"id":"A1-01","label":"申請区分","prompt":"今回の申請はどちらですか。（新規開業／新分野進出）","example":"新規開業","type":"select","options":["新規開業","新分野進出"]},{"id":"A1-02","label":"現在の業種","prompt":"【新分野進出の方】現在営んでいる事業の業種を教えてください。","example":"宿泊業（旅館）","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A1-03","label":"新事業の業種","prompt":"今回新たに始める事業の業種を教えてください。","example":"飲食店（カフェ）","type":"textarea","short":true},{"id":"A1-04","label":"村内での営業開始","prompt":"【新分野進出の方】村内で現在の事業を始めた年月を教えてください。","example":"平成14年7月","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A1-05","label":"指定区域","prompt":"事業を行う場所は、村長が指定する区域内ですか。（はい／いいえ／わからない）","example":"はい","type":"select","options":["はい","いいえ","わからない"]},{"id":"A1-06","label":"指定空き家","prompt":"村長が指定する空き家等を活用しますか。（はい／いいえ／わからない）","example":"いいえ","type":"select","options":["はい","いいえ","わからない"]},{"id":"A1-07","label":"村内居住歴","prompt":"代表者は、鶴居村に通算15年以上住んだことがありますか。（はい／いいえ）","example":"はい","type":"select","options":["はい","いいえ"]},{"id":"A1-08","label":"年齢要件","prompt":"申請日の時点で、代表者は45歳以下ですか。（はい／いいえ）","example":"はい","type":"select","options":["はい","いいえ"]}]}]},{"id":"b2","no":2,"eyebrow":"第2ブロック","title":"あなたのこれまで【新規開業の方】","railLabel":"2．あなたのこれまで【新規開業の方】","sheetLabel":"2. あなたのこれまで【新規開業の方】","note":"※「1 申請区分」で「新規開業」を選んだ方だけご記入ください。「新分野進出」を選んだ方は、このブロックは自動的にスキップされます。","groups":[{"heading":"","questions":[{"id":"A2-01","label":"最終学歴","prompt":"最終学歴（学校名・卒業年月）を教えてください。","example":"平成15年3月 北海道〇〇高等学校 卒業","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-02","label":"職歴①","prompt":"これまでの主な職歴（年月・勤務先・仕事内容）を教えてください（1つ目）。","example":"平成18年6月〜令和元年6月 〇〇株式会社（店舗での接客・販売）","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-03","label":"職歴②","prompt":"主な職歴の2つ目を教えてください。ない場合は「なし」。","example":"令和5年3月〜9月 〇〇パソコン教室（Webデザイナー科）","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-04","label":"職歴③以降","prompt":"その他の職歴があれば教えてください。ない場合は「なし」。","example":"なし","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-05","label":"資格・検定","prompt":"お持ちの資格や検定を教えてください。ない場合は「なし」。","example":"食品衛生責任者、Webクリエイター能力認定試験エキスパート","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-06","label":"活かせる経験","prompt":"これまでの経験やスキルのうち、今回の事業に活かせるものは何ですか。","example":"接客経験と、SNSで情報発信するためのデザインスキル","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-07","label":"開業のきっかけ","prompt":"事業を始めようと思ったきっかけを教えてください。","example":"父の定年を機に、父の趣味と自分のスキルを活かした店を開きたいと考えた","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-08","label":"鶴居村で行う理由","prompt":"鶴居村で事業を行う理由や、村とのつながりを教えてください。","example":"生まれ育った鶴居村の魅力を広く発信したい","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-09","label":"協力者","prompt":"事業に協力してくれる方（家族・パートナーなど）はいますか。ない場合は「なし」。","example":"父","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"}]},{"id":"A2-10","label":"協力者の強み","prompt":"その方の経験や強みを教えてください。協力者がいない場合は「なし」。","example":"旧車の趣味で道内外に広い人脈を持つ","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新分野進出"},{"id":"A2-09","hideIf":"eq","val":"なし"}]}]}]},{"id":"b3","no":3,"eyebrow":"第3ブロック","title":"会社のこれまで【新分野進出の方】","railLabel":"3．会社のこれまで【新分野進出の方】","sheetLabel":"3. 会社のこれまで【新分野進出の方】","note":"※「1 申請区分」で「新分野進出」を選んだ方だけご記入ください。「新規開業」を選んだ方は、このブロックは自動的にスキップされます。","groups":[{"heading":"","questions":[{"id":"A3-01","label":"創業年月","prompt":"創業した年月を教えてください。「1」で答えた村内での営業開始と同じなら「同じ」。","example":"同じ","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-02","label":"創業者","prompt":"創業者はどなたですか。","example":"〇〇 一郎","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-03","label":"法人化","prompt":"法人化した年月を教えてください。個人のままなら「なし」。","example":"平成14年7月","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-04","label":"大きな転機","prompt":"これまでの大きな転機（移転、新事業開始など）と、その年月を教えてください。","example":"平成19年4月 旅館業の許可を取得し宿泊事業を開始","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-05","label":"現在の主な事業","prompt":"現在の主な事業の名称と内容を教えてください。","example":"温泉旅館〇〇（宿泊・日帰り入浴・レストラン）","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-06","label":"売上の内わけ","prompt":"事業ごとの売上の割合（内わけ）を教えてください。","example":"宿泊60％、日帰り入浴25％、レストラン15％","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-07","label":"従業員数","prompt":"役員を含む常用従業員（ほぼ毎日働いている人）の人数と、パート・アルバイトの人数を教えてください。","example":"常用8名、パート5名","type":"textarea","short":true,"dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-08","label":"新分野で活かせる強み","prompt":"今の事業の強み（顧客、ノウハウ、設備、人材）のうち、新しい事業に活かせるものは何ですか。","example":"既存の宿泊客という顧客基盤と、調理スタッフのノウハウ","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]},{"id":"A3-09","label":"進出のきっかけ","prompt":"新しい分野に進出しようと思ったきっかけを教えてください。","example":"宿泊客から村内で食事できる場所が少ないという声が多かった","type":"textarea","dependsOn":[{"id":"A1-01","hideIf":"eq","val":"新規開業"}]}]}]},{"id":"b4","no":4,"eyebrow":"第4ブロック","title":"地域とのつながり","railLabel":"4．地域とのつながり","sheetLabel":"4. 地域とのつながり","note":"","groups":[{"heading":"","questions":[{"id":"A4-01","label":"加入団体","prompt":"加入している商工会・観光協会などの団体と、加入した年を教えてください。ない場合は「なし」。","example":"鶴居村商工会（平成12年〜）","type":"textarea","short":true},{"id":"A4-02","label":"団体での役職","prompt":"代表者や役員の方が、団体で役職に就いた経験があれば教えてください。ない場合は「なし」。","example":"鶴居村商工会 理事（令和2年〜）","type":"textarea"},{"id":"A4-03","label":"地域活動","prompt":"村のイベントへの協力など、地域での活動があれば教えてください。ない場合は「なし」。","example":"村の夏祭りに毎年出店","type":"textarea","short":true}]}]},{"id":"b5","no":5,"eyebrow":"第5ブロック","title":"事業を始める目的","railLabel":"5．事業を始める目的","sheetLabel":"5. 事業を始める目的","note":"","groups":[{"heading":"","questions":[{"id":"A5-01","label":"事業の一言タイトル","prompt":"今回の事業を一言で表すと何ですか。（30字以内）","example":"旧車・オールドバイクをコンセプトにしたカフェの開業","type":"textarea"},{"id":"A5-02","label":"村の不足・困りごと","prompt":"鶴居村で「足りない」「困っている」と感じることは何ですか。","example":"夕方以降に営業している飲食店が少ない","type":"textarea"},{"id":"A5-03","label":"そう感じた根拠","prompt":"そう感じた具体的な場面や根拠を教えてください。","example":"宿泊客が夜の食事場所に困っている様子をよく見かける","type":"textarea"},{"id":"A5-04","label":"解決の方法","prompt":"今回の事業で、その困りごとをどう解決しますか。","example":"夜22時まで営業し、軽食とドリンクを提供する","type":"textarea"},{"id":"A5-05","label":"目指す姿","prompt":"お客様にとって、どんなお店・施設になりたいですか。","example":"道東に来たら必ず立ち寄りたい場所","type":"textarea"}]}]},{"id":"b6","no":6,"eyebrow":"第6ブロック","title":"事業の内容","railLabel":"6．事業の内容","sheetLabel":"6. 事業の内容","note":"","groups":[{"heading":"コンセプト・商品・サービス","questions":[{"id":"A6-01","label":"コンセプト","prompt":"お店・事業のコンセプトを教えてください。","example":"プレミアムカー・オールドバイクを眺めながらくつろげるカフェ","type":"textarea"},{"id":"A6-02","label":"商品・サービス①","prompt":"主な商品・サービス（1つ目）の名称と内容を教えてください。","example":"こだわりのカレー（スパイスから自家調合）","type":"textarea"},{"id":"A6-03","label":"①の価格","prompt":"その商品・サービスの価格を教えてください。","example":"1,200円","type":"textarea","short":true},{"id":"A6-04","label":"商品・サービス②","prompt":"主な商品・サービス（2つ目）の名称と内容を教えてください。","example":"珍しいクラフトドリンク","type":"textarea","short":true},{"id":"A6-05","label":"②の価格","prompt":"その商品・サービスの価格を教えてください。","example":"600円","type":"textarea","short":true},{"id":"A6-06","label":"その他の商品","prompt":"その他の商品・サービスがあれば教えてください。ない場合は「なし」。","example":"ツーリング客向けの缶ドリンク","type":"textarea","short":true},{"id":"A6-07","label":"客単価","prompt":"お客様1人あたりの平均利用額（客単価）はいくらを見込みますか。","example":"1,500円","type":"textarea","short":true},{"id":"A6-08","label":"他店との違い","prompt":"他のお店・施設と比べて、一番のこだわりや違いは何ですか。","example":"実際の旧車の展示と、カスタム作業の見学ができる","type":"textarea"}]},{"heading":"営業日・営業時間・開業時期","questions":[{"id":"A6-09","label":"営業期間","prompt":"通年営業ですか。季節営業の場合は営業する期間を教えてください。","example":"通年","type":"textarea","short":true},{"id":"A6-10","label":"年間営業日数","prompt":"1年間の営業日数は、およそ何日を見込みますか。","example":"260日","type":"textarea","short":true},{"id":"A6-11","label":"定休日","prompt":"定休日を教えてください。","example":"不定休","type":"textarea","short":true},{"id":"A6-12","label":"営業時間","prompt":"営業時間を教えてください。","example":"10:00〜17:00、18:00〜22:00","type":"textarea"},{"id":"A6-13","label":"開業予定時期","prompt":"開業（事業開始）の予定時期を教えてください。","example":"2027年5月（ゴールデンウィーク）","type":"textarea"}]},{"heading":"許認可・運営体制・提携先","questions":[{"id":"A6-14","label":"許認可","prompt":"事業に必要な許可・資格と、その取得状況を教えてください。","example":"飲食店営業許可（申請予定）、食品衛生責任者（取得済）","type":"textarea"},{"id":"A6-15","label":"運営人数","prompt":"事業の運営に関わる人数（あなたを含む）を教えてください。","example":"2名（本人・父）","type":"textarea","short":true},{"id":"A6-16","label":"新規雇用","prompt":"新たに人を雇う予定はありますか。人数と雇用形態（正社員・パートなど）を教えてください。ない場合は「なし」。","example":"繁忙期にパート1名","type":"textarea","short":true},{"id":"A6-17","label":"村内からの雇用","prompt":"そのうち、村内に住む方を雇う予定の人数を教えてください。","example":"1名","type":"textarea","short":true,"dependsOn":[{"id":"A6-16","hideIf":"eq","val":"なし"}]},{"id":"A6-18","label":"人件費の見込み","prompt":"年間の人件費（ご自身の役員報酬を除く）はおよそいくらを見込みますか。人を雇う予定がない場合は「0」。","example":"年120万円","type":"textarea","short":true},{"id":"A6-19","label":"提携先・取引先","prompt":"提携先・仕入先・販売先など、協力してくれる事業者を具体名で教えてください（予定を含む）。ない場合は「なし」。","example":"〇〇牧場（乗馬ツアーで提携予定）、村内の〇〇商店（食材の仕入）","type":"textarea"}]}]},{"id":"b7","no":7,"eyebrow":"第7ブロック","title":"補助金で整備するもの","railLabel":"7．補助金で整備するもの","sheetLabel":"7. 補助金で整備するもの","note":"※ここでいう「工事・設備」は、補助金を使って行う工事や、購入する設備・備品のことです。4つ以上ある場合は、4つ目以降を最後の「その他・補足」にご記入ください。","groups":[{"heading":"事業を行う場所・建物","questions":[{"id":"A7-01","label":"事業を行う場所","prompt":"事業を行う場所の住所を教えてください。基本情報（00-03）の住所と同じなら「同じ」。","example":"阿寒郡鶴居村鶴居北〇丁目〇番地","type":"textarea"},{"id":"A7-02","label":"場所の特徴","prompt":"その場所の特徴（立地、周辺環境など）を教えてください。","example":"市街地から少し森側に入った、自然に囲まれた場所","type":"textarea"},{"id":"A7-03","label":"建物の種類","prompt":"建物は次のどれですか。（新築／既存建物の改修／空き家の改修／住居兼店舗）","example":"新築","type":"select","options":["新築","既存建物の改修","空き家の改修","住居兼店舗"]},{"id":"A7-04","label":"住居兼店舗の面積","prompt":"【住居兼店舗の方】建物全体の面積と、そのうち事業に使う部分の面積を教えてください。","example":"全体120㎡、うち店舗部分45㎡","type":"textarea","dependsOn":[{"id":"A7-03","hideIf":"ne","val":"住居兼店舗"}]}]},{"heading":"工事・設備①","questions":[{"id":"A7-05","label":"工事・設備①の名称","prompt":"今回整備・導入するもの（1つ目）の名称を教えてください。","example":"カフェ店舗本体の新設工事","type":"textarea","short":true},{"id":"A7-06","label":"工事・設備①の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"古い貨物コンテナをリノベーションしてカフェにする","type":"textarea"},{"id":"A7-07","label":"工事・設備①の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"個性的な外観で印象に残り、SNSでの拡散が期待できる","type":"textarea"},{"id":"A7-08","label":"工事・設備①の金額","prompt":"工事・設備①のおおよその金額（税抜）を教えてください。","example":"111万円","type":"textarea","short":true},{"id":"A7-09","label":"工事・設備①の見積書","prompt":"工事・設備①の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"]}]},{"heading":"工事・設備②","questions":[{"id":"A7-10","label":"工事・設備②の名称","prompt":"今回整備・導入するもの（2つ目）の名称を教えてください。2つ目がない場合は「なし」（続く設問は記入不要になります）。","example":"展示用ガレージの新設工事","type":"textarea","short":true},{"id":"A7-11","label":"工事・設備②の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"旧車を展示し、カフェの窓越しに見学できるガレージ","type":"textarea","dependsOn":[{"id":"A7-10","hideIf":"eq","val":"なし"}]},{"id":"A7-12","label":"工事・設備②の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"車・バイク好きが目的地として訪れる理由になる","type":"textarea","dependsOn":[{"id":"A7-10","hideIf":"eq","val":"なし"}]},{"id":"A7-13","label":"工事・設備②の金額","prompt":"工事・設備②のおおよその金額（税抜）を教えてください。","example":"1,500万円","type":"textarea","short":true,"dependsOn":[{"id":"A7-10","hideIf":"eq","val":"なし"}]},{"id":"A7-14","label":"工事・設備②の見積書","prompt":"工事・設備②の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"],"dependsOn":[{"id":"A7-10","hideIf":"eq","val":"なし"}]}]},{"heading":"工事・設備③","questions":[{"id":"A7-15","label":"工事・設備③の名称","prompt":"今回整備・導入するもの（3つ目）の名称を教えてください。3つ目がない場合は「なし」（続く設問は記入不要になります）。","example":"厨房機器・店内設備","type":"textarea","short":true},{"id":"A7-16","label":"工事・設備③の内容","prompt":"それは、具体的に何をどのように整備しますか。","example":"冷凍冷蔵庫、フライヤー、製氷機、テーブル・椅子など","type":"textarea","dependsOn":[{"id":"A7-15","hideIf":"eq","val":"なし"}]},{"id":"A7-17","label":"工事・設備③の効果","prompt":"それによって、お客様や事業にとって何が良くなりますか。","example":"少人数でも効率よく料理を提供できる","type":"textarea","dependsOn":[{"id":"A7-15","hideIf":"eq","val":"なし"}]},{"id":"A7-18","label":"工事・設備③の金額","prompt":"工事・設備③のおおよその金額（税抜）を教えてください。","example":"356万円","type":"textarea","short":true,"dependsOn":[{"id":"A7-15","hideIf":"eq","val":"なし"}]},{"id":"A7-19","label":"工事・設備③の見積書","prompt":"工事・設備③の見積書はありますか。（あり／依頼中／まだ）","example":"あり","type":"select","options":["あり","依頼中","まだ"],"dependsOn":[{"id":"A7-15","hideIf":"eq","val":"なし"}]}]},{"heading":"その他の費用・スケジュール","questions":[{"id":"A7-20","label":"その他にかかるお金","prompt":"上の工事・設備のほかに、消耗品や申請手数料などでかかるお金があれば、内容と金額を教えてください。ない場合は「なし」。","example":"食器・調理小物など 約20万円","type":"textarea"},{"id":"A7-21","label":"発注時期","prompt":"業者に発注する予定時期を教えてください。","example":"2026年8月","type":"textarea","short":true},{"id":"A7-22","label":"着工時期","prompt":"工事に着手する予定時期を教えてください。","example":"2026年8月下旬","type":"textarea","short":true},{"id":"A7-23","label":"完了時期","prompt":"工事完了・納品の予定時期を教えてください。","example":"2027年4月","type":"textarea","short":true},{"id":"A7-24","label":"冬季の休工","prompt":"冬の間（12〜3月ごろ）に工事を休む予定はありますか。ない場合は「なし」。","example":"12〜3月は休工","type":"textarea","short":true},{"id":"A7-25","label":"支払時期","prompt":"業者への支払いを終える予定時期を教えてください。","example":"2027年4月","type":"textarea","short":true},{"id":"A7-26","label":"開業前の準備","prompt":"開業前に行う準備（試食会、アンケートなど）があれば教えてください。ない場合は「なし」。","example":"開業1〜2か月前に試食会とアンケートを実施","type":"textarea"}]}]},{"id":"b8","no":8,"eyebrow":"第8ブロック","title":"資金の準備","railLabel":"8．資金の準備","sheetLabel":"8. 資金の準備","note":"","groups":[{"heading":"","questions":[{"id":"A8-01","label":"自己資金","prompt":"工事・設備の費用のうち、自己資金（手持ちのお金）で払う額は約いくらですか。※補助金は工事が終わった後に支払われるため、いったん全額を用意する必要があります。","example":"500万円","type":"textarea","short":true},{"id":"A8-02","label":"借入の予定","prompt":"金融機関からお金を借りる予定はありますか。ある場合は金融機関名と金額を教えてください。ない場合は「なし」。","example":"日本政策金融公庫 1,500万円","type":"textarea"},{"id":"A8-03","label":"他の補助金","prompt":"今回の工事・設備について、国・道など他の補助金を使う予定はありますか。ない場合は「なし」。","example":"なし","type":"textarea","short":true}]}]},{"id":"b9","no":9,"eyebrow":"第9ブロック","title":"狙うお客様","railLabel":"9．狙うお客様","sheetLabel":"9. 狙うお客様","note":"","groups":[{"heading":"","questions":[{"id":"A9-01","label":"お客様①","prompt":"一番のメインとなるお客様はどんな人ですか。","example":"道東をツーリングで訪れるバイク愛好家","type":"textarea"},{"id":"A9-02","label":"①が選ぶ理由","prompt":"その人たちは、なぜあなたのお店・施設を選びますか。","example":"旧車の展示という、ここでしか見られない体験があるため","type":"textarea"},{"id":"A9-03","label":"お客様②","prompt":"他に狙いたいお客様はいますか。ない場合は「なし」。","example":"村内の宿泊施設に泊まる観光客","type":"textarea","short":true},{"id":"A9-04","label":"②が選ぶ理由","prompt":"その人たちは、なぜあなたのお店・施設を選びますか。","example":"夜22時まで営業しているため","type":"textarea","short":true,"dependsOn":[{"id":"A9-03","hideIf":"eq","val":"なし"}]},{"id":"A9-05","label":"お客様③","prompt":"その他に狙いたいお客様がいれば教えてください。ない場合は「なし」。","example":"村内・近隣の住民","type":"textarea","short":true},{"id":"A9-06","label":"村外客の割合","prompt":"お客様のうち、村外から来る人の割合はどのくらいを見込みますか。","example":"約8割","type":"textarea","short":true},{"id":"A9-07","label":"村内との関わり","prompt":"村内の方や村内の事業者と、どのように関わりますか。","example":"村内宿泊施設の宿泊客に夕食の場を提供し、施設に紹介カードを置いてもらう","type":"textarea"}]}]},{"id":"b10","no":10,"eyebrow":"第10ブロック","title":"市場とライバル","railLabel":"10．市場とライバル","sheetLabel":"10. 市場とライバル","note":"","groups":[{"heading":"","questions":[{"id":"A10-01","label":"業界の動き","prompt":"あなたの業界や市場は今どんな状況ですか。知っている数字があれば教えてください。","example":"道東のツーリング客は増えている","type":"textarea"},{"id":"A10-02","label":"数字の出どころ","prompt":"その数字は、どこで見聞きしたものですか（新聞、役場の資料、業界団体の発表など）。前の設問で数字を書いていない場合は「なし」、わからない場合は「わからない」。","example":"〇〇新聞（2025年〇月）","type":"textarea","short":true},{"id":"A10-03","label":"近くの似たお店","prompt":"村内や近隣に、似たお店・施設はありますか。","example":"村内で夜20時以降も営業する飲食店は2軒のみ","type":"textarea"},{"id":"A10-04","label":"似たお店との違い","prompt":"それらと比べて、あなたのお店・施設が選ばれる理由は何ですか。","example":"旧車の展示と夜間営業","type":"textarea","short":true},{"id":"A10-05","label":"ニーズを感じた出来事","prompt":"お客様の「こうしてほしい」という声を実感した出来事があれば教えてください。ない場合は「なし」。","example":"ツーリング客から休憩できる場所がないと聞いた","type":"textarea"},{"id":"A10-06","label":"季節による違い","prompt":"季節によってお客様の数や種類はどう変わりますか。","example":"春〜秋はツーリング客、冬はタンチョウ目当ての観光客","type":"textarea"}]}]},{"id":"b11","no":11,"eyebrow":"第11ブロック","title":"集客の方法","railLabel":"11．集客の方法","sheetLabel":"11. 集客の方法","note":"","groups":[{"heading":"","questions":[{"id":"A11-01","label":"開業前の告知","prompt":"開業前に、どのように告知しますか。","example":"InstagramとX（旧Twitter）で工事の様子を発信","type":"textarea"},{"id":"A11-02","label":"SNS・ホームページ","prompt":"使う予定のSNSやホームページを教えてください。","example":"Instagram、専用ホームページ","type":"textarea"},{"id":"A11-03","label":"予約・口コミサイト","prompt":"使う予定の予約サイトや口コミサイトがあれば教えてください。ない場合は「なし」。","example":"Googleマップ、食べログ","type":"textarea","short":true},{"id":"A11-04","label":"人脈・コミュニティ","prompt":"集客に活かせる人脈や仲間のつながりがあれば教えてください。ない場合は「なし」。","example":"父の旧車仲間のネットワーク","type":"textarea","short":true},{"id":"A11-05","label":"閑散期の対策","prompt":"お客様が少ない時期の対策を教えてください。","example":"冬季は旧車のカスタム作業の公開イベントを開催","type":"textarea"}]}]},{"id":"b12","no":12,"eyebrow":"第12ブロック","title":"事業の見通しと地域への効果","railLabel":"12．事業の見通しと地域への効果","sheetLabel":"12. 事業の見通しと地域への効果","note":"","groups":[{"heading":"","questions":[{"id":"A12-01","label":"1年目の目標","prompt":"1年目の、月あたりのお客様数（または稼働率）の目標を教えてください。","example":"月300人","type":"textarea","short":true},{"id":"A12-02","label":"5年後のお客様数","prompt":"5年後の、月あたりのお客様数の目標を教えてください。","example":"月500人","type":"textarea","short":true},{"id":"A12-03","label":"5年後の売上","prompt":"5年後の、年間売上の目標を教えてください。","example":"年間900万円","type":"textarea","short":true},{"id":"A12-04","label":"目標の根拠","prompt":"その目標の根拠を教えてください。","example":"近隣の類似店の来客数と、ツーリング客の通過台数から算出","type":"textarea"},{"id":"A12-05","label":"将来の展開","prompt":"将来、新しく展開したいことはありますか。ない場合は「なし」。","example":"旧車イベントの定期開催、オリジナルグッズの販売","type":"textarea"},{"id":"A12-06","label":"村への良い影響","prompt":"この事業が成功すると、村にどんな良い影響がありますか。","example":"夜の飲食の場ができ、宿泊客の満足度が上がる","type":"textarea"},{"id":"A12-07","label":"観光・ブランドへの貢献","prompt":"村の観光や地域ブランドに、どう貢献できますか。","example":"「旧車の聖地・鶴居村」として新たな観光客を呼び込む","type":"textarea"}]}]},{"id":"b13","no":13,"eyebrow":"第13ブロック","title":"その他・補足","railLabel":"13．その他・補足","sheetLabel":"13. その他・補足","note":"","groups":[{"heading":"","questions":[{"id":"A13-01","label":"追加の工事・設備","prompt":"書ききれなかった工事・設備（名称・内容・効果・金額）があればご記入ください。ない場合は「なし」。","example":"④ 看板の設置：店の場所がわかりやすくなる、15万円（見積書あり）","type":"textarea"},{"id":"A13-02","label":"その他伝えたいこと","prompt":"その他、計画書づくりのために伝えておきたいことがあればご記入ください。ない場合は「なし」。","example":"開業時期は工事業者と調整中","type":"textarea","short":true}]}]}],"docs":[{"id":"D1","no":1,"label":"見積書（工事・設備ごと）"},{"id":"D2","no":2,"label":"施設の図面・完成イメージ（あれば）"},{"id":"D3","no":3,"label":"許可証・資格証の写し（取得済みのもの）"},{"id":"D4","no":4,"label":"【新分野進出の方のみ】直近2〜3期分の決算書または確定申告書（新規開業の方は「該当なし」）"}],"docStates":["準備済み","準備中","まだ","該当なし"],"docDefault":2,"cover":{"usage":[["記入のしかた","難しく考えず、思いつくことを短い言葉や箇条書きでご記入ください。1つの欄には1つのことをお書きください。"],["「なし」","当てはまらない・特にない場合は「なし」とご記入ください（空欄のままだと未回答として扱われます）。"],["「わからない」","わからない・まだ決まっていない場合は「わからない」「未定」とご記入のうえ、先へ進んでください。後ほど追加のヒアリングでお伺いします。"],["数字・記入例","金額・人数・割合などはおおよその値で構いません。記入例は実際の事例をもとにしたイメージです。"],["設問の切替","前の設問の回答によって、記入が不要な設問は自動的に表示されなくなります。上から順にお答えください。"],["所要時間","設問は最大で約115問（回答内容によって減ります）、2〜3時間ほどです。1日で終わらなくて大丈夫です。数日に分けてご記入ください。"],["保存","入力内容はこの端末に自動的に保存されます。途中でやめても続きから再開できます。最後の確認画面でファイル保存・コピーができます。"],["お困りのとき","入力が難しい場合は、担当の支援者にご相談ください。お電話でのヒアリングも承ります。"]],"info":[],"summary":[["対象事業","新規開業支援事業（起業に必要な施設の整備・改修等）／新分野進出支援事業（既存の村内事業者が、日本標準産業分類の中分類を超えて新たに開始する事業）"],["補助率","補助対象経費の1/2以内"],["補助限度額","500万円。次に当てはまる場合は限度額に加算：村長が指定する区域内で事業を開始（＋100万円）／村長が指定する空き家等を活用（＋50万円）／申請日から起算して鶴居村に15年以上居住した経験のある45歳以下の方（＋200万円）"],["補助金の下限額","50万円"],["対象経費","工事請負費（事務所・店舗等の建設費・改修費等）、委託費（調査・設計・開発費等）、備品購入費（設備・機械装置・測量器具等）、そのほか村長が必要かつ適当と認めた費用"],["ご注意","住居兼店舗事務所は事業専有部分に係る経費のみが対象です（住居等の他用途部分と物理的に明確な区分が必要）。施設整備等の上限単価は24.8万円／㎡です。"]],"summaryCaveat":"※つるい未来へつなぐ商工観光経済活性化支援事業補助規則（別表1）に基づく概要です。募集期間や詳細な要件は、村が別に定める公募案内等で必ずご確認ください。"}};
+
+const STORAGE_KEY = "turui_hearing_" + FORM.key + "_v1";
+const FORM_ID = "turui-" + FORM.key + "-v1";
+
+/* ---------------- state ---------------- */
+let state = { answers:{}, step:0 };
+try{
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){ const parsed = JSON.parse(raw); if(parsed && typeof parsed==="object"){ state = Object.assign(state, parsed); } }
+}catch(e){}
+if(!state.answers) state.answers = {};
+let hasResumed = Object.keys(state.answers).some(k=>k!=="R_DATE" && String(state.answers[k]).trim()!=="");
+if(!state.answers.R_DATE){
+  const d = new Date(); state.answers.R_DATE = d.toISOString().slice(0,10);
+}
+
+const BLOCKS = FORM.blocks;
+const STEP_META = [{key:"cover", label:"はじめに"}]
+  .concat(BLOCKS.map(b=>({key:b.id, label:b.railLabel})))
+  .concat([{key:"docs", label:"提出書類チェック"}, {key:"review", label:"確認・保存"}]);
+const STEP_DOCS = STEP_META.findIndex(s=>s.key==="docs");
+
+const QUESTION_STEP = {};
+BLOCKS.forEach((b,i)=>{ b.groups.forEach(g=>g.questions.forEach(q=>{ QUESTION_STEP[q.id] = i+1; })); });
+
+let lastSavedAt = null;
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    lastSavedAt = new Date();
+    updateSavedIndicator();
+  }catch(e){}
+}
+let saveTimer=null;
+function scheduleSave(){ clearTimeout(saveTimer); saveTimer=setTimeout(saveState, 250); }
+function updateSavedIndicator(){
+  const el = document.getElementById("savedIndicator");
+  if(!el) return;
+  if(!lastSavedAt){ el.textContent = ""; return; }
+  const hh = String(lastSavedAt.getHours()).padStart(2,"0");
+  const mm = String(lastSavedAt.getMinutes()).padStart(2,"0");
+  const ss = String(lastSavedAt.getSeconds()).padStart(2,"0");
+  el.textContent = `最終保存 ${hh}:${mm}:${ss}`;
+}
+
+/* ---------------- 設問の表示制御（Excelの「状態」列と同じ規則） ---------------- */
+function norm(v){ return String(v==null?"":v).split("　").join(" ").trim(); }
+
+/* 戻り値: "na"(対象外) / "pending"(先に選択) / "ok"(回答対象) */
+function qGate(q){
+  if(!q.dependsOn) return "ok";
+  for(const c of q.dependsOn){
+    const v = norm(state.answers[c.id]);
+    if(v==="") return "pending";
+    if(c.hideIf==="eq" && v===c.val) return "na";
+    if(c.hideIf==="ne" && v!==c.val) return "na";
+  }
+  return "ok";
+}
+function isVisible(q){ return qGate(q)==="ok"; }
+function qStatus(q){
+  const g = qGate(q);
+  if(g==="na") return "対象外";
+  if(g==="pending") return "先に選択";
+  return norm(state.answers[q.id])==="" ? "未入力" : "入力済";
+}
+
+function allQuestions(){
+  const list=[];
+  BLOCKS.forEach(b=>b.groups.forEach(g=>g.questions.forEach(q=>list.push(Object.assign({_blockId:b.id}, q)))));
+  return list;
+}
+function allVisibleQuestions(){ return allQuestions().filter(isVisible); }
+
+/* ブロック単位の状態: "na"=記入不要 / "pending"=先に別の設問へ回答 / "ok" */
+function blockGate(b){
+  let pending=false;
+  for(const g of b.groups) for(const q of g.questions){
+    const s = qGate(q);
+    if(s==="ok") return "ok";
+    if(s==="pending") pending=true;
+  }
+  return pending ? "pending" : "na";
+}
+function stepIsNA(i){
+  const meta = STEP_META[i];
+  const b = BLOCKS.find(x=>x.id===meta.key);
+  return !!b && blockGate(b)==="na";
+}
+
+function computeProgress(){
+  const qs = allVisibleQuestions();
+  let total=qs.length, done=0;
+  qs.forEach(q=>{ if(norm(state.answers[q.id])!=="") done++; });
+  return {total, done};
+}
+function progressText(p){ return `${p.done}/${p.total} 回答済み`; }
+
+/* ---------------- cross-device transfer ---------------- */
+let pendingResumePayload = null;
+let qrPanelOpen = false;
+const RESUME_LINK_LIMIT = 1800;
+
+function utf8ToBase64(str){
+  const bytes = new TextEncoder().encode(str);
+  let binary = "";
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary);
+}
+function base64ToUtf8(str){
+  const binary = atob(str);
+  const bytes = new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function buildTransferPayload(){
+  return { formId: FORM_ID, savedAt: new Date().toISOString(), answers: state.answers };
+}
+function buildResumeLink(){
+  const encoded = utf8ToBase64(JSON.stringify(buildTransferPayload()));
+  return { url: location.origin + location.pathname + "#resume=" + encodeURIComponent(encoded), size: encoded.length };
+}
+function applyPayloadToState(payload){
+  state.answers = payload.answers || {};
+  state.step = 0;
+  saveState();
+  hasResumed = Object.keys(state.answers).length>0;
+}
+function clearResumeHash(){
+  try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+}
+function checkResumeHash(){
+  if(location.hash && location.hash.indexOf("#resume=")===0){
+    try{
+      const encoded = decodeURIComponent(location.hash.slice(8));
+      const payload = JSON.parse(base64ToUtf8(encoded));
+      if(payload && payload.formId===FORM_ID && payload.answers){ pendingResumePayload = payload; }
+    }catch(e){}
+  }
+}
+function exportProgressFile(){
+  trySaveFile(safeFileBase()+"_進捗.json", JSON.stringify(buildTransferPayload(), null, 2), "application/json");
+}
+function importProgressFile(file){
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const payload = JSON.parse(reader.result);
+      if(!payload || payload.formId !== FORM_ID){ showToast("このフォーム用の進捗ファイルではないようです"); return; }
+      if(!confirm("読み込んだ内容で、この端末の入力内容を上書きします。よろしいですか？")) return;
+      applyPayloadToState(payload);
+      showToast("進捗ファイルを読み込みました");
+      renderAll();
+    }catch(e){
+      showToast("ファイルの読み込みに失敗しました。正しい進捗ファイルかご確認ください");
+    }
+  };
+  reader.readAsText(file, "utf-8");
+}
+function renderQrPanel(){
+  const {size} = buildResumeLink();
+  if(size > RESUME_LINK_LIMIT){
+    return `<div class="qr-panel"><p class="qr-hint">現在の入力量が多く、QRコード／リンクでは送れません。上の「進捗をファイルに保存」をご利用ください。</p></div>`;
+  }
+  return `<div class="qr-panel">
+    <div class="qr-canvas" id="qrCanvas"></div>
+    <p class="qr-hint">QRコードを別端末のカメラで読み取るか、下のボタンでリンクをコピーしてください。入力内容が含まれるリンクのため、第三者と共有しないようご注意ください。</p>
+    <div class="save-btn-row"><button class="btn" id="btnCopyResumeLink">リンクをコピーする</button></div>
+  </div>`;
+}
+
+/* ---------------- rendering ---------------- */
+const mainScroll = document.getElementById("mainScroll");
+const railEl = document.getElementById("rail");
+const trackerEl = document.getElementById("mobileTracker");
+const footerEl = document.getElementById("footerBar");
+
+function renderAll(){
+  renderRail(); renderTracker(); renderStep(); renderFooter();
+}
+
+function stepClass(i){
+  let cls = i===state.step ? "active" : (i<state.step ? "done" : "");
+  if(stepIsNA(i)) cls += " na";
+  return cls;
+}
+function renderRail(){
+  let html = `<p class="rail-brand">${esc(FORM.brand)}<small>${esc(FORM.typeName)}</small></p>`;
+  STEP_META.forEach((s,i)=>{
+    html += `<div class="rail-step ${stepClass(i)}" data-step="${i}"><span class="rail-dot">${i}</span><span class="rail-label-wrap"><div class="rail-title">${esc(s.label)}</div></span></div>`;
+  });
+  railEl.innerHTML = html;
+  railEl.querySelectorAll(".rail-step").forEach(el=>{
+    el.addEventListener("click", ()=>{ goStep(parseInt(el.dataset.step,10)); });
+  });
+}
+
+function renderTracker(){
+  let html="";
+  STEP_META.forEach((s,i)=>{
+    html += `<div class="mt-pill ${stepClass(i)}" data-step="${i}">${esc(s.label)}</div>`;
+  });
+  trackerEl.innerHTML = html;
+  trackerEl.querySelectorAll(".mt-pill").forEach(el=>{
+    el.addEventListener("click", ()=>{ goStep(parseInt(el.dataset.step,10)); });
+  });
+  const active = trackerEl.querySelector(".mt-pill.active");
+  if(active) active.scrollIntoView({inline:"center", block:"nearest"});
+}
+
+function fieldHtml(q){
+  const val = state.answers[q.id] ?? "";
+  const answered = String(val).trim()!=="";
+  let inputHtml="";
+  if(q.type==="select"){
+    inputHtml = `<select class="q-input" id="f_${q.id}" data-qid="${q.id}"><option value="">選択してください</option>` +
+      q.options.map(o=>`<option value="${escAttr(o)}" ${o===val?"selected":""}>${esc(o)}</option>`).join("") + `</select>`;
+  } else if(q.type==="textarea"){
+    inputHtml = `<textarea class="q-input${q.short?" short":""}" id="f_${q.id}" data-qid="${q.id}" placeholder="ご回答（ない場合は「なし」）">${esc(val)}</textarea>`;
+  } else {
+    inputHtml = `<input class="q-input" type="text" id="f_${q.id}" data-qid="${q.id}" value="${escAttr(val)}" placeholder="ご回答をご記入ください"${q.inputmode?` inputmode="${q.inputmode}"`:""}>`;
+  }
+  return `<div class="qcard ${answered?'answered':''}" id="card_${q.id}" data-card="${q.id}" ${isVisible(q)?"":"hidden"}>
+    <div class="q-top"><span class="q-no">${esc(q.id)}</span></div>
+    <label class="q-label" for="f_${q.id}">${esc(q.label)}</label>
+    ${q.prompt?`<p class="q-prompt">${esc(q.prompt)}</p>`:''}
+    ${q.example?`<div class="q-example"><b>記入例：</b>${esc(q.example)}</div>`:''}
+    ${inputHtml}
+  </div>`;
+}
+
+function renderCover(){
+  const c = FORM.cover;
+  let html = `<div class="cover-wrap">
+    <h1 class="cover-title serif">${esc(FORM.brand)}<br>事業計画ヒアリングフォーム</h1>
+    <p class="cover-sub">${esc(FORM.typeName)}用　／　補助事業の事業計画書づくりに必要な情報を、一問一答形式でお伺いします。</p>`;
+  if(pendingResumePayload){
+    const savedAtStr = pendingResumePayload.savedAt ? new Date(pendingResumePayload.savedAt).toLocaleString("ja-JP") : "";
+    html += `<div class="resume-note hash-resume-note">
+      <span>別の端末からの引き継ぎデータが見つかりました${savedAtStr?'（'+esc(savedAtStr)+'時点）':''}。読み込みますか？現在この端末にある入力内容は上書きされます。</span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn primary btn-sm" id="btnApplyResumeHash">読み込む</button>
+        <button class="btn btn-sm" id="btnDismissResumeHash">無視する</button>
+      </span>
+    </div>`;
+  }
+  if(hasResumed){
+    html += `<div class="resume-note"><span>前回入力の続きから再開できます。</span><button id="btnReset">最初からやり直す</button></div>`;
+  }
+  if(c.info && c.info.length){
+    html += `<div class="cover-card"><h3>■ ご返送について</h3><ul class="info-list">` +
+      c.info.map(r=>`<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join("") + `</ul></div>`;
+  }
+  html += `<div class="cover-card">
+      <h3>■ このフォームの使い方</h3>
+      <div class="usage-grid">${c.usage.map(r=>`<div class="usage-item"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>`).join("")}</div>
+    </div>`;
+  if(c.summary && c.summary.length){
+    html += `<div class="cover-card"><h3>■ この補助金の概要（補助規則より）</h3><ul class="info-list">` +
+      c.summary.map(r=>`<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join("") + `</ul>
+      <p class="cover-caveat">${esc(c.summaryCaveat)}</p></div>`;
+  }
+  html += `<div class="cover-card">
+      <button class="btn primary start-btn" id="btnStart">${hasResumed ? "続きから入力する" : "回答をはじめる"} →</button>
+    </div>
+    <div class="cover-card">
+      <h3>■ 別の端末で続きを入力する</h3>
+      <p>この端末に保存されている入力内容を、他のスマートフォンやパソコンに引き継ぐことができます。</p>
+      <div class="save-btn-row">
+        <button class="btn" id="btnExportProgress">進捗をファイルに保存</button>
+        <button class="btn" id="btnImportProgress">ファイルから読み込む</button>
+      </div>
+      <input type="file" id="importFileInput" accept="application/json,.json" style="display:none">
+      <button class="btn ghost" type="button" id="btnToggleQr" style="width:100%;margin-top:6px;">${qrPanelOpen ? "QRコード／リンクを閉じる" : "QRコード／リンクで送る（入力量が少ない場合）"}</button>
+      ${qrPanelOpen ? renderQrPanel() : ''}
+    </div>
+  </div>`;
+  return html;
+}
+
+function naNoteText(b){
+  return blockGate(b)==="pending"
+    ? "このブロックの設問は、先に前のブロックの設問へ回答すると表示されます。"
+    : "これまでの回答内容により、このブロックはご記入不要です。「次へ」で先へお進みください。";
+}
+
+function renderBlockContent(b){
+  let html = `<div class="block-header">
+    <p class="block-eyebrow">${esc(b.eyebrow)}</p>
+    <h2 class="block-title">${esc(b.title)}</h2>
+    ${b.note?`<div class="block-note">${esc(b.note)}</div>`:''}
+  </div>`;
+  const navGroups = b.groups.map((g,idx)=> g.heading ? {heading:g.heading, id:`grp_${b.id}_${idx}`} : null).filter(Boolean);
+  if(navGroups.length > 1){
+    html += `<div class="block-jumpnav">` + navGroups.map(ng=>`<button type="button" class="jump-chip" data-jump-group="${ng.id}">${esc(ng.heading)}</button>`).join('') + `</div>`;
+  }
+  const gate = blockGate(b);
+  html += `<div class="na-note" id="naNote" ${gate==="ok"?"hidden":""}>${esc(naNoteText(b))}</div>`;
+  b.groups.forEach((g,idx)=>{
+    const anyVisible = g.questions.some(isVisible);
+    html += `<div class="grp" id="grp_${b.id}_${idx}" ${anyVisible?"":"hidden"}>`;
+    if(g.heading) html += `<div class="group-heading">${esc(g.heading)}</div>`;
+    g.questions.forEach(q=>{ html += fieldHtml(q); });
+    html += `</div>`;
+  });
+  return html;
+}
+
+function renderChecklistBlock(){
+  let html = `<div class="block-header">
+    <p class="block-eyebrow">提出書類</p>
+    <h2 class="block-title">ご提出いただきたい資料</h2>
+    <div class="block-note">準備の状況を選んでください。資料はメール・郵送・手渡しのいずれでもかまいません。スマホで撮影した写真でも大丈夫です。</div>
+  </div>`;
+  html += FORM.docs.map(d=>{
+    const st = state.answers["ST_"+d.id] || FORM.docStates[FORM.docDefault];
+    const note = state.answers["NT_"+d.id] || "";
+    const chips = FORM.docStates.map(s=>{
+      let cls="";
+      if(s===st){
+        if(s==="準備済み") cls="on-ready";
+        else if(s==="準備中") cls="on-mid";
+        else if(s==="該当なし") cls="on-none";
+        else cls="on-todo";
+      }
+      const mark = s==="準備済み"?"☑ ":(s==="準備中"?"◐ ":(s==="まだ"?"☐ ":"－ "));
+      return `<button class="doc-chip ${cls}" data-doc-state="${d.id}" data-val="${s}">${mark}${s}</button>`;
+    }).join("");
+    return `<div class="doc-row"><div class="doc-main"><div class="doc-label">${esc(d.no)}. ${esc(d.label)}</div><div class="doc-state">${chips}</div>
+      <div class="doc-note"><input type="text" placeholder="備考・メモ（任意）" data-doc-note="${d.id}" value="${escAttr(note)}"></div>
+    </div></div>`;
+  }).join("");
+  return html;
+}
+
+function renderReview(){
+  const p = computeProgress();
+  const missing = allVisibleQuestions().filter(q=>norm(state.answers[q.id])==="");
+  let html = `<div class="block-header">
+    <p class="block-eyebrow">最終ステップ</p>
+    <h2 class="block-title">内容の確認・保存</h2>
+    <p class="block-subtitle">ここまでの回答を確認し、ファイルに保存またはコピーして、担当の支援者へお送りください。</p>
+  </div>
+  <div class="review-stats">
+    <div class="stat-tile"><div class="stat-num">${p.done} / ${p.total}</div><div class="stat-label">回答済みの設問数</div></div>
+    <div class="stat-tile"><div class="stat-num">${missing.length}</div><div class="stat-label">未回答の設問数</div></div>
+  </div>`;
+  if(missing.length){
+    html += `<div class="missing-box"><h4>未回答の設問が ${missing.length} 件あります</h4><ul class="missing-list">` +
+      missing.slice(0,20).map(q=>`<li><a data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</a></li>`).join("") +
+      (missing.length>20?`<li>ほか ${missing.length-20} 件</li>`:"") + `</ul>
+      <p style="margin:10px 0 0;font-size:11.5px;color:var(--text-muted);line-height:1.7;">当てはまらない・特にない場合は「なし」、わからない・未定の場合は「わからない」「未定」とご記入ください。</p></div>`;
+  } else if(p.total>0) {
+    html += `<div class="done-box"><h4>✓ すべての設問に回答済みです</h4><p>この内容で保存・送付いただけます。提出書類の準備状況もあわせてご確認ください。</p></div>`;
+  }
+  html += `<div class="save-section">
+    <h3>📄 Excel・スプレッドシート用（CSV形式）</h3>
+    <p class="hint">元のヒアリングシートの「回答一覧（支援者・AI読み込み用）」と同じ列構成（項目番号・ブロック・項目・おたずね・回答・状態）で保存します。支援者へお渡しする際に便利です。</p>
+    <div class="save-btn-row"><button class="btn primary" id="btnSaveCsv">CSVファイルを保存する</button></div>
+  </div>
+  <div class="save-section">
+    <h3>📝 メール・チャット用（テキスト形式）</h3>
+    <p class="hint">読みやすい文章形式でまとめます。ファイル保存、またはコピーしてメールやLINEに貼り付けてご利用いただけます。</p>
+    <div class="save-btn-row">
+      <button class="btn primary" id="btnSaveTxt">テキストファイルを保存する</button>
+      <button class="btn" id="btnCopyTxt">全文をコピーする</button>
+    </div>
+    <textarea class="copy-area" id="copyArea" readonly></textarea>
+  </div>
+  <p class="reset-link"><a id="btnResetBottom">回答をすべて消去して最初からやり直す</a></p>`;
+  return html;
+}
+
+function renderStep(){
+  const meta = STEP_META[state.step];
+  let html="";
+  if(meta.key==="cover") html = renderCover();
+  else if(meta.key==="review") html = renderReview();
+  else if(meta.key==="docs") html = renderChecklistBlock();
+  else {
+    const block = BLOCKS.find(b=>b.id===meta.key);
+    html = `<div>${renderBlockContent(block)}</div>`;
+  }
+  mainScroll.innerHTML = html;
+  attachStepEvents();
+  if(meta.key==="review"){
+    document.getElementById("copyArea").value = buildReadableText();
+  }
+  mainScroll.scrollTo({top:0});
+}
+
+function renderFooter(){
+  const p = computeProgress();
+  const pct = p.total ? Math.round((p.done/p.total)*100) : 0;
+  const isCover = state.step===0, isReview = state.step===STEP_META.length-1;
+  footerEl.innerHTML = `
+    <div class="footer-progress">
+      <div class="footer-progress-text"><span>${esc(STEP_META[state.step].label)}<span id="savedIndicator" class="footer-saved"></span></span><span>${progressText(p)}</span></div>
+      <div class="footer-bar-track"><div class="footer-bar-fill" style="width:${pct}%"></div></div>
+    </div>
+    ${isCover?'':'<button class="btn" id="btnPrev">← 戻る</button>'}
+    ${isReview?'':'<button class="btn primary" id="btnNext">'+(isCover?'始める':'次へ')+' →</button>'}
+  `;
+  const prev = document.getElementById("btnPrev");
+  const next = document.getElementById("btnNext");
+  if(prev) prev.addEventListener("click", ()=>stepBy(-1));
+  if(next) next.addEventListener("click", ()=>{ if(isCover){ startFromCover(); } else { stepBy(1); } });
+  updateSavedIndicator();
+}
+
+/* 記入不要（対象外）のブロックは「次へ／戻る」で自動的に飛ばす */
+function stepBy(dir){
+  let i = state.step + dir;
+  while(i>0 && i<STEP_META.length-1 && stepIsNA(i)) i += dir;
+  if(i<=0 && dir<0){ goStep(0); return; }
+  goStep(i);
+}
+function startFromCover(){
+  hasResumed = true;
+  let i = 1;
+  while(i<STEP_META.length-1 && stepIsNA(i)) i++;
+  goStep(i);
+}
+
+function goStep(i){
+  if(i<0||i>=STEP_META.length) return;
+  state.step = i;
+  saveState();
+  renderAll();
+}
+
+function attachStepEvents(){
+  mainScroll.querySelectorAll("[data-qid]").forEach(el=>{
+    el.addEventListener("input", onFieldInput);
+    el.addEventListener("change", onFieldInput);
+  });
+  mainScroll.querySelectorAll("[data-doc-state]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      state.answers["ST_"+el.dataset.docState] = el.dataset.val;
+      scheduleSave();
+      const sc = mainScroll.scrollTop;
+      renderStep(); renderFooter();
+      mainScroll.scrollTop = sc;
+    });
+  });
+  mainScroll.querySelectorAll("[data-doc-note]").forEach(el=>{
+    el.addEventListener("input", ()=>{ state.answers["NT_"+el.dataset.docNote] = el.value; scheduleSave(); });
+  });
+  const btnStart = document.getElementById("btnStart");
+  if(btnStart) btnStart.addEventListener("click", startFromCover);
+  const btnReset = document.getElementById("btnReset");
+  if(btnReset) btnReset.addEventListener("click", doReset);
+  const btnResetBottom = document.getElementById("btnResetBottom");
+  if(btnResetBottom) btnResetBottom.addEventListener("click", doReset);
+  const btnApplyResumeHash = document.getElementById("btnApplyResumeHash");
+  if(btnApplyResumeHash) btnApplyResumeHash.addEventListener("click", ()=>{
+    applyPayloadToState(pendingResumePayload);
+    pendingResumePayload = null;
+    clearResumeHash();
+    showToast("引き継ぎデータを読み込みました");
+    renderAll();
+  });
+  const btnDismissResumeHash = document.getElementById("btnDismissResumeHash");
+  if(btnDismissResumeHash) btnDismissResumeHash.addEventListener("click", ()=>{
+    pendingResumePayload = null;
+    clearResumeHash();
+    renderStep();
+  });
+  const btnExportProgress = document.getElementById("btnExportProgress");
+  if(btnExportProgress) btnExportProgress.addEventListener("click", exportProgressFile);
+  const btnImportProgress = document.getElementById("btnImportProgress");
+  const importFileInput = document.getElementById("importFileInput");
+  if(btnImportProgress && importFileInput) btnImportProgress.addEventListener("click", ()=>importFileInput.click());
+  if(importFileInput) importFileInput.addEventListener("change", (e)=>{
+    const file = e.target.files[0];
+    if(file) importProgressFile(file);
+    e.target.value = "";
+  });
+  const btnToggleQr = document.getElementById("btnToggleQr");
+  if(btnToggleQr) btnToggleQr.addEventListener("click", ()=>{ qrPanelOpen = !qrPanelOpen; renderStep(); });
+  const qrCanvas = document.getElementById("qrCanvas");
+  if(qrCanvas){
+    if(window.QRCode){
+      qrCanvas.innerHTML = "";
+      new QRCode(qrCanvas, { text: buildResumeLink().url, width:180, height:180, correctLevel: QRCode.CorrectLevel.M });
+    } else {
+      qrCanvas.textContent = "QRコードを生成できませんでした。下のボタンでリンクをコピーしてください。";
+    }
+  }
+  const btnCopyResumeLink = document.getElementById("btnCopyResumeLink");
+  if(btnCopyResumeLink) btnCopyResumeLink.addEventListener("click", ()=>{
+    const {url} = buildResumeLink();
+    navigator.clipboard.writeText(url).then(()=>showToast("リンクをコピーしました")).catch(()=>showToast("コピーできませんでした"));
+  });
+  mainScroll.querySelectorAll("[data-jump]").forEach(el=>{
+    el.addEventListener("click", ()=>{ jumpToQuestion(el.dataset.jump); });
+  });
+  const btnSaveCsv = document.getElementById("btnSaveCsv");
+  if(btnSaveCsv) btnSaveCsv.addEventListener("click", saveCsv);
+  const btnSaveTxt = document.getElementById("btnSaveTxt");
+  if(btnSaveTxt) btnSaveTxt.addEventListener("click", saveTxt);
+  const btnCopyTxt = document.getElementById("btnCopyTxt");
+  if(btnCopyTxt) btnCopyTxt.addEventListener("click", copyTxt);
+  mainScroll.querySelectorAll("[data-jump-group]").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const target = document.getElementById(el.dataset.jumpGroup);
+      if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  });
+  mainScroll.querySelectorAll("textarea.q-input").forEach(el=>{
+    autoGrow(el);
+    el.addEventListener("input", ()=>autoGrow(el));
+  });
+}
+function autoGrow(el){
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + "px";
+}
+
+/* 回答に応じて、設問カード・グループ・ブロックの表示を再計算する（入力欄は再描画しない） */
+function refreshVisibility(){
+  const meta = STEP_META[state.step];
+  const b = BLOCKS.find(x=>x.id===meta.key);
+  if(!b) return;
+  b.groups.forEach((g,idx)=>{
+    let any=false;
+    g.questions.forEach(q=>{
+      const card = document.getElementById("card_"+q.id);
+      if(!card) return;
+      const vis = isVisible(q);
+      if(vis) any=true;
+      if(card.hidden === vis){
+        card.hidden = !vis;
+        if(vis){ const ta = card.querySelector("textarea"); if(ta) autoGrow(ta); }
+      }
+    });
+    const grp = document.getElementById(`grp_${b.id}_${idx}`);
+    if(grp) grp.hidden = !any;
+  });
+  const naNote = document.getElementById("naNote");
+  if(naNote){
+    const gate = blockGate(b);
+    naNote.hidden = gate==="ok";
+    naNote.textContent = naNoteText(b);
+  }
+}
+
+function onFieldInput(e){
+  const id = e.target.dataset.qid;
+  state.answers[id] = e.target.value;
+  const card = document.getElementById("card_"+id);
+  if(card){ card.classList.toggle("answered", String(e.target.value).trim()!=="") ; }
+  scheduleSave();
+  refreshVisibility();
+  renderFooterLite();
+  refreshNav();
+}
+function refreshNav(){
+  railEl.querySelectorAll(".rail-step").forEach(el=>{
+    el.classList.toggle("na", stepIsNA(parseInt(el.dataset.step,10)));
+  });
+  trackerEl.querySelectorAll(".mt-pill").forEach(el=>{
+    el.classList.toggle("na", stepIsNA(parseInt(el.dataset.step,10)));
+  });
+}
+function renderFooterLite(){
+  const p = computeProgress();
+  const pct = p.total ? Math.round((p.done/p.total)*100) : 0;
+  const txt = footerEl.querySelector(".footer-progress-text span:last-child");
+  const fill = footerEl.querySelector(".footer-bar-fill");
+  if(txt) txt.textContent = progressText(p);
+  if(fill) fill.style.width = pct+"%";
+}
+
+function jumpToQuestion(qid){
+  const targetStep = QUESTION_STEP[qid];
+  if(!targetStep) return;
+  goStep(targetStep);
+  setTimeout(()=>{
+    const el = document.getElementById("card_"+qid);
+    if(el) el.scrollIntoView({behavior:"smooth", block:"center"});
+  },60);
+}
+
+function doReset(){
+  if(!confirm("これまでの回答をすべて消去して、最初からやり直しますか？この操作は取り消せません。")) return;
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  state = { answers:{}, step:0 };
+  const d = new Date(); state.answers.R_DATE = d.toISOString().slice(0,10);
+  hasResumed=false;
+  lastSavedAt = null;
+  renderAll();
+}
+
+/* ---------------- export builders ---------------- */
+function esc(s){ return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escAttr(s){ return esc(s).replace(/"/g,"&quot;"); }
+
+/* Excel「回答一覧（支援者・AI読み込み用）」と同じ構成: 項目番号 / ブロック / 項目 / おたずね / 回答 / 状態 */
+function buildRows(){
+  const rows=[];
+  BLOCKS.forEach(b=>{
+    b.groups.forEach(g=>g.questions.forEach(q=>{
+      const st = qStatus(q);
+      const shown = st==="入力済" || st==="未入力";
+      rows.push({no:q.id, section:b.sheetLabel, label:q.label, prompt:q.prompt, answer: shown ? (state.answers[q.id]||"") : "", status:st});
+    }));
+  });
+  FORM.docs.forEach(d=>{
+    rows.push({no:"書類"+d.no, section:"提出書類チェック", label:d.label, prompt:"", answer:state.answers["ST_"+d.id]||FORM.docStates[FORM.docDefault], status:state.answers["NT_"+d.id]||"", isDoc:true});
+  });
+  return rows;
+}
+
+function csvEscape(v){
+  v = String(v??"");
+  if(/[",\r\n]/.test(v)) return '"' + v.replace(/"/g,'""') + '"';
+  return v;
+}
+function buildCsv(){
+  const rows = buildRows();
+  let out = "﻿" + ["項目番号","ブロック","項目","おたずね","回答","状態（提出書類は備考）"].map(csvEscape).join(",") + "\r\n";
+  out += ["","記入日","","",state.answers.R_DATE||"",""].map(csvEscape).join(",") + "\r\n";
+  rows.forEach(r=>{
+    out += [r.no, r.section, r.label, r.prompt, r.answer, r.status].map(csvEscape).join(",") + "\r\n";
+  });
+  return out;
+}
+
+function buildReadableText(){
+  const rows = buildRows();
+  const NL = String.fromCharCode(10);
+  let out = `【${FORM.brand}】事業計画ヒアリングフォーム（${FORM.typeName}） 回答控え` + NL;
+  out += "事業者名：" + (state.answers["00-01"]||"") + "　代表者：" + (state.answers["00-02"]||"") + "　記入日：" + (state.answers.R_DATE||"") + NL;
+  out += "生成日時：" + new Date().toLocaleString("ja-JP") + NL;
+  out += "========================================" + NL;
+  let curSection="";
+  rows.forEach(r=>{
+    if(r.status==="対象外" || r.status==="先に選択") return;
+    if(r.section!==curSection){ curSection=r.section; out += NL + "■ "+curSection + NL; }
+    if(r.isDoc){
+      out += "・" + r.label + NL + "  → " + r.answer + (r.status?"（"+r.status+"）":"") + NL;
+      return;
+    }
+    out += "・" + r.no + " " + r.label + (r.status==="未入力"?"【未回答】":"") + NL;
+    out += "  → " + (r.answer || "（未回答）") + NL;
+  });
+  return out;
+}
+
+function safeFileBase(){
+  const biz = String(state.answers["00-01"]||"事業者").replace(/[/:*?"<>|]/g,"").split(String.fromCharCode(92)).join("");
+  const date = (state.answers.R_DATE||"").replace(/-/g,"");
+  return `ヒアリング回答_${FORM.short}_${biz}_${date}`;
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>t.classList.remove("show"), 2600);
+}
+
+function trySaveFile(filename, content, mime){
+  try{
+    const blob = new Blob([content], {type: mime + ";charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    showToast("保存しました：" + filename);
+  }catch(e){
+    const ca = document.getElementById("copyArea");
+    if(ca){ ca.value = content; ca.scrollIntoView({behavior:"smooth", block:"center"}); }
+    showToast("自動保存に失敗したため、下の欄からコピーしてご利用ください");
+  }
+}
+function saveCsv(){ trySaveFile(safeFileBase()+".csv", buildCsv(), "text/csv"); }
+function saveTxt(){ trySaveFile(safeFileBase()+".txt", buildReadableText(), "text/plain"); }
+async function copyTxt(){
+  const text = buildReadableText();
+  const ca = document.getElementById("copyArea");
+  if(ca) ca.value = text;
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast("コピーしました");
+  }catch(e){
+    if(ca){ ca.focus(); ca.select(); try{ document.execCommand("copy"); showToast("コピーしました"); }catch(e2){ showToast("コピーできませんでした。テキストを選択してコピーしてください"); } }
+  }
+}
+
+/* ---------------- init ---------------- */
+checkResumeHash();
+if(state.step<0 || state.step>=STEP_META.length) state.step = 0;
+renderAll();
+</script>
+</body>
+</html>
