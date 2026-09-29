@@ -14,7 +14,7 @@ with sync_playwright() as pw:
     p.click("#btnStart")
     p.fill("[data-qid='00-01']", "テスト事業者")
     print("progress:", p.inner_text("#progressText"))
-    p.on("dialog", lambda d: (print("dialog:", d.message.split(chr(10))[0]), d.accept()))
+    p.add_locator_handler(p.locator("#btnProceed"), lambda: (print("modal shown"), p.click("#btnProceed")))
     p.click("#btnNext")
     print("step:", p.inner_text(".footer-label"))
     print("radio chips:", p.eval_on_selector_all(".opt-chip", "e=>e.length"))

@@ -103,8 +103,8 @@ def clean_note(n):
     if not n:
         return ""
     n = n.replace("あなたが記入しなくてよい設問が自動で灰色（対象外）になります", "あなたが記入しなくてよい設問は自動的に表示されなくなります")
-    n = n.replace("は、このシートは飛ばして次へお進みください。", "は、このブロックは自動的にスキップされます。")
-    n = n.replace("このシート", "このブロック")
+    n = n.replace("は、このシートは飛ばして次へお進みください。", "は、この章は自動的にスキップされます。")
+    n = n.replace("このシート", "この章")
     n = n.replace("指定区域〜年齢要件は補助金の上乗せに当てはまるかを確認する質問です。分からなければ「わからない」を選んでください。", "")
     n = n.replace("次にお進みください。", "")
     return n
@@ -146,7 +146,7 @@ def build_form(key, spec):
             groups[-1]["questions"].append(item)
         blocks.append({
             "id": "b%d" % n, "no": n,
-            "eyebrow": "基本情報" if n == 0 else "第%dブロック" % n,
+            "eyebrow": "基本情報" if n == 0 else "第%d章" % n,
             "title": title, "railLabel": "%d．%s" % (n, title), "sheetLabel": "%d. %s" % (n, title),
             "note": clean_note(sh["note"]), "groups": groups,
         })
@@ -192,7 +192,7 @@ def build_form(key, spec):
         "key": key, "brand": BRAND, "typeName": t["typeName"], "short": t["short"],
         "blocks": blocks, "docs": docs, "docStates": doc_states,
         "docDefault": doc_states.index("まだ") if "まだ" in doc_states else 0,
-        "cover": {"points": ["分かる範囲で書けば大丈夫です。短い言葉や箇条書きで構いません。", "当てはまらない・特にない場合は「なし」、分からない・まだ決まっていない場合は「わからない」「未定」とご記入ください。", "入力内容はこの端末に自動で保存されます。途中でやめても、続きから再開できます（全部で2〜3時間ほど。数日に分けて大丈夫です）。"], "usage": usage, "info": info, "summary": t["summary"], "summaryCaveat": SUMMARY_CAVEAT},
+        "cover": {"points": ["分かる範囲で書けば大丈夫です。短い言葉や箇条書きで構いません。", "当てはまらない・特にない場合は「なし」、分からない・まだ決まっていない場合は「わからない」「未定」とご記入ください。", "入力内容はこの端末に自動で保存されます。途中でやめても、続きから再開できます（全部で2〜3時間ほど。数日に分けて大丈夫です）。回答に応じて設問数は変わります。"], "usage": usage, "info": info, "summary": t["summary"], "summaryCaveat": SUMMARY_CAVEAT},
         "_total": total_q,
     }
 

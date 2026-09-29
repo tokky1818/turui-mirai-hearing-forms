@@ -149,7 +149,6 @@ textarea.q-input.short{min-height:46px;}
 .rail-step.na{opacity:.45;}
 .rail-step.na .rail-title::after{content:"（対象外）";font-size:10.5px;}
 .mt-pill.na{opacity:.45;}
-.doc-chip.on-mid{background:var(--required-soft);border-color:var(--required);color:var(--required);}
 .doc-chip.on-todo{background:var(--optional-soft);border-color:var(--border-strong);color:var(--text);}
 .usage-item b{min-width:104px;}
 .info-list{margin:0;padding:0;list-style:none;display:grid;gap:7px;}
@@ -172,6 +171,24 @@ details.cover-card>summary,details.save-section>summary{cursor:pointer;font-weig
 .q-prompt{font-size:14px;}
 .q-example{font-size:13px;}
 .footer-label{font-weight:600;}
+.modal-back{position:fixed;inset:0;background:rgba(10,20,17,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:var(--surface);color:var(--text);border-radius:var(--radius);padding:22px 20px;max-width:420px;width:100%;box-shadow:var(--shadow);}
+.modal-box h3{margin:0 0 10px;font-size:16px;}
+.modal-box p{margin:0 0 18px;font-size:13.5px;line-height:1.8;color:var(--text-muted);}
+.modal-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.modal-btns .btn{flex:1;min-width:130px;min-height:46px;}
+details.missing-box>summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--required);list-style-position:inside;}
+.missing-list li .link-btn{min-height:44px;display:inline-flex;align-items:center;}
+.doc-chip{min-height:40px;}
+body{line-break:strict;word-break:auto-phrase;}
+.footer-progress-text{display:flex;justify-content:space-between;gap:10px;}
+.footer-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1;}
+#progressText{white-space:nowrap;flex:none;}
+.doc-chip.on-mid{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-strong);border-style:dashed;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .btn.primary,:root:not([data-theme="light"]) .opt-chip.on{color:#0b1512;}
+  :root:not([data-theme="light"]) .rail-step.done .rail-dot,:root:not([data-theme="light"]) .mt-pill.done{color:#0b1512;}
+}
 .footer-saved{display:block;margin:4px 0 0;font-size:11px;min-height:14px;}
 .doc-state{flex-wrap:wrap;}
 .mt-pill{min-height:38px;}

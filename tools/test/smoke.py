@@ -5,6 +5,11 @@ from playwright.sync_api import sync_playwright
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+def nxt(page):
+    page.click("#btnNext")
+    if page.locator("#btnProceed").count():
+        page.click("#btnProceed")
+
 def run(pw, fname, first_choice, other_choice_hidden_prefix):
     b = pw.chromium.launch(channel="chrome", headless=True)
     ctx = b.new_context(viewport={"width": 1100, "height": 800}, accept_downloads=True)
@@ -13,12 +18,11 @@ def run(pw, fname, first_choice, other_choice_hidden_prefix):
     page.on("pageerror", lambda e: errs.append(str(e)))
     page.on("console", lambda m: errs.append(m.text) if m.type == "error" and "fonts" not in m.text and "cdnjs" not in m.text and "ERR_" not in m.text else None)
     page.goto("file:///" + ROOT.replace(os.sep, "/") + "/" + fname)
-    page.on("dialog", lambda d: d.accept())
     page.click("#btnStart")
     # block 0: fill all
     for i, el in enumerate(page.query_selector_all("[data-qid]")):
         el.fill("テスト%d" % i)
-    page.click("#btnNext")
+    nxt(page)
     # block 1: choose first select
     sel = page.query_selector("select[data-qid]")
     qid = sel.get_attribute("data-qid") if sel else None
@@ -36,7 +40,7 @@ def run(pw, fname, first_choice, other_choice_hidden_prefix):
             el.select_option(index=1)
         else:
             el.fill("回答")
-    page.click("#btnNext")
+    nxt(page)
     step_label = page.inner_text(".footer-progress-text span:first-child")
     print("  after next ->", step_label.strip())
     # go through all remaining steps, fill visible, count NA skips
@@ -51,7 +55,7 @@ def run(pw, fname, first_choice, other_choice_hidden_prefix):
             else:
                 # 'なし' first for chain questions
                 el.fill("なし" if el.get_attribute("data-qid")[-2:] in ("15","10") else "回答")
-        page.click("#btnNext")
+        nxt(page)
     print("  visited:", labels)
     txt = page.input_value("#copyArea")
     print("  review stats:", page.inner_text(".review-stats").replace("\n", " "))

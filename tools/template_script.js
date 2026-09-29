@@ -87,6 +87,10 @@ function blockGate(b){
   }
   return pending ? "pending" : "na";
 }
+function stepIsSkippable(i){
+  const b = BLOCKS.find(x=>x.id===STEP_META[i].key);
+  return !!b && blockGate(b)!=="ok";
+}
 function stepIsNA(i){
   const meta = STEP_META[i];
   const b = BLOCKS.find(x=>x.id===meta.key);
@@ -99,7 +103,7 @@ function computeProgress(){
   qs.forEach(q=>{ if(norm(state.answers[q.id])!=="") done++; });
   return {total, done};
 }
-function progressText(p){ return `${p.done}/${p.total} 回答済み`; }
+function progressText(p){ return `${p.done}問 回答済み`; }
 
 /* ---------------- cross-device transfer ---------------- */
 let pendingResumePayload = null;
@@ -127,6 +131,8 @@ function buildResumeLink(){
 }
 function applyPayloadToState(payload){
   state.answers = payload.answers || {};
+  if(!state.answers.R_DATE) state.answers.R_DATE = localDate();
+  state.lastStep = 0;
   state.step = 0;
   saveState();
   hasResumed = Object.keys(state.answers).length>0;
@@ -195,7 +201,7 @@ function stepClass(i){
 function renderRail(){
   let html = `<p class="rail-brand">${esc(FORM.brand)}<small>${esc(FORM.typeName)}</small></p>`;
   STEP_META.forEach((s,i)=>{
-    html += `<div class="rail-step ${stepClass(i)}" data-step="${i}"><span class="rail-dot">${i}</span><span class="rail-label-wrap"><div class="rail-title">${esc(s.label)}</div></span></div>`;
+    html += `<div class="rail-step ${stepClass(i)}" data-step="${i}" title="${escAttr(s.label)}"><span class="rail-dot">${i}</span><span class="rail-label-wrap"><div class="rail-title">${esc(s.label)}</div></span></div>`;
   });
   railEl.innerHTML = html;
   railEl.querySelectorAll(".rail-step").forEach(el=>{
@@ -221,8 +227,8 @@ function fieldHtml(q){
   const answered = String(val).trim()!=="";
   let inputHtml="";
   if(q.type==="select" && q.options.length<=4){
-    inputHtml = `<div class="opt-group" role="radiogroup" aria-label="${escAttr(q.label)}">` +
-      q.options.map(o=>`<button type="button" class="opt-chip ${o===val?"on":""}" role="radio" aria-checked="${o===val}" data-opt="${q.id}" data-val="${escAttr(o)}">${esc(o)}</button>`).join("") + `</div>`;
+    inputHtml = `<div class="opt-group" role="group" aria-label="${escAttr(q.label)}">` +
+      q.options.map(o=>`<button type="button" class="opt-chip ${o===val?"on":""}" aria-pressed="${o===val}" data-opt="${q.id}" data-val="${escAttr(o)}">${esc(o)}</button>`).join("") + `</div>`;
   } else if(q.type==="select"){
     inputHtml = `<select class="q-input" id="f_${q.id}" data-qid="${q.id}"><option value="">選択してください</option>` +
       q.options.map(o=>`<option value="${escAttr(o)}" ${o===val?"selected":""}>${esc(o)}</option>`).join("") + `</select>`;
@@ -293,8 +299,8 @@ function renderCover(){
 
 function naNoteText(b){
   return blockGate(b)==="pending"
-    ? "このブロックの設問は、先に前のブロックの設問へ回答すると表示されます。"
-    : "これまでの回答内容により、このブロックはご記入不要です。「次へ」で先へお進みください。";
+    ? "この章の設問は、先に前の章の設問（申請区分など）へ回答すると表示されます。"
+    : "これまでの回答内容により、この章はご記入不要です。「次へ」で先へお進みください。";
 }
 
 function renderBlockContent(b){
@@ -326,7 +332,7 @@ function renderChecklistBlock(){
     <div class="block-note">準備の状況を選んでください。資料はメール・郵送・手渡しのいずれでもかまいません。スマホで撮影した写真でも大丈夫です。</div>
   </div>`;
   html += FORM.docs.map(d=>{
-    const st = state.answers["ST_"+d.id] || FORM.docStates[FORM.docDefault];
+    const st = state.answers["ST_"+d.id] || "";
     const note = state.answers["NT_"+d.id] || "";
     const chips = FORM.docStates.map(s=>{
       let cls="";
@@ -337,7 +343,7 @@ function renderChecklistBlock(){
         else cls="on-todo";
       }
       const mark = s==="準備済み"?"☑ ":(s==="準備中"?"◐ ":(s==="まだ"?"☐ ":"－ "));
-      return `<button class="doc-chip ${cls}" data-doc-state="${d.id}" data-val="${s}">${mark}${s}</button>`;
+      return `<button type="button" class="doc-chip ${cls}" aria-pressed="${s===st}" data-doc-state="${d.id}" data-val="${s}">${mark}${s}</button>`;
     }).join("");
     return `<div class="doc-row"><div class="doc-main"><div class="doc-label">${esc(d.no)}. ${esc(d.label)}</div><div class="doc-state">${chips}</div>
       <div class="doc-note"><input type="text" placeholder="備考・メモ（任意）" data-doc-note="${d.id}" value="${escAttr(note)}"></div>
@@ -357,12 +363,13 @@ function renderReview(){
   <div class="review-stats">
     <div class="stat-tile"><div class="stat-num">${p.done} / ${p.total}</div><div class="stat-label">回答済みの設問数</div></div>
     <div class="stat-tile"><div class="stat-num">${missing.length}</div><div class="stat-label">未回答の設問数</div></div>
+    <div class="stat-tile"><div class="stat-num">${FORM.docs.filter(d=>(state.answers["ST_"+d.id]||"")==="準備済み").length} / ${FORM.docs.length}</div><div class="stat-label">提出書類の準備済み</div></div>
   </div>`;
   if(missing.length){
-    html += `<div class="missing-box"><h4>あと ${missing.length} 問、未記入の設問があります</h4>
-      <p style="margin:0 0 10px;font-size:12.5px;color:var(--text-muted);line-height:1.7;">当てはまらない・特にない場合は「なし」、分からない・未定の場合は「わからない」「未定」とご記入ください。項目をタップすると、その設問へ移動します。</p><ul class="missing-list">` +
-      missing.slice(0,20).map(q=>`<li><button type="button" class="link-btn" data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</button></li>`).join("") +
-      (missing.length>20?`<li>ほか ${missing.length-20} 件</li>`:"") + `</ul></div>`;
+    html += `<details class="missing-box"><summary>あと ${missing.length} 問、未記入の設問があります（タップして確認）</summary>
+      <p style="margin:10px 0;font-size:12.5px;color:var(--text-muted);line-height:1.7;">未記入があっても、いまの内容で保存して送ることができます。あとから追記する場合は、項目をタップするとその設問へ移動します。当てはまらない場合は「なし」、分からない場合は「わからない」とご記入ください。</p><ul class="missing-list">` +
+      missing.slice(0,30).map(q=>`<li><button type="button" class="link-btn" data-jump="${q.id}">${esc(q.id)}：${esc(q.label)}</button></li>`).join("") +
+      (missing.length>30?`<li>ほか ${missing.length-30} 件</li>`:"") + `</ul></details>`;
   } else if(p.total>0) {
     html += `<div class="done-box"><h4>✓ すべての設問に回答済みです</h4><p>この内容で保存・送付いただけます。提出書類の準備状況もあわせてご確認ください。</p></div>`;
   }
@@ -370,8 +377,8 @@ function renderReview(){
   html += `<div class="save-section">
     <h3>📝 提出の手順</h3>
     <ol class="step-list">
-      <li>未記入の設問がないか確認します（上の一覧から戻って入力できます）。</li>
-      <li>下の「テキストファイルを保存する」を押します。<br>保存できない場合は「全文をコピーする」を押してください。</li>
+      <li>未記入の設問がないか確認します（上の一覧から戻って入力できます。未記入があっても保存して送れます）。</li>
+      <li>下の「テキストファイルを保存する」を押します。<br>ファイルはスマホでは「ダウンロード」などに保存されます。保存できない場合は「全文をコピーする」を押し、メールやLINEに貼り付けてください。</li>
       <li>保存したファイル（またはコピーした文章）を、${dest?esc(dest[1]):"担当の支援者"}へメールやLINEなどでお送りください。${dest?"連絡先は事業者様へ個別にお知らせしています。":""}</li>
     </ol>
     <div class="save-btn-row">
@@ -412,6 +419,11 @@ function renderFooter(){
   const p = computeProgress();
   const pct = p.total ? Math.round((p.done/p.total)*100) : 0;
   const isCover = state.step===0, isReview = state.step===STEP_META.length-1;
+  if(isCover){
+    footerEl.innerHTML = `<div class="footer-progress"></div><button class="btn primary" id="btnNext">回答をはじめる →</button>`;
+    document.getElementById("btnNext").addEventListener("click", startFromCover);
+    return;
+  }
   footerEl.innerHTML = `
     <div class="footer-progress">
       <div class="footer-progress-text"><span class="footer-label">${esc(STEP_META[state.step].label)}</span><span id="progressText">${progressText(p)}</span></div>
@@ -429,20 +441,39 @@ function renderFooter(){
 }
 
 /* 記入不要（対象外）のブロックは「次へ／戻る」で自動的に飛ばす */
-function unansweredInCurrentBlock(){
+function currentBlockCounts(){
   const b = BLOCKS.find(x=>x.id===STEP_META[state.step].key);
-  if(!b) return 0;
-  let n=0;
-  b.groups.forEach(g=>g.questions.forEach(q=>{ if(isVisible(q) && norm(state.answers[q.id])==="") n++; }));
-  return n;
+  if(!b) return {n:0, total:0};
+  let n=0, total=0;
+  b.groups.forEach(g=>g.questions.forEach(q=>{ if(isVisible(q)){ total++; if(norm(state.answers[q.id])==="") n++; } }));
+  return {n, total};
+}
+function askProceed(n, onGo){
+  const old = document.getElementById("proceedModal");
+  if(old) old.remove();
+  const el = document.createElement("div");
+  el.id = "proceedModal"; el.className = "modal-back";
+  el.innerHTML = `<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <h3 id="pmTitle">未記入の設問が ${n} 問あります</h3>
+    <p>このまま次へ進んでもかまいません。あとで「確認・保存」画面から戻って入力できます。分からない場合は「わからない」とご記入ください。</p>
+    <div class="modal-btns"><button type="button" class="btn" id="btnProceedBack">入力にもどる</button><button type="button" class="btn primary" id="btnProceed">このまま進む</button></div>
+  </div>`;
+  document.body.appendChild(el);
+  const close = ()=>{ el.remove(); };
+  document.getElementById("btnProceedBack").addEventListener("click", close);
+  document.getElementById("btnProceed").addEventListener("click", ()=>{ close(); onGo(); });
+  document.getElementById("btnProceedBack").focus();
 }
 function stepBy(dir){
   if(dir>0){
-    const n = unansweredInCurrentBlock();
-    if(n>0 && !confirm(`このブロックに未記入の設問が ${n} 問あります。\nこのまま次へ進みますか？\n（あとで「確認・保存」画面から戻って入力できます。分からない場合は「わからない」とご記入ください）`)) return;
+    const c = currentBlockCounts();
+    if(c.n>0 && c.n<c.total){ askProceed(c.n, ()=>doStep(dir)); return; }
   }
+  doStep(dir);
+}
+function doStep(dir){
   let i = state.step + dir;
-  while(i>0 && i<STEP_META.length-1 && stepIsNA(i)) i += dir;
+  while(i>0 && i<STEP_META.length-1 && stepIsSkippable(i)) i += dir;
   if(i<=0 && dir<0){ goStep(0); return; }
   goStep(i);
 }
@@ -450,7 +481,7 @@ function startFromCover(){
   if(hasResumed && state.lastStep>0 && state.lastStep<STEP_META.length){ goStep(state.lastStep); return; }
   hasResumed = true;
   let i = 1;
-  while(i<STEP_META.length-1 && stepIsNA(i)) i++;
+  while(i<STEP_META.length-1 && stepIsSkippable(i)) i++;
   goStep(i);
 }
 
@@ -473,16 +504,19 @@ function attachStepEvents(){
       const same = state.answers[id]===el.dataset.val;
       setAnswer(id, same ? "" : el.dataset.val);
       const grp = el.parentElement;
-      grp.querySelectorAll(".opt-chip").forEach(b=>{ const on = !same && b===el; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); });
+      grp.querySelectorAll(".opt-chip").forEach(b=>{ const on = !same && b===el; b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); });
     });
   });
   mainScroll.querySelectorAll("[data-doc-state]").forEach(el=>{
     el.addEventListener("click", ()=>{
-      state.answers["ST_"+el.dataset.docState] = el.dataset.val;
+      const id = el.dataset.docState, val = el.dataset.val;
+      state.answers["ST_"+id] = val;
       scheduleSave();
-      const sc = mainScroll.scrollTop;
-      renderStep(); renderFooter();
-      mainScroll.scrollTop = sc;
+      el.parentElement.querySelectorAll(".doc-chip").forEach(b=>{
+        const s2 = b.dataset.val;
+        b.className = "doc-chip" + (s2===val ? (s2==="準備済み"?" on-ready":(s2==="準備中"?" on-mid":(s2==="該当なし"?" on-none":" on-todo"))) : "");
+        b.setAttribute("aria-pressed", String(s2===val));
+      });
     });
   });
   mainScroll.querySelectorAll("[data-doc-note]").forEach(el=>{
@@ -649,14 +683,14 @@ function buildRows(){
     }));
   });
   FORM.docs.forEach(d=>{
-    rows.push({no:"書類"+d.no, section:"提出書類チェック", label:d.label, prompt:"", answer:state.answers["ST_"+d.id]||FORM.docStates[FORM.docDefault], status:state.answers["NT_"+d.id]||"", isDoc:true});
+    rows.push({no:"書類"+d.no, section:"提出書類チェック", label:d.label, prompt:"", answer:state.answers["ST_"+d.id]||"未選択", status:state.answers["NT_"+d.id]||"", isDoc:true});
   });
   return rows;
 }
 
 function csvEscape(v){
   v = String(v??"");
-  if(/^[=+@]/.test(v) || /^-[^0-9]/.test(v)) v = "'" + v;
+  if(/^[=+@\t\r]/.test(v) || /^-(?![0-9.,]+$)/.test(v)) v = "'" + v;
   if(/[",\r\n]/.test(v)) return '"' + v.replace(/"/g,'""') + '"';
   return v;
 }
@@ -735,8 +769,13 @@ async function copyTxt(){
 }
 
 /* ---------------- init ---------------- */
+window.addEventListener("hashchange", ()=>{
+  checkResumeHash();
+  if(pendingResumePayload){ state.step = 0; renderAll(); }
+});
 window.addEventListener("pagehide", saveState);
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") saveState(); });
 checkResumeHash();
-if(state.step<0 || state.step>=STEP_META.length) state.step = 0;
+if(typeof state.step!=="number" || !(state.step>=0 && state.step<STEP_META.length)) state.step = 0;
+if(typeof state.lastStep!=="number") state.lastStep = 0;
 renderAll();
