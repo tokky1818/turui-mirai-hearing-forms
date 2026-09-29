@@ -86,27 +86,6 @@ GROUP_HEADINGS = {
     },
 }
 
-# 打ち合わせ(2026-09-29)での確認事項に基づく、Excelからの差分。Excel本体は未改訂のためここで吸収する。
-# 類型C: 観光推進事業は別表1に加算がないため、上乗せ確認の4問(指定区域・空き家・居住歴・年齢)を削除
-REMOVE_IDS = {"c": {"C1-06", "C1-07", "C1-08", "C1-09"}}
-# 類型B: 補助対象経費のうち報償費・広告宣伝費の設問を追加（既存IDを動かさないよう末尾の連番で追加）
-_YOMIKOMI = ["あり", "依頼中", "まだ"]
-def _q(id, label, prompt, example, options=None, dep=None):
-    return {"id": id, "label": label, "prompt": prompt, "example": example, "options": ",".join(options) if options else None,
-            "deps": [{"ref": dep, "op": "=", "val": "なし", "kind": "対象外"}] if dep else [], "row": 0}
-EXTRA_QUESTIONS = {
-    "b": {"05_補助金でやりたいこと": [
-        _q("B5-21", "報償費（専門家等への謝礼）", "補助金を使って、専門家（コンサルタント・デザイナー・講師など）へ謝礼を支払う予定はありますか。ある場合は、依頼する内容と依頼先を教えてください。ない場合は「なし」（続く設問は記入不要になります）。", "例）商品開発のための料理研究家への監修依頼"),
-        _q("B5-22", "報償費の目的・効果", "その依頼で、何を目的とし、今と比べて何がどのくらい良くなりますか。", "例）冷凍商品の味と歩留まりを改善し、新商品を2品開発する", dep="B5-21"),
-        _q("B5-23", "報償費の金額", "報償費のおおよその金額（税抜）を教えてください。", "例）30万円", dep="B5-21"),
-        _q("B5-24", "報償費の見積書", "報償費の見積書または依頼内容がわかる書類はありますか。（あり／依頼中／まだ） ▼リストから選んでください", "例）あり", _YOMIKOMI, dep="B5-21"),
-        _q("B5-25", "広告宣伝費", "補助金を使って、広告・宣伝（チラシ、パンフレット、看板、Web広告、ホームページ制作など）を行う予定はありますか。ある場合は、その内容を教えてください。ない場合は「なし」（続く設問は記入不要になります）。", "例）新商品を紹介するパンフレットの制作と、SNS広告", dep=None),
-        _q("B5-26", "広告宣伝費の目的・効果", "その広告・宣伝で、誰に何を伝え、どのような効果を見込みますか。", "例）道内の旅行客に新商品を知ってもらい、通販の注文を月20件増やす", dep="B5-25"),
-        _q("B5-27", "広告宣伝費の金額", "広告宣伝費のおおよその金額（税抜）を教えてください。", "例）45万円", dep="B5-25"),
-        _q("B5-28", "広告宣伝費の見積書", "広告宣伝費の見積書はありますか。（あり／依頼中／まだ） ▼リストから選んでください", "例）依頼中", _YOMIKOMI, dep="B5-25"),
-    ]},
-}
-
 SKIP_SHEETS = ("はじめに", "提出書類チェック", "回答一覧（支援者用）")
 
 
@@ -142,8 +121,7 @@ def build_form(key, spec):
         n, title = int(m.group(1)), m.group(2).strip()
         heads = GROUP_HEADINGS[key]
         groups = []
-        qlist = [q for q in sh["qs"] if q["id"] not in REMOVE_IDS.get(key, ())] + EXTRA_QUESTIONS.get(key, {}).get(sh["title"], [])
-        for q in qlist:
+        for q in sh["qs"]:
             all_ids.add(q["id"])
             opts = [o.strip() for o in q["options"].split(",")] if q["options"] else None
             item = {
@@ -170,7 +148,7 @@ def build_form(key, spec):
             "id": "b%d" % n, "no": n,
             "eyebrow": "基本情報" if n == 0 else "第%dブロック" % n,
             "title": title, "railLabel": "%d．%s" % (n, title), "sheetLabel": "%d. %s" % (n, title),
-            "note": clean_note(sh["note"]) + (" 専門家への謝礼（報償費）や広告宣伝費は、続く設問でお伺いします。" if key == "b" and n == 5 else ""), "groups": groups,
+            "note": clean_note(sh["note"]), "groups": groups,
         })
     # 依存先IDの存在確認
     for b in blocks:
